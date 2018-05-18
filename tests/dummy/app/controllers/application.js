@@ -28,7 +28,12 @@ const users = [
 ];
 
 const newUsers = [
-    { name: 'James' }
+    { name: 'James' },
+    { name: 'Jimmy' },
+    { name: 'Joel' },
+    { name: 'Mike' },
+    { name: 'Matt' },
+    { name: 'Jon' }
 ];
 
 export default Controller.extend({
@@ -50,7 +55,7 @@ export default Controller.extend({
                     resolve([]);
                 } else {
                     later(function() {
-                        resolve(newUsers.filter((u) => u.name.indexOf(term) > -1));
+                        resolve(newUsers);
                     }, 600);
                 }
             });

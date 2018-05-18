@@ -1,7 +1,8 @@
 ember-power-select-infinity
 ==============================================================================
 
-[Short description of the addon.]
+![To Infinity & Beyond](https://media.giphy.com/media/U2BASTIsaw8WQ/giphy.gif)
+This addon provides a select which uses occlusion rendering to load a large list of items. The select list is pageable, and will load more items when you get near the bottom. 
 
 Installation
 ------------------------------------------------------------------------------

@@ -46,16 +46,10 @@ export default Component.extend({
             }
           }
       },
-      search(term) {
-          return tryInvoke(this, 'search', [term]).then(results => {
-              let plainArray = results.toArray ? results.toArray() : results;
-              set(this, 'options', plainArray);
-          });
-      },
       loadMore(term) {
-         tryInvoke(this, 'loadMore', [term]).then(results => {
+         return tryInvoke(this, 'loadMore', [term]).then(results => {
              let plainArray = results.toArray ? results.toArray() : results;
-             get(this, 'options').concat(plainArray);
+             return plainArray;
          });
       }
   }
