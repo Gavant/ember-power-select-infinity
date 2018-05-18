@@ -1,5 +1,5 @@
 {{#if (hasBlock "inverse")}}
-  {{#power-select
+  {{#power-select-with-scroll
       afterOptionsComponent=afterOptionsComponent
       allowClear=allowClear
       ariaDescribedBy=ariaDescribedBy
@@ -18,6 +18,7 @@
       horizontalPosition=horizontalPosition
       initiallyOpened=initiallyOpened
       loadingMessage=loadingMessage
+      loadMore=loadMore
       matcher=matcher
       matchTriggerWidth=matchTriggerWidth
       noMatchesMessage=noMatchesMessage
@@ -30,11 +31,9 @@
       onopen=onopen
       opened=opened
       options=options
-      loadMore=loadMore
-      optionsComponent=(component optionsComponent onScroll=(action "loadMore"))
+      optionsComponent=(component optionsComponent onScroll=onScroll)
       placeholder=placeholder
       renderInPlace=renderInPlace
-      results=results
       search=search
       searchEnabled=searchEnabled
       searchField=searchField
@@ -53,9 +52,9 @@
       {{yield option term}}
     {{else}}
       {{yield to="inverse"}}
-  {{/power-select}}
+  {{/power-select-with-scroll}}
 {{else}}
-  {{#power-select
+  {{#power-select-with-scroll
       afterOptionsComponent=afterOptionsComponent
       allowClear=allowClear
       ariaDescribedBy=ariaDescribedBy
@@ -74,6 +73,7 @@
       horizontalPosition=horizontalPosition
       initiallyOpened=initiallyOpened
       loadingMessage=loadingMessage
+      loadMore=loadMore
       matcher=matcher
       matchTriggerWidth=matchTriggerWidth
       noMatchesMessage=noMatchesMessage
@@ -86,7 +86,7 @@
       onopen=onopen
       opened=opened
       options=options
-      optionsComponent=(component optionsComponent onScroll=(action "loadMore"))
+      optionsComponent=(component optionsComponent onScroll=onScroll)
       placeholder=placeholder
       renderInPlace=renderInPlace
       search=search
@@ -105,5 +105,5 @@
       calculatePosition=calculatePosition
       as |option term|}}
       {{yield option term}}
-  {{/power-select}}
+  {{/power-select-with-scroll}}
 {{/if}}

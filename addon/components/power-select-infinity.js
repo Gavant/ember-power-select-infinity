@@ -1,8 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { tryInvoke } from '@ember/utils';
 import layout from '../templates/components/power-select-infinity';
-import { get, set } from '@ember/object';
 
 export default Component.extend({
   tagName: '',
@@ -45,12 +43,6 @@ export default Component.extend({
               select.actions.choose(null);
             }
           }
-      },
-      loadMore(term) {
-         return tryInvoke(this, 'loadMore', [term]).then(results => {
-             let plainArray = results.toArray ? results.toArray() : results;
-             return plainArray;
-         });
       }
   }
 });
