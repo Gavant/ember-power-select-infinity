@@ -2,6 +2,11 @@ import Controller from '@ember/controller';
 import RSVP from 'rsvp';
 import { later } from '@ember/runloop';
 
+const firstUsers = [
+    { name: "Linda" },
+    { name: "Emma" }
+];
+
 const users = [
   { name: 'Arthur' },
   { name: 'Sam' },
@@ -37,6 +42,7 @@ const newUsers = [
 ];
 
 export default Controller.extend({
+    options: users,
     actions: {
         search(term) {
             return new RSVP.Promise(function(resolve) {
@@ -51,13 +57,9 @@ export default Controller.extend({
         },
         loadMore(term) {
             return new RSVP.Promise(function(resolve) {
-                if (term.length === 0) {
-                    resolve([]);
-                } else {
-                    later(function() {
-                        resolve(newUsers);
-                    }, 600);
-                }
+                later(function() {
+                    resolve(newUsers);
+                }, 600);
             });
         }
     }

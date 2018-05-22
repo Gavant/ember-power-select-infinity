@@ -4,10 +4,11 @@
 
 
 {{#power-select-infinity
+    options=options
     search=(action 'search')
     loadMore=(action 'loadMore')
     selected=selected
     onchange=(action (mut selected))
-    as |object|}}
-        {{object.name}}
+    as |user|}}
+        {{user.name}}
 {{/power-select-infinity}}

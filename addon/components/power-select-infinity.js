@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import layout from '../templates/components/power-select-infinity';
+import { scheduleOnce } from '@ember/runloop';
 
 export default Component.extend({
   tagName: '',
@@ -33,6 +34,10 @@ export default Component.extend({
   }),
 
   actions: {
+      handleFocus(select) {
+          scheduleOnce('actions', select, select.actions.search);
+          scheduleOnce('actions', select, select.actions.open);
+      },
       onKeyDown(select, e) {
           let action = this.get('onkeydown');
 
