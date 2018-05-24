@@ -2,11 +2,6 @@ import Controller from '@ember/controller';
 import RSVP from 'rsvp';
 import { later } from '@ember/runloop';
 
-const firstUsers = [
-    { name: "Linda" },
-    { name: "Emma" }
-];
-
 const users = [
   { name: 'Arthur' },
   { name: 'Sam' },

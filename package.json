@@ -1,17 +1,17 @@
 {
   "name": "ember-power-select-infinity",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "Ember Power Select with Infinity Paging and Occlusion Rendering",
   "keywords": [
     "ember-addon"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Gavant Software",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/Gavant/ember-power-select-infinity",
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint ./*.js addon addon-test-support app blueprints config lib server test-support tests",

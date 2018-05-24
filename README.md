@@ -2,7 +2,7 @@ ember-power-select-infinity
 ==============================================================================
 
 ![To Infinity & Beyond](https://media.giphy.com/media/U2BASTIsaw8WQ/giphy.gif)
-This addon provides a select which uses occlusion rendering to load a large list of items. The select list is pageable, and will load more items when you get near the bottom. 
+This addon provides a power select which uses occlusion rendering to infinitely load and search for a large list of items.
 
 Installation
 ------------------------------------------------------------------------------
@@ -15,8 +15,72 @@ ember install ember-power-select-infinity
 Usage
 ------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
+To use `power-select-infinity` you just declare it in a template.
+Both `search` and `loadMore` must return a promise to that `power-select-infinity` can display the loading indicator.
+The paging is left up to you, since some API's use different formats for paging. Some API's declare page=1, others take in the last items ID.
+Either way, `power-select-infinity` just provides a `loadMore` action where you can load data however your API requires.
 
+Your Component
+```
+{{#power-select-infinity
+    search=(action 'search')
+    loadMore=(action 'loadMore')
+    selected=selected
+    onchange=(action (mut selected))
+    as |name|}}
+        {{name}}
+{{/power-select-infinity
+```
+
+Your Controller
+```
+export default Controller.extend({
+    page: 1,
+    actions: {
+        search(term) {
+            //API call 
+            let page = get(this, 'page');
+            return get(this, 'ajax').request(`names?page=${page}&search=${term}`);
+        },
+        loadMore(term) {
+            let page = get(this, 'page');
+            let newPage = get(this, 'page');
+            return get(this, 'ajax').request(`names?page=${newPage}&search=${term}`).then(() => {
+                set(this, 'page', newPage);
+            });
+        }
+    }
+});
+```
+
+If you want the power select to open when the input is focused, just pass a list of options via the options parameter.
+```
+{{#power-select-infinity
+    options=options
+    search=(action 'search')
+    loadMore=(action 'loadMore')
+    selected=selected
+    onchange=(action (mut selected))
+    as |name|}}
+        {{name}}
+{{/power-select-infinity
+```
+
+
+If your using a complex objects as the options, you need to tell `power-select-infinity` what value to display when an option is selected using
+```
+{{#power-select-infinity
+    options=options
+    search=(action 'search')
+    loadMore=(action 'loadMore')
+    selected=selected
+    onchange=(action (mut selected))
+    extra=(hash labelPath="name")
+    as |user|}}
+        {{user.name}}
+{{/power-select-infinity
+```
+In the example above, Im using a user object which has a property of `name` that I want to display when selected.
 
 Contributing
 ------------------------------------------------------------------------------
