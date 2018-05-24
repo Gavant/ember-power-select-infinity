@@ -101,16 +101,13 @@ export default Component.extend({
    */
   getSelectedAsText() {
     let labelPath = this.get('extra.labelPath');
-    let value;
+    let value = '';
     if (labelPath) {
       // complex object
       value = this.get(`select.selected.${labelPath}`);
     } else {
       // primitive value
       value = this.get('select.selected');
-    }
-    if (value === undefined) {
-      value = '';
     }
     return value;
   }

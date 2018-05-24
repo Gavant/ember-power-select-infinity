@@ -12,6 +12,11 @@
     &-trigger {
         padding: 0;
     }
+    &-selected-item {
+        position: absolute;
+        top: 2px;
+        left: 0;
+    }
     &-typeahead-loading-indicator {
         right: 5px;
         top: 5px;

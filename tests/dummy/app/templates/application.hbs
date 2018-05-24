@@ -9,6 +9,7 @@
     loadMore=(action 'loadMore')
     selected=selected
     onchange=(action (mut selected))
+    extra=(hash labelPath="name")
     as |user|}}
         {{user.name}}
 {{/power-select-infinity}}
