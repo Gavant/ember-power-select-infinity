@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { get, computed } from '@ember/object';
 import layout from '../templates/components/power-select-infinity';
 import { scheduleOnce } from '@ember/runloop';
 
@@ -13,11 +13,13 @@ export default Component.extend({
   searchEnabled: false,
   loadingMessage: null,
   noMatchesMessage: null,
-
+  estimateHeight: 28,
+  bufferSize: 5,
+  staticHeight: false,
   // CPs
   concatenatedTriggerClasses: computed('triggerClass', function() {
     let classes = ['ember-power-select-typeahead-trigger'];
-    let passedClass = this.get('triggerClass');
+    let passedClass = get(this, 'triggerClass');
     if (passedClass) {
       classes.push(passedClass);
     }
@@ -26,7 +28,7 @@ export default Component.extend({
 
   concatenatedDropdownClasses: computed('dropdownClass', function() {
     let classes = ['ember-power-select-typeahead-dropdown'];
-    let passedClass = this.get('dropdownClass');
+    let passedClass = get(this, 'dropdownClass');
     if (passedClass) {
       classes.push(passedClass);
     }
@@ -39,7 +41,7 @@ export default Component.extend({
           scheduleOnce('actions', select, select.actions.open);
       },
       onKeyDown(select, e) {
-          let action = this.get('onkeydown');
+          let action = get(this, 'onkeydown');
 
           // if user passes `onkeydown` action
           if (!action || action(select, e) !== false) {

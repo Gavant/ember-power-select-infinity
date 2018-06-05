@@ -13,3 +13,30 @@
     as |user|}}
         {{user.name}}
 {{/power-select-infinity}}
+
+With Custom buffer size
+{{#power-select-infinity
+    options=options
+    search=(action 'search')
+    loadMore=(action 'loadMore')
+    selected=selected
+    onchange=(action (mut selected))
+    extra=(hash labelPath="name")
+    bufferSize=1
+    as |user|}}
+        {{user.name}}
+{{/power-select-infinity}}
+
+
+With Custom Loading Component
+{{#power-select-infinity
+    options=options
+    search=(action 'search')
+    loadMore=(action 'loadMore')
+    selected=selected
+    onchange=(action (mut selected))
+    extra=(hash labelPath="name")
+    loadingComponent=(component 'loading-component')
+    as |user|}}
+        {{user.name}}
+{{/power-select-infinity}}

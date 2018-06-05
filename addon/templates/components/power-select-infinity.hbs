@@ -31,7 +31,12 @@
       onopen=onopen
       opened=opened
       options=options
-      optionsComponent=(component optionsComponent onScroll=onScroll)
+      optionsComponent=(component optionsComponent
+            onScroll=onScroll
+            estimateHeight=estimateHeight
+            bufferSize=bufferSize
+            staticHeight=staticHeight
+      )
       placeholder=placeholder
       renderInPlace=renderInPlace
       search=search
@@ -43,7 +48,9 @@
       selectedItemComponent=selectedItemComponent
       tabindex=tabindex
       triggerClass=concatenatedTriggerClasses
-      triggerComponent=triggerComponent
+      triggerComponent=(component triggerComponent
+            loadingComponent=loadingComponent
+      )
       triggerId=triggerId
       triggerRole=null
       verticalPosition=verticalPosition
@@ -86,7 +93,12 @@
       onopen=onopen
       opened=opened
       options=options
-      optionsComponent=(component optionsComponent onScroll=onScroll)
+      optionsComponent=(component optionsComponent
+            onScroll=onScroll
+            estimateHeight=estimateHeight
+            bufferSize=bufferSize
+            staticHeight=staticHeight
+      )
       placeholder=placeholder
       renderInPlace=renderInPlace
       search=search
@@ -98,7 +110,9 @@
       selectedItemComponent=selectedItemComponent
       tabindex=tabindex
       triggerClass=concatenatedTriggerClasses
-      triggerComponent=triggerComponent
+      triggerComponent=(component triggerComponent
+            loadingComponent=loadingComponent
+      )
       triggerId=triggerId
       triggerRole=null
       verticalPosition=verticalPosition
