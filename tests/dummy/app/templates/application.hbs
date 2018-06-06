@@ -36,7 +36,7 @@ With Custom Loading Component
     selected=selected
     onchange=(action (mut selected))
     extra=(hash labelPath="name")
-    loadingComponent=(component 'loading-component')
+    loadingComponent='loading-component'
     as |user|}}
         {{user.name}}
 {{/power-select-infinity}}

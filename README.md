@@ -82,6 +82,38 @@ If your using a complex objects as the options, you need to tell `power-select-i
 ```
 In the example above, Im using a user object which has a property of `name` that I want to display when selected.
 
+There are some options you can pass to https://github.com/html-next/vertical-collection, which is what we use for the occlusion rendering. The three options are estimateHeight, bufferSize, and staticHeight. Read the vertical collection documentation for what they do and how to use them
+
+```
+{{#power-select-infinity
+    options=options
+    estimateHeight=75
+    bufferSize=10
+    staticHeight=true
+    search=(action 'search')
+    loadMore=(action 'loadMore')
+    selected=selected
+    onchange=(action (mut selected))
+    as |name|}}
+        {{name}}
+{{/power-select-infinity
+```
+
+You can also customize the loading component by passing in your own `loadingComponent` property.
+
+```
+{{#power-select-infinity
+    options=options
+    search=(action 'search')
+    loadMore=(action 'loadMore')
+    selected=selected
+    onchange=(action (mut selected))
+    loadingComponent='my-loading-component'
+    as |name|}}
+        {{name}}
+{{/power-select-infinity
+```
+
 Contributing
 ------------------------------------------------------------------------------
 

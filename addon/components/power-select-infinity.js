@@ -9,6 +9,7 @@ export default Component.extend({
   tabindex: -1,
   triggerComponent: 'power-select-infinity/trigger',
   optionsComponent: 'power-select-infinity/options',
+  loadingComponent: 'power-select-infinity/loading',
   beforeOptionsComponent: null,
   searchEnabled: false,
   loadingMessage: null,

@@ -12,12 +12,5 @@
   onkeydown={{action "handleKeydown"}}
   onmousedown={{action "stopPropagation"}}>
 {{#if select.loading}}
-    {{#if loadingComponent}}
-        {{component loadingComponent}}
-    {{else}}
-        <span class="ember-power-select-typeahead-loading-indicator">
-            <div class="double-bounce1"></div>
-            <div class="double-bounce2"></div>
-        </span>
-    {{/if}}
+    {{component loadingComponent}}
 {{/if}}
