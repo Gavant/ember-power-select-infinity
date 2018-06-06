@@ -2,6 +2,8 @@ ember-power-select-infinity
 ==============================================================================
 
 ![To Infinity & Beyond](https://media.giphy.com/media/U2BASTIsaw8WQ/giphy.gif)
+
+
 This addon provides a power select which uses occlusion rendering to infinitely load and search for a large list of items.
 
 Installation
