@@ -1,0 +1,17 @@
+{{#vertical-collection
+    items=options
+    estimateHeight=estimateHeight
+    staticHeight=staticHeight
+    bufferSize=bufferSize
+    lastReached="onScroll"
+    containerSelector=".ember-power-select-options"
+     as |opt index|}}
+     <li class="ember-power-select-option"
+       aria-selected="{{ember-power-select-is-selected opt select.selected}}"
+       aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
+       aria-current="{{eq opt select.highlighted}}"
+       data-option-index="{{groupIndex}}{{index}}"
+       role="option">
+       {{yield opt select}}
+     </li>
+{{/vertical-collection}}
