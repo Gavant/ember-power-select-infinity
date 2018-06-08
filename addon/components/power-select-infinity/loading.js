@@ -3,5 +3,5 @@ import layout from '../../templates/components/power-select-infinity/loading';
 
 export default Component.extend({
   layout,
-  classNames: ['ember-power-select-typeahead-loading-indicator']
+  classNames: ['ember-power-select-infinity-loading-indicator']
 });
