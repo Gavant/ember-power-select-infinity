@@ -9,13 +9,19 @@
 }
 
 .ember-power-select-infinity {
+    &-clear-btn {
+        right: 25px;
+        top: 4px;
+        position: absolute;
+    }
     &-trigger {
         padding: 0;
         border: none;
     }
     &-loading-indicator {
         right: 5px;
-        top: 5px;
+        top: 50%;
+        transform: translateY(-50%);
         width: 20px;
         height: 20px;
         position: absolute;

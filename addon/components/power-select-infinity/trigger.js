@@ -1,6 +1,6 @@
 import Component from '@ember/component';
 import { get, set, computed } from '@ember/object';
-import { isBlank } from '@ember/utils';
+import { isBlank, isEmpty } from '@ember/utils';
 import { run } from '@ember/runloop';
 import layout from '../../templates/components/power-select-infinity/trigger';
 
@@ -16,6 +16,10 @@ export default Component.extend({
       classes.push(passedClass);
     }
     return classes.join(' ');
+  }),
+
+  canClear: computed('select.{disabled}', 'text', 'allowClear', function() {
+    return !isEmpty(get(this, 'text')) && !get(this, 'select.disabled') && get(this, 'allowClear');
   }),
 
 
@@ -39,7 +43,7 @@ export default Component.extend({
      * the select box.
      */
     if (oldSelect.isOpen && !newSelect.isOpen && newSelect.searchText) {
-      let input = document.querySelector(`#ember-power-select-typeahead-input-${newSelect.uniqueId}`);
+      let input = document.querySelector(`#ember-power-select-infinity-input-${newSelect.uniqueId}`);
       let newText = this.getSelectedAsText();
       if (input.value !== newText) {
         input.value = newText;
@@ -96,9 +100,26 @@ export default Component.extend({
         e.stopPropagation();
       }
 
+      if (e.keyCode === 8 && get(this, 'select.selected')) {
+          let select = get(this, 'select');
+          e.stopPropagation();
+          select.actions.select(null);
+          run.schedule('actions', null, select.actions.open);
+      } else if (e.keyCode === 8 && get(this, 'select.searchText') <= 1) {
+          let select = get(this, 'select');
+          run.schedule('actions', null, select.actions.open);
+      }
+
       // optional, passed from power-select
       let onkeydown = get(this, 'onKeydown');
       if (onkeydown && onkeydown(e) === false) {
+        return false;
+      }
+  },
+    clear(e) {
+      e.stopPropagation();
+      this.get('select').actions.select(null);
+      if (e.type === 'touchstart') {
         return false;
       }
     }
@@ -112,14 +133,17 @@ export default Component.extend({
    */
   getSelectedAsText() {
     let labelPath = get(this, 'extra.labelPath');
-    let value = '';
-    if (labelPath) {
-      // complex object
-      value = get(this, `select.selected.${labelPath}`);
-    } else {
-      // primitive value
-      value = get(this, 'select.selected');
+    let selected = get(this, 'select.selected');
+    let value = null;
+    if (selected) {
+        if (labelPath) {
+          // complex object
+          value = get(this, `select.selected.${labelPath}`);
+        } else {
+          // primitive value
+          value = get(this, 'select.selected');
+        }
     }
     return value;
-  }
+  },
 });

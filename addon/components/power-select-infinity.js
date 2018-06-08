@@ -7,6 +7,7 @@ export default Component.extend({
   tagName: '',
   layout,
   tabindex: -1,
+  allowClear: true,
   triggerComponent: 'power-select-infinity/trigger',
   optionsComponent: 'power-select-infinity/options',
   loadingComponent: 'power-select-infinity/loading',
