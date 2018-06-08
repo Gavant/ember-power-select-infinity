@@ -19,7 +19,7 @@ export default Component.extend({
   staticHeight: false,
   // CPs
   concatenatedTriggerClasses: computed('triggerClass', function() {
-    let classes = ['ember-power-select-typeahead-trigger'];
+    let classes = ['ember-power-select-infinity-trigger'];
     let passedClass = get(this, 'triggerClass');
     if (passedClass) {
       classes.push(passedClass);
@@ -28,7 +28,7 @@ export default Component.extend({
   }),
 
   concatenatedDropdownClasses: computed('dropdownClass', function() {
-    let classes = ['ember-power-select-typeahead-dropdown'];
+    let classes = ['ember-power-select-infinity-dropdown'];
     let passedClass = get(this, 'dropdownClass');
     if (passedClass) {
       classes.push(passedClass);
