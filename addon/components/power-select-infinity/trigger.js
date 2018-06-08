@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { get, set } from '@ember/object';
+import { get, set, computed } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { run } from '@ember/runloop';
 import layout from '../../templates/components/power-select-infinity/trigger';
@@ -8,6 +8,16 @@ export default Component.extend({
   layout,
   tagName: '',
   text: '',
+
+  concatenatedInputClasses: computed('inputClass', function() {
+    let classes = ['ember-power-select-infinity-input'];
+    let passedClass = get(this, 'inputClass');
+    if (passedClass) {
+      classes.push(passedClass);
+    }
+    return classes.join(' ');
+  }),
+
 
   /**
    * Lifecycle Hook

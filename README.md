@@ -22,6 +22,8 @@ Both `search` and `loadMore` must return a promise to that `power-select-infinit
 The paging is left up to you, since some API's use different formats for paging. Some API's declare page=1, others take in the last items ID.
 Either way, `power-select-infinity` just provides a `loadMore` action where you can load data however your API requires.
 
+If your using `ember-cli-sass` in your project, an import statement will automatically be added to your project.
+
 Your Component
 ```
 {{#power-select-infinity
