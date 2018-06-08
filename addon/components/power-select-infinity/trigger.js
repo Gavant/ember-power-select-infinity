@@ -4,6 +4,15 @@ import { isBlank, isEmpty } from '@ember/utils';
 import { run } from '@ember/runloop';
 import layout from '../../templates/components/power-select-infinity/trigger';
 
+const KEYCODE_BACKSPACE = 8;
+const KEYCODE_UP_ARROW = 38;
+const KEYCODE_DOWN_ARROW = 40;
+const KEYCODE_0 = 48;
+const KEYCODE_Z = 90;
+const KEYCODE_SPACE = 32;
+const KEYCODE_ENTER = 13;
+const KEYCODE_ESCAPE = 27;
+
 export default Component.extend({
   layout,
   tagName: '',
@@ -18,7 +27,7 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
-  canClear: computed('select.{disabled}', 'text', 'allowClear', function() {
+  canClear: computed('select.disabled', 'text', 'allowClear', function() {
     return !isEmpty(get(this, 'text')) && !get(this, 'select.disabled') && get(this, 'allowClear');
   }),
 
@@ -85,13 +94,13 @@ export default Component.extend({
      */
     handleKeydown(e) {
       // up or down arrow and if not open, no-op and prevent parent handlers from being notified
-      if ([38, 40].indexOf(e.keyCode) > -1 && !get(this, 'select.isOpen')) {
+      if ([KEYCODE_UP_ARROW, KEYCODE_DOWN_ARROW].indexOf(e.keyCode) > -1 && !get(this, 'select.isOpen')) {
         e.stopPropagation();
         return;
       }
-      let isLetter = e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32; // Keys 0-9, a-z or SPACE
+      let isLetter = e.keyCode >= KEYCODE_0 && e.keyCode <= KEYCODE_Z || e.keyCode === KEYCODE_SPACE; // Keys 0-9, a-z or SPACE
       // if isLetter, escape or enter, prevent parent handlers from being notified
-      if (isLetter || [13, 27].indexOf(e.keyCode) > -1) {
+      if (isLetter || [KEYCODE_ENTER, KEYCODE_ESCAPE].indexOf(e.keyCode) > -1) {
         let select = get(this, 'select');
         // open if loading msg configured
         if (!select.isOpen && get(this, 'loadingMessage')) {
@@ -100,14 +109,12 @@ export default Component.extend({
         e.stopPropagation();
       }
 
-      if (e.keyCode === 8 && get(this, 'select.selected')) {
+      if (e.keyCode === KEYCODE_BACKSPACE && get(this, 'select.selected')) {
           let select = get(this, 'select');
           e.stopPropagation();
-          select.actions.select(null);
-          run.schedule('actions', null, select.actions.search);
-          run.schedule('actions', null, select.actions.open);
-      } else if (e.keyCode === 8 && get(this, 'select.searchText') <= 1) {
-          let select = get(this, 'select');
+          if (get(this, 'select.selected')) {
+               select.actions.select(null);
+          }
           run.schedule('actions', null, select.actions.search);
           run.schedule('actions', null, select.actions.open);
       }
