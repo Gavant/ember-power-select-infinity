@@ -1,8 +1,17 @@
 import Component from '@ember/component';
 import { get, set, computed } from '@ember/object';
-import { isBlank } from '@ember/utils';
+import { isBlank, isEmpty } from '@ember/utils';
 import { run } from '@ember/runloop';
 import layout from '../../templates/components/power-select-infinity/trigger';
+
+const KEYCODE_BACKSPACE = 8;
+const KEYCODE_UP_ARROW = 38;
+const KEYCODE_DOWN_ARROW = 40;
+const KEYCODE_0 = 48;
+const KEYCODE_Z = 90;
+const KEYCODE_SPACE = 32;
+const KEYCODE_ENTER = 13;
+const KEYCODE_ESCAPE = 27;
 
 export default Component.extend({
   layout,
@@ -16,6 +25,10 @@ export default Component.extend({
       classes.push(passedClass);
     }
     return classes.join(' ');
+  }),
+
+  canClear: computed('select.disabled', 'text', 'allowClear', function() {
+    return !isEmpty(get(this, 'text')) && !get(this, 'select.disabled') && get(this, 'allowClear');
   }),
 
 
@@ -39,7 +52,7 @@ export default Component.extend({
      * the select box.
      */
     if (oldSelect.isOpen && !newSelect.isOpen && newSelect.searchText) {
-      let input = document.querySelector(`#ember-power-select-typeahead-input-${newSelect.uniqueId}`);
+      let input = document.querySelector(`#ember-power-select-infinity-input-${newSelect.uniqueId}`);
       let newText = this.getSelectedAsText();
       if (input.value !== newText) {
         input.value = newText;
@@ -81,13 +94,13 @@ export default Component.extend({
      */
     handleKeydown(e) {
       // up or down arrow and if not open, no-op and prevent parent handlers from being notified
-      if ([38, 40].indexOf(e.keyCode) > -1 && !get(this, 'select.isOpen')) {
+      if ([KEYCODE_UP_ARROW, KEYCODE_DOWN_ARROW].indexOf(e.keyCode) > -1 && !get(this, 'select.isOpen')) {
         e.stopPropagation();
         return;
       }
-      let isLetter = e.keyCode >= 48 && e.keyCode <= 90 || e.keyCode === 32; // Keys 0-9, a-z or SPACE
+      let isLetter = e.keyCode >= KEYCODE_0 && e.keyCode <= KEYCODE_Z || e.keyCode === KEYCODE_SPACE; // Keys 0-9, a-z or SPACE
       // if isLetter, escape or enter, prevent parent handlers from being notified
-      if (isLetter || [13, 27].indexOf(e.keyCode) > -1) {
+      if (isLetter || [KEYCODE_ENTER, KEYCODE_ESCAPE].indexOf(e.keyCode) > -1) {
         let select = get(this, 'select');
         // open if loading msg configured
         if (!select.isOpen && get(this, 'loadingMessage')) {
@@ -96,9 +109,26 @@ export default Component.extend({
         e.stopPropagation();
       }
 
+      if (e.keyCode === KEYCODE_BACKSPACE && get(this, 'select.selected')) {
+          let select = get(this, 'select');
+          e.stopPropagation();
+          if (get(this, 'select.selected')) {
+               select.actions.select(null);
+          }
+          run.schedule('actions', null, select.actions.search);
+          run.schedule('actions', null, select.actions.open);
+      }
+
       // optional, passed from power-select
       let onkeydown = get(this, 'onKeydown');
       if (onkeydown && onkeydown(e) === false) {
+        return false;
+      }
+  },
+    clear(e) {
+      e.stopPropagation();
+      this.get('select').actions.select(null);
+      if (e.type === 'touchstart') {
         return false;
       }
     }
@@ -112,14 +142,17 @@ export default Component.extend({
    */
   getSelectedAsText() {
     let labelPath = get(this, 'extra.labelPath');
-    let value = '';
-    if (labelPath) {
-      // complex object
-      value = get(this, `select.selected.${labelPath}`);
-    } else {
-      // primitive value
-      value = get(this, 'select.selected');
+    let selected = get(this, 'select.selected');
+    let value = null;
+    if (selected) {
+        if (labelPath) {
+          // complex object
+          value = get(this, `select.selected.${labelPath}`);
+        } else {
+          // primitive value
+          value = get(this, 'select.selected');
+        }
     }
     return value;
-  }
+  },
 });
