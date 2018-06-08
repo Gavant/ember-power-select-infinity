@@ -104,9 +104,11 @@ export default Component.extend({
           let select = get(this, 'select');
           e.stopPropagation();
           select.actions.select(null);
+          run.schedule('actions', null, select.actions.search);
           run.schedule('actions', null, select.actions.open);
       } else if (e.keyCode === 8 && get(this, 'select.searchText') <= 1) {
           let select = get(this, 'select');
+          run.schedule('actions', null, select.actions.search);
           run.schedule('actions', null, select.actions.open);
       }
 
