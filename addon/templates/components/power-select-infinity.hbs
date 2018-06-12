@@ -31,7 +31,7 @@
       onopen=onopen
       opened=opened
       options=options
-      optionsComponent=(component optionsComponent
+      optionsComponent=(unless fastboot.isFastBoot component optionsComponent
             onScroll=onScroll
             estimateHeight=estimateHeight
             bufferSize=bufferSize
@@ -94,7 +94,7 @@
       onopen=onopen
       opened=opened
       options=options
-      optionsComponent=(component optionsComponent
+      optionsComponent=(unless fastboot.isFastBoot component optionsComponent
             onScroll=onScroll
             estimateHeight=estimateHeight
             bufferSize=bufferSize

@@ -3,6 +3,7 @@ import { get, computed } from '@ember/object';
 import layout from '../templates/components/power-select-infinity';
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
+import { getOwner } from '@ember/application';
 
 export default Component.extend({
   tagName: '',
@@ -19,6 +20,9 @@ export default Component.extend({
   estimateHeight: 28,
   bufferSize: 5,
   staticHeight: false,
+  fastboot: computed(function() {
+    return getOwner(this).lookup(`service:fastboot`);
+  }),
   // CPs
   concatenatedTriggerClasses: computed('triggerClass', function() {
     let classes = ['ember-power-select-infinity-trigger'];
