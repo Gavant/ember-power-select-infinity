@@ -31,12 +31,12 @@
       onopen=onopen
       opened=opened
       options=options
-      optionsComponent=(component optionsComponent
+      optionsComponent=(unless fastboot.isFastBoot (component optionsComponent
             onScroll=onScroll
             estimateHeight=estimateHeight
             bufferSize=bufferSize
             staticHeight=staticHeight
-      )
+      ))
       placeholder=placeholder
       renderInPlace=renderInPlace
       search=search
@@ -94,12 +94,12 @@
       onopen=onopen
       opened=opened
       options=options
-      optionsComponent=(component optionsComponent
+      optionsComponent=(unless fastboot.isFastBoot (component optionsComponent
             onScroll=onScroll
             estimateHeight=estimateHeight
             bufferSize=bufferSize
             staticHeight=staticHeight
-      )
+      ))
       placeholder=placeholder
       renderInPlace=renderInPlace
       search=search
