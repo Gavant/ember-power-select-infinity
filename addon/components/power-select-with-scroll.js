@@ -6,6 +6,7 @@ import { isBlank } from '@ember/utils';
 
 export default PowerSelect.extend({
     mustShowSearchMessage: false,
+    canLoadMore: true,
     actions: {
         search(term) {
           this.updateState({ canLoadMore: true });
