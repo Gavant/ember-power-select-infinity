@@ -8,6 +8,7 @@ export default PowerSelect.extend({
     mustShowSearchMessage: false,
     actions: {
         search(term) {
+          this.updateState({ canLoadMore: true });
           if (isBlank(term)) {
               this.updateState({
                   results: get(this, 'options'),
@@ -23,23 +24,26 @@ export default PowerSelect.extend({
           }
         },
         onScroll() {
-            this.updateState({ loading: true });
-            let term = get(this, 'publicAPI.lastSearchedText');
-            let currentResults = get(this, 'publicAPI.results');
-            tryInvoke(this, 'loadMore', [term, get(this, 'publicAPI')]).then(results => {
-                let plainArray = results.toArray ? results.toArray() : results;
-                let newResults = currentResults.concat(plainArray);
-                this.updateState({
-                    results: newResults,
-                    _rawSearchResults: newResults,
-                    resultsCount: countOptions(plainArray),
-                    lastSearchedText: term,
-                    loading: false
+            if (get(this, 'canLoadMore')) {
+                this.updateState({ loading: true });
+                let term = get(this, 'publicAPI.lastSearchedText');
+                let currentResults = get(this, 'publicAPI.results');
+                tryInvoke(this, 'loadMore', [term, get(this, 'publicAPI')]).then(results => {
+                    let plainArray = results.toArray ? results.toArray() : results;
+                    let newResults = currentResults.concat(plainArray);
+                    this.updateState({
+                        results: newResults,
+                        _rawSearchResults: newResults,
+                        resultsCount: countOptions(plainArray),
+                        lastSearchedText: term,
+                        loading: false,
+                        canLoadMore: get(results, 'length') !== 0
+                    });
+                    this.resetHighlighted();
+                }).catch(() => {
+                    this.updateState({ lastSearchedText: term, loading: false });
                 });
-                this.resetHighlighted();
-            }).catch(() => {
-                this.updateState({ lastSearchedText: term, loading: false });
-            });
+            }
         }
     },
     init() {
