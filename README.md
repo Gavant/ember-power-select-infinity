@@ -37,6 +37,8 @@ Your Component
 ```
 
 Your Controller
+
+Paging using page numbers
 ```
 export default Controller.extend({
     page: 1,
@@ -52,6 +54,20 @@ export default Controller.extend({
             return get(this, 'ajax').request(`names?page=${newPage}&search=${term}`).then(() => {
                 set(this, 'page', newPage);
             });
+        }
+    }
+});
+```
+Paging using page offset & limit
+```
+export default Controller.extend({
+    page: 1,
+    actions: {
+        search(term) {
+            return get(this, 'ajax').request(`names?search=${term}`);
+        },
+        async loadMore(term, select) {
+            return get(this, 'ajax').request(`names?search=${term}&offset=${get(select, 'resultsCount')}&limit=10`);
         }
     }
 });
