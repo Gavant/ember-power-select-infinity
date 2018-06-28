@@ -35,7 +35,7 @@ export default PowerSelect.extend({
                     this.updateState({
                         results: newResults,
                         _rawSearchResults: newResults,
-                        resultsCount: countOptions(plainArray),
+                        resultsCount: countOptions(newResults),
                         lastSearchedText: term,
                         loading: false
                     });
