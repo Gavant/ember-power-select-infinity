@@ -1,6 +1,6 @@
 import PowerSelect from 'ember-power-select/components/power-select';
 import { countOptions } from 'ember-power-select/utils/group-utils';
-import { get } from '@ember/object';
+import { get, set } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { isBlank } from '@ember/utils';
 
@@ -9,7 +9,7 @@ export default PowerSelect.extend({
     canLoadMore: true,
     actions: {
         search(term) {
-          this.updateState({ canLoadMore: true });
+          set(this, 'canLoadMore', true);
           if (isBlank(term)) {
               this.updateState({
                   results: get(this, 'options'),
@@ -37,9 +37,9 @@ export default PowerSelect.extend({
                         _rawSearchResults: newResults,
                         resultsCount: countOptions(plainArray),
                         lastSearchedText: term,
-                        loading: false,
-                        canLoadMore: get(results, 'length') !== 0
+                        loading: false
                     });
+                    set(this, 'canLoadMore', get(results, 'length') !== 0);
                     this.resetHighlighted();
                 }).catch(() => {
                     this.updateState({ lastSearchedText: term, loading: false });
