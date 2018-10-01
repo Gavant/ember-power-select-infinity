@@ -4,6 +4,10 @@ import { get, set } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { isBlank } from '@ember/utils';
 
+function toPlainArray(collection) {
+    return collection.toArray ? collection.toArray() : collection;
+}
+
 export default PowerSelect.extend({
     mustShowSearchMessage: false,
     canLoadMore: true,
@@ -12,7 +16,7 @@ export default PowerSelect.extend({
           set(this, 'canLoadMore', true);
           if (isBlank(term)) {
               this.updateState({
-                  results: get(this, 'options'),
+                  results: toPlainArray(get(this, 'options')),
                   _rawSearchResults: get(this, 'options'),
                   resultsCount: countOptions(get(this, 'options')),
                   lastSearchedText: "",
@@ -30,7 +34,7 @@ export default PowerSelect.extend({
                 let term = get(this, 'publicAPI.lastSearchedText');
                 let currentResults = get(this, 'publicAPI.results');
                 tryInvoke(this, 'loadMore', [term, get(this, 'publicAPI')]).then(results => {
-                    let plainArray = results.toArray ? results.toArray() : results;
+                    let plainArray = toPlainArray(results);
                     let newResults = currentResults.concat(plainArray);
                     this.updateState({
                         results: newResults,
