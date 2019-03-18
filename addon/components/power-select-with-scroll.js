@@ -5,7 +5,11 @@ import { tryInvoke } from '@ember/utils';
 import { isBlank } from '@ember/utils';
 
 function toPlainArray(collection) {
-    return collection.toArray ? collection.toArray() : collection;
+    if (collection) {
+        return collection.toArray ? collection.toArray() : collection;
+    } else {
+        return [];
+    }
 }
 
 export default PowerSelect.extend({
