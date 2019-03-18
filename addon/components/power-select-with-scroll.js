@@ -5,7 +5,11 @@ import { tryInvoke } from '@ember/utils';
 import { isBlank } from '@ember/utils';
 
 function toPlainArray(collection) {
-    return collection.toArray ? collection.toArray() : collection;
+    if (collection) {
+        return collection.toArray ? collection.toArray() : collection;
+    } else {
+        return [];
+    }
 }
 
 export default PowerSelect.extend({
@@ -14,7 +18,7 @@ export default PowerSelect.extend({
     actions: {
         search(term) {
           set(this, 'canLoadMore', true);
-          if (isBlank(term) || term === undefined) {
+          if (isBlank(term)) {
               this.updateState({
                   results: toPlainArray(get(this, 'options')),
                   _rawSearchResults: get(this, 'options'),
