@@ -113,7 +113,8 @@ export default Component.extend({
           let select = get(this, 'select');
           e.stopPropagation();
           if (get(this, 'select.selected')) {
-               select.actions.select(null);
+                set(this, 'text', null);
+                select.actions.select(null);
           }
           run.schedule('actions', null, select.actions.search);
           run.schedule('actions', null, select.actions.open);
