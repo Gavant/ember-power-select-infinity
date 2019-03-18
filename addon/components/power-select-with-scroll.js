@@ -14,7 +14,7 @@ export default PowerSelect.extend({
     actions: {
         search(term) {
           set(this, 'canLoadMore', true);
-          if (isBlank(term)) {
+          if (isBlank(term) || term === undefined) {
               this.updateState({
                   results: toPlainArray(get(this, 'options')),
                   _rawSearchResults: get(this, 'options'),
