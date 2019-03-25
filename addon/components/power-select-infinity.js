@@ -42,23 +42,23 @@ export default Component.extend({
     return classes.join(' ');
   }),
 
-  actions: {
-      handleFocus(select) {
-          if (!isEmpty(select.options)) {
-              scheduleOnce('actions', select, select.actions.search);
-              scheduleOnce('actions', select, select.actions.open);
-          }
-      },
-      onKeyDown(select, e) {
-          let action = get(this, 'onkeydown');
-
-          // if user passes `onkeydown` action
-          if (!action || action(select, e) !== false) {
-            // if escape, then clear out selection
-            if (e.keyCode === 27) {
-              select.actions.choose(null);
+    actions: {
+        async handleFocus(select) {
+            await select.actions.search();
+            if (!isEmpty(select.options)) {
+                scheduleOnce('actions', select, select.actions.open);
             }
-          }
-      }
-  }
+        },
+        onKeyDown(select, e) {
+            let action = get(this, 'onkeydown');
+
+            // if user passes `onkeydown` action
+            if (!action || action(select, e) !== false) {
+                // if escape, then clear out selection
+                if (e.keyCode === 27) {
+                    select.actions.choose(null);
+                }
+            }
+        }
+    }
 });

@@ -17,20 +17,20 @@ export default PowerSelect.extend({
     canLoadMore: true,
     actions: {
         search(term) {
-          set(this, 'canLoadMore', true);
-          if (isBlank(term)) {
-              this.updateState({
-                  results: toPlainArray(get(this, 'options')),
-                  _rawSearchResults: get(this, 'options'),
-                  resultsCount: countOptions(get(this, 'options')),
-                  lastSearchedText: "",
-                  loading: false
-              });
-          } else if (this.get('search')) {
-            this._performSearch(term);
-          } else {
-            this._performFilter(term);
-          }
+            set(this, 'canLoadMore', true);
+            if (isBlank(term)) {
+                return this.updateState({
+                    results: toPlainArray(get(this, 'options')),
+                    _rawSearchResults: get(this, 'options'),
+                    resultsCount: countOptions(get(this, 'options')),
+                    lastSearchedText: "",
+                    loading: false
+                });
+            } else if (this.get('search')) {
+                return this._performSearch(term);
+            } else {
+                return this._performFilter(term);
+            }
         },
         onScroll() {
             if (get(this, 'canLoadMore')) {
