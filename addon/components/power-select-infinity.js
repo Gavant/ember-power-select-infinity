@@ -47,6 +47,8 @@ export default Component.extend({
           if (!isEmpty(select.options)) {
               scheduleOnce('actions', select, select.actions.search);
               scheduleOnce('actions', select, select.actions.open);
+          } else {
+               select.actions.choose(null);
           }
       },
       onKeyDown(select, e) {
