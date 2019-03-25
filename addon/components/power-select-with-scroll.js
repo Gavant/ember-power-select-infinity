@@ -27,7 +27,6 @@ export default PowerSelect.extend({
                   lastSearchedText: "",
                   loading: false
               });
-              scheduleOnce('actions', this.get('publicAPI'), this.get('publicAPI.actions.open'));
           } else if (this.get('search')) {
             this._performSearch(term);
           } else {

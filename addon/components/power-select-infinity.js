@@ -43,8 +43,8 @@ export default Component.extend({
   }),
 
     actions: {
-        handleFocus(select) {
-            scheduleOnce('actions', select, select.actions.search);
+        async handleFocus(select) {
+            await scheduleOnce('actions', select, select.actions.search);
             if (!isEmpty(select.options)) {
                 scheduleOnce('actions', select, select.actions.open);
             }
