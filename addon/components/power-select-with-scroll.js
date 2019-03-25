@@ -3,7 +3,6 @@ import { countOptions } from 'ember-power-select/utils/group-utils';
 import { get, set } from '@ember/object';
 import { tryInvoke } from '@ember/utils';
 import { isBlank } from '@ember/utils';
-import { scheduleOnce } from '@ember/runloop';
 
 function toPlainArray(collection) {
     if (collection) {
