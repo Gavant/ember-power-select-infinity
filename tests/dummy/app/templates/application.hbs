@@ -53,3 +53,21 @@
         {{/power-select-infinity}}
     </div>
 </div>
+
+<div class="row justify-content-center">
+    <div class="col-4">
+        With min length
+        {{#power-select-infinity
+            search=(action 'search')
+            loadMore=(action 'loadMore')
+            selected=selected
+            onchange=(action (mut selected))
+            extra=(hash labelPath="name")
+            inputClass="form-control"
+            minLength=3
+            loadingComponent='loading-component'
+            as |user|}}
+                {{user.name}}
+        {{/power-select-infinity}}
+    </div>
+</div>
