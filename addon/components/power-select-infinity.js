@@ -20,7 +20,7 @@ export default Component.extend({
   estimateHeight: 28,
   bufferSize: 5,
   staticHeight: false,
-  minLength: 0,
+  minCharacters: 0,
   fastboot: computed(function() {
     return getOwner(this).lookup(`service:fastboot`);
   }),
@@ -62,7 +62,7 @@ export default Component.extend({
             }
         },
         onInput(text) {
-            return text.length >= get(this, 'minLength');
+            return text.length >= get(this, 'minCharacters');
         }
     }
 });
