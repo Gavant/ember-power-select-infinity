@@ -10,7 +10,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-power-select-infinity
+ember install @gavant/ember-power-select-infinity
 ```
 
 
@@ -44,7 +44,7 @@ export default Controller.extend({
     page: 1,
     actions: {
         search(term) {
-            //API call 
+            //API call
             let page = get(this, 'page');
             return get(this, 'ajax').request(`names?page=${page}&search=${term}`);
         },
