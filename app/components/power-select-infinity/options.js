@@ -1,1 +1,1 @@
-export { default } from 'ember-power-select-infinity/components/power-select-infinity/options';
+export { default } from '@gavant/ember-power-select-infinity/components/power-select-infinity/options';
