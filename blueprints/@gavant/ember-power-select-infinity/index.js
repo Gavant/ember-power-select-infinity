@@ -13,7 +13,7 @@ module.exports = {
 
     afterInstall() {
         let dependencies = this.project.dependencies();
-        let importStatement = '\n@import "ember-power-select";\n@import "@gavant/ember-power-select-infinity";\n';
+        let importStatement = '\n@import "ember-power-select";\n@import "ember-power-select-infinity";\n';
 
         if ('ember-cli-sass' in dependencies) {
             let stylePath = path.join('app', 'styles');
