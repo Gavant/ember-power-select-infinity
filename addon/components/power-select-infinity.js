@@ -20,6 +20,7 @@ export default Component.extend({
   estimateHeight: 28,
   bufferSize: 5,
   staticHeight: false,
+  minCharacters: 0,
   fastboot: computed(function() {
     return getOwner(this).lookup(`service:fastboot`);
   }),
@@ -59,6 +60,9 @@ export default Component.extend({
                     select.actions.choose(null);
                 }
             }
+        },
+        onInput(text) {
+            return text.length >= get(this, 'minCharacters');
         }
     }
 });
