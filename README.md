@@ -10,9 +10,9 @@ This addon provides a power select which uses occlusion rendering to infinitely 
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.12 or above
+* Ember.js v3.8 or above
 * Ember CLI v2.13 or above
-* Node.js v10 or above
+* Node.js v8 or above
 
 
 Installation
@@ -36,10 +36,10 @@ If your using `ember-cli-sass` in your project, an import statement will automat
 Your Component
 ```
 <PowerSelectInfinity
-    @search={{action this.search}}
-    @loadMore={{action this.loadMore}}
+    @search={{fn this.search}}
+    @loadMore={{fn this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{action (mut this.selected)}}
+    @onchange={{fn (mut this.selected)}}
     as |name|>
         {{name}}
 </PowerSelectInfinity>
@@ -90,10 +90,10 @@ If you want the power select to open when the input is focused, just pass a list
 ```
 <PowerSelectInfinity
     @options={{this.options}}
-    @search={{action this.search}}
-    @loadMore={{action this.loadMore}}
+    @search={{fn this.search}}
+    @loadMore={{fn this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{action (mut this.selected)}}
+    @onchange={{fn (mut this.selected)}}
     as |name|>
         {{name}}
 </PowerSelectInfinity>
@@ -105,9 +105,9 @@ If your using a complex objects as the options, you need to tell `power-select-i
 <PowerSelectInfinity
     @options={{this.options}}
     @search={{action this.search}}
-    @loadMore={{action this.loadMore}}
+    @loadMore={{fn this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{action (mut this.selected)}}
+    @onchange={{fn (mut this.selected)}}
     @extra={{hash labelPath="name"}}
     as |user|>
         {{user.name}}
@@ -123,10 +123,10 @@ There are some options you can pass to https://github.com/html-next/vertical-col
     @estimateHeight={{75}}
     @bufferSize={{10}}
     @staticHeight={{true}}
-    @search={{action this.search}}
-    @loadMore={{action this.loadMore}}
+    @search={{fn this.search}}
+    @loadMore={{fn this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{action (mut this.selected)}}
+    @onchange={{fn (mut this.selected)}}
     as |name|>
         {{name}}
 </PowerSelectInfinity>
@@ -137,11 +137,11 @@ You can also customize the loading component by passing in your own `loadingComp
 ```
 <PowerSelectInfinity
     @options={{this.options}}
-    @search={{action this.search}}
-    @loadMore={{action this.loadMore}}
+    @search={{fn this.search}}
+    @loadMore={{fn this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{action (mut this.selected)}}
-    loadingComponent='my-loading-component'
+    @onchange={{fn (mut this.selected)}}
+    @loadingComponent='my-loading-component'
     as |name|>
         {{name}}
 </PowerSelectInfinity>

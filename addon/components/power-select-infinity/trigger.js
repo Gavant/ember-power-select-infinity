@@ -44,7 +44,7 @@ export default class TriggerComponent extends Component {
    * @private
    * @method didReceiveAttrs
    */
-    get didReceiveAttrs() {
+    didReceiveAttrs() {
         super.didReceiveAttrs(...arguments);
         let oldSelect = get(this, 'oldSelect');
         oldSelect = get(this, 'select');
@@ -84,7 +84,7 @@ export default class TriggerComponent extends Component {
      * @private
      * @method getSelectedAsText
      */
-    get getSelectedAsText() {
+    getSelectedAsText() {
         let labelPath = get(this, 'extra.labelPath');
         let selected = get(this, 'select.selected');
         let value = null;

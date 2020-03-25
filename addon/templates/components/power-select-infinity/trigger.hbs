@@ -1,20 +1,20 @@
 <input type="search"
   value={{this.text}}
   role="combobox"
-  id="ember-power-select-infinity-input-{{select.uniqueId}}"
-  class={{this.concatenatedInputClasses}}
-  autocomplete="off"
-  placeholder={{this.placeholder}}
-  oninput={{this.onInput}}
-  onfocus={{this.onFocus}}
-  onblur={{this.onBlur}}
-  disabled={{select.disabled}}
-  onkeydown={{action this.handleKeydown}}
-  onmousedown={{action this.stopPropagation}}>
-{{#if select.loading}}
-    {{component loadingComponent}}
+  id="ember-power-select-infinity-input-{{this.select.uniqueId}}"
+  @class={{this.concatenatedInputClasses}}
+  @autocomplete="off"
+  @placeholder={{this.placeholder}}
+  @oninput={{this.onInput}}
+  @onfocus={{this.onFocus}}
+  @onblur={{this.onBlur}}
+  @disabled={{this.select.disabled}}
+  @onkeydown={{fn this.handleKeydown}}
+  @onmousedown={{fn this.stopPropagation}}>
+{{#if this.select.loading}}
+    {{component this.loadingComponent}}
 {{/if}}
 {{#if this.canClear}}
-    <span class="ember-power-select-infinity-clear-btn" @onmousedown={{action this.clear}} @ontouchstart={{action this.clear}}>&times;</span>
+    <span class="ember-power-select-infinity-clear-btn" @onmousedown={{fn this.clear}} @ontouchstart={{fn this.clear}}>&times;</span>
 {{/if}}
 <span class="ember-power-select-status-icon"></span>

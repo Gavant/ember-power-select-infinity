@@ -25,18 +25,18 @@
         @onblur={{this.onblur}}
         @onchange={{@onchange}}
         @onclose={{@onclose}}
-        @onfocus={{action this.handleFocus}}
+        @onfocus={{fn this.handleFocus}}
         @oninput={{@oninput}}
-        @onkeydown={{action this.onKeyDown}}
+        @onkeydown={{fn this.onKeyDown}}
         @onopen={{this.onopen}}
         @opened={{this.opened}}
         @options={{@options}}
-        @optionsComponent={{unless fastboot.isFastBoot (component optionsComponent
-            onScroll=this.onScroll
-            estimateHeight=@estimateHeight
-            @bufferSize=@bufferSize
-            @staticHeight=@staticHeight
-        )}}
+        @optionsComponent=(unless fastboot.isFastBoot (component optionsComponent
+            onScroll={{this.onScroll}}
+            @estimateHeight={{@estimateHeight}}
+            @bufferSize={{@bufferSize}}
+            @staticHeight={{@staticHeight}}
+        ))
         @placeholder={{@placeholder}}
         @renderInPlace={{@renderInPlace}}
         @search={{@search}}
@@ -48,10 +48,10 @@
         @selectedItemComponent={{this.selectedItemComponent}}
         @tabindex={{this.tabindex}}
         @triggerClass={{this.concatenatedTriggerClasses}}
-        @triggerComponent={{component triggerComponent
-            loadingComponent=this.loadingComponent
-            inputClass=this.inputClass
-        }}
+        @triggerComponent=(component triggerComponent
+            loadingComponent={{@loadingComponent}}
+            inputClass={{this.inputClass}}
+        )
         @triggerId={{this.triggerId}}
         @triggerRole={{null}}
         @verticalPosition={{this.verticalPosition}}
@@ -86,18 +86,18 @@
         @onblur={{@onblur}}
         @onchange={{@onchange}}
         @onclose={{@onclose}}
-        @onfocus={{action this.handleFocus}}
+        @onfocus={{fn this.handleFocus}}
         @oninput={{@oninput}}
-        @onkeydown={{action this.onKeyDown}}
+        @onkeydown={{fn this.onKeyDown}}
         @onopen={{@onopen}}
         @opened={{this.opened}}
         @options={{@options}}
-        @optionsComponent={{unless fastboot.isFastBoot (component optionsComponent
-            onScroll=this.onScroll
-            @estimateHeight
-            @bufferSize=@bufferSize
-            @staticHeight=@staticHeight
-        )}}
+        @optionsComponent=(unless fastboot.isFastBoot (component optionsComponent
+            onScroll={{this.onScroll}}
+            @estimateHeight={{@estimateHeight}}
+            @bufferSize={{@bufferSize}}
+            @staticHeight={{@staticHeight}}
+        ))
         @placeholder={{@placeholder}}
         @renderInPlace={{@renderInPlace}}
         @search={{@search}}
@@ -109,10 +109,10 @@
         @selectedItemComponent={{this.selectedItemComponent}}
         @tabindex={{this.tabindex}}
         @triggerClass={{this.concatenatedTriggerClasses}}
-        @triggerComponent={{component triggerComponent
-            loadingComponent=this.loadingComponent
-            inputClass=this.inputClass
-        }}
+        @triggerComponent=(component triggerComponent
+            loadingComponent={{@loadingComponent}}
+            inputClass={{this.inputClass}}
+        )
         @triggerId={{this.triggerId}}
         @triggerRole={{null}}
         @verticalPosition={{this.verticalPosition}}

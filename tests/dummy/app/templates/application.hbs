@@ -5,51 +5,51 @@
 
 <div class="row justify-content-center">
     <div class="col-4">
-        {{#power-select-infinity
-            options=options
-            search=(action 'search')
-            loadMore=(action 'loadMore')
-            selected=selected
-            onchange=(action (mut selected))
-            inputClass="form-control"
-            extra=(hash labelPath="name")
-            as |user|}}
+        <PowerSelectInfinity
+            @options={{this.options}}
+            @search={{action this.search}}
+            @loadMore={{action this.loadMore}}
+            @selected={{this.selected}}
+            @onchange={{action (mut this.selected)}}
+            @inputClass="form-control"
+            !extra={{hash labelPath="name"}}
+            as |user|>
                 {{user.name}}
-        {{/power-select-infinity}}
+        </PowerSelectInfinity>
     </div>
 </div>
 <div class="row justify-content-center">
     <div class="col-4">
         With Custom buffer size
-        {{#power-select-infinity
-            options=options
-            search=(action 'search')
-            loadMore=(action 'loadMore')
-            selected=selected
-            onchange=(action (mut selected))
-            inputClass="form-control"
-            extra=(hash labelPath="name")
-            bufferSize=1
-            as |user|}}
+        <PowerSelectInfinity
+            @options={{this.options}}
+            @search={{action this.search}}
+            @loadMore={{action this.loadMore}}
+            @selected={{this.selected}}
+            @onchange={{action (mut this.selected)}}
+            @inputClass="form-control"
+            @extra={{hash labelPath="name"}}
+            @bufferSize={{1}}
+            as |user|>
                 {{user.name}}
-        {{/power-select-infinity}}
+        </PowerSelectInfinity>
     </div>
 </div>
 
 <div class="row justify-content-center">
     <div class="col-4">
         With Custom Loading Component
-        {{#power-select-infinity
-            options=options
-            search=(action 'search')
-            loadMore=(action 'loadMore')
-            selected=selected
-            onchange=(action (mut selected))
-            extra=(hash labelPath="name")
-            inputClass="form-control"
-            loadingComponent='loading-component'
-            as |user|}}
+        <PowerSelectInfinity
+            @options={{this.options}}
+            @search={{action this.search}}
+            @loadMore={{action this.loadMore}}
+            @selected={{this.selected}}
+            @onchange={{action (mut this.selected)}}
+            @extra={{hash labelPath="name"}}
+            @inputClass="form-control"
+            @loadingComponent='loading-component'
+            as |user|>
                 {{user.name}}
-        {{/power-select-infinity}}
+        </PowerSelectInfinity>
     </div>
 </div>
