@@ -1,125 +1,123 @@
 {{#if (hasBlock "inverse")}}
-    {{#power-select-with-scroll
-        afterOptionsComponent=afterOptionsComponent
-        allowClear=allowClear
-        ariaDescribedBy=ariaDescribedBy
-        ariaInvalid=ariaInvalid
-        ariaLabel=ariaLabel
-        ariaLabelledBy=ariaLabelledBy
-        beforeOptionsComponent=beforeOptionsComponent
-        buildSelection=buildSelection
-        closeOnSelect=closeOnSelect
-        defaultHighlighted=defaultHighlighted
-        dir=dir
-        destination=destination
-        disabled=disabled
-        dropdownClass=concatenatedDropdownClasses
-        extra=extra
-        horizontalPosition=horizontalPosition
-        initiallyOpened=initiallyOpened
-        loadingMessage=loadingMessage
-        loadMore=loadMore
-        matcher=matcher
-        matchTriggerWidth=matchTriggerWidth
-        noMatchesMessage=noMatchesMessage
-        onblur=onblur
-        onchange=onchange
-        onclose=onclose
-        onfocus=(action "handleFocus")
-        oninput=oninput
-        onkeydown=(action "onKeyDown")
-        onopen=onopen
-        opened=opened
-        options=options
-        optionsComponent=(unless fastboot.isFastBoot (component optionsComponent
-            onScroll=onScroll
-            estimateHeight=estimateHeight
-            bufferSize=bufferSize
-            staticHeight=staticHeight
-        ))
-        placeholder=placeholder
-        renderInPlace=renderInPlace
-        search=search
-        searchEnabled=searchEnabled
-        searchField=searchField
-        searchMessage=searchMessage
-        searchPlaceholder=searchPlaceholder
-        selected=selected
-        selectedItemComponent=selectedItemComponent
-        tabindex=tabindex
-        triggerClass=concatenatedTriggerClasses
-        triggerComponent=(component triggerComponent
-            loadingComponent=loadingComponent
-            inputClass=inputClass
-        )
-        triggerId=triggerId
-        triggerRole=null
-        verticalPosition=verticalPosition
-        calculatePosition=calculatePosition
-    as |option term|}}
-        {{yield option term}}
-    {{else}}
+    <PowerSelectWithScroll
+        @afterOptionsComponent={{this.afterOptionsComponent}}
+        @allowClear={{this.allowClear}}
+        @ariaDescribedBy={{this.ariaDescribedBy}}
+        @ariaInvalid={{this.ariaInvalid}}
+        @ariaLabel={{this.ariaLabel}}
+        @ariaLabelledBy={{this.ariaLabelledBy}}
+        @beforeOptionsComponent={{this.beforeOptionsComponent}}
+        @buildSelection={{this.buildSelection}}
+        @closeOnSelect={{this.closeOnSelect}}
+        @defaultHighlighted={{this.defaultHighlighted}}
+        @dir={{this.dir}}
+        @destination={{this.destination}}
+        @disabled={{@disabled}}
+        @dropdownClass={{this.concatenatedDropdownClasses}}
+        @extra={{@extra}}
+        @horizontalPosition={{this.horizontalPosition}}
+        @initiallyOpened={{this.initiallyOpened}}
+        @loadingMessage={{@loadingMessage}}
+        @loadMore={{@loadMore}}
+        @matcher={{this.matcher}}
+        @matchTriggerWidth={{this.matchTriggerWidth}}
+        @noMatchesMessage={{this.noMatchesMessage}}
+        @onblur={{this.onblur}}
+        @onchange={{@onchange}}
+        @onclose={{@onclose}}
+        @onfocus={{action this.handleFocus}}
+        @oninput={{@oninput}}
+        @onkeydown={{action this.onKeyDown}}
+        @onopen={{this.onopen}}
+        @opened={{this.opened}}
+        @options={{@options}}
+        @optionsComponent={{unless fastboot.isFastBoot (component optionsComponent
+            onScroll=this.onScroll
+            estimateHeight=@estimateHeight
+            @bufferSize=@bufferSize
+            @staticHeight=@staticHeight
+        )}}
+        @placeholder={{@placeholder}}
+        @renderInPlace={{@renderInPlace}}
+        @search={{@search}}
+        @searchEnabled={{@searchEnabled}}
+        @searchField={{this.searchField}}
+        @searchMessage={{this.searchMessage}}
+        @searchPlaceholder={{this.searchPlaceholder}}
+        @selected={{@selected}}
+        @selectedItemComponent={{this.selectedItemComponent}}
+        @tabindex={{this.tabindex}}
+        @triggerClass={{this.concatenatedTriggerClasses}}
+        @triggerComponent={{component triggerComponent
+            loadingComponent=this.loadingComponent
+            inputClass=this.inputClass
+        }}
+        @triggerId={{this.triggerId}}
+        @triggerRole={{null}}
+        @verticalPosition={{this.verticalPosition}}
+        @calculatePosition={{this.calculatePosition}}
+    as |option term|>
         {{yield to="inverse"}}
-    {{/power-select-with-scroll}}
+    </PowerSelectWithScroll>
 {{else}}
-    {{#power-select-with-scroll
-        afterOptionsComponent=afterOptionsComponent
-        allowClear=allowClear
-        ariaDescribedBy=ariaDescribedBy
-        ariaInvalid=ariaInvalid
-        ariaLabel=ariaLabel
-        ariaLabelledBy=ariaLabelledBy
-        beforeOptionsComponent=beforeOptionsComponent
-        buildSelection=buildSelection
-        closeOnSelect=closeOnSelect
-        defaultHighlighted=defaultHighlighted
-        dir=dir
-        destination=destination
-        disabled=disabled
-        dropdownClass=concatenatedDropdownClasses
-        extra=extra
-        horizontalPosition=horizontalPosition
-        initiallyOpened=initiallyOpened
-        loadingMessage=loadingMessage
-        loadMore=loadMore
-        matcher=matcher
-        matchTriggerWidth=matchTriggerWidth
-        noMatchesMessage=noMatchesMessage
-        onblur=onblur
-        onchange=onchange
-        onclose=onclose
-        onfocus=(action "handleFocus")
-        oninput=oninput
-        onkeydown=(action "onKeyDown")
-        onopen=onopen
-        opened=opened
-        options=options
-        optionsComponent=(unless fastboot.isFastBoot (component optionsComponent
-            onScroll=onScroll
-            estimateHeight=estimateHeight
-            bufferSize=bufferSize
-            staticHeight=staticHeight
-        ))
-        placeholder=placeholder
-        renderInPlace=renderInPlace
-        search=search
-        searchEnabled=searchEnabled
-        searchField=searchField
-        searchMessage=searchMessage
-        searchPlaceholder=searchPlaceholder
-        selected=selected
-        selectedItemComponent=selectedItemComponent
-        tabindex=tabindex
-        triggerClass=concatenatedTriggerClasses
-        triggerComponent=(component triggerComponent
-            loadingComponent=loadingComponent
-            inputClass=inputClass
-        )
-        triggerId=triggerId
-        triggerRole=null
-        verticalPosition=verticalPosition
-        calculatePosition=calculatePosition
-    as |option term|}}
+    <PowerSelectWithScroll
+        @afterOptionsComponent={{this.afterOptionsComponent}}
+        @allowClear={{@allowClear}}
+        @ariaDescribedBy={{this.ariaDescribedBy}}
+        @ariaInvalid={{this.ariaInvalid}}
+        @ariaLabel={{this.ariaLabel}}
+        @ariaLabelledBy={{this.ariaLabelledBy}}
+        @beforeOptionsComponent={{this.beforeOptionsComponent}}
+        @buildSelection={{this.buildSelection}}
+        @closeOnSelect={{this.closeOnSelect}}
+        @defaultHighlighted={{this.defaultHighlighted}}
+        @dir={{this.dir}}
+        @destination={{this.destination}}
+        @disabled={{@disabled}}
+        @dropdownClass={{this.concatenatedDropdownClasses}}
+        @extra={{@extra}}
+        @horizontalPosition={{this.horizontalPosition}}
+        @initiallyOpened={{this.initiallyOpened}}
+        @loadingMessage={{this.loadingMessage}}
+        @loadMore={{@loadMore}}
+        @matcher={{this.matcher}}
+        @matchTriggerWidth={{this.matchTriggerWidth}}
+        @noMatchesMessage={{this.noMatchesMessage}}
+        @onblur={{@onblur}}
+        @onchange={{@onchange}}
+        @onclose={{@onclose}}
+        @onfocus={{action this.handleFocus}}
+        @oninput={{@oninput}}
+        @onkeydown={{action this.onKeyDown}}
+        @onopen={{@onopen}}
+        @opened={{this.opened}}
+        @options={{@options}}
+        @optionsComponent={{unless fastboot.isFastBoot (component optionsComponent
+            onScroll=this.onScroll
+            @estimateHeight
+            @bufferSize=@bufferSize
+            @staticHeight=@staticHeight
+        )}}
+        @placeholder={{@placeholder}}
+        @renderInPlace={{@renderInPlace}}
+        @search={{@search}}
+        @searchEnabled={{@searchEnabled}}
+        @searchField={{this.searchField}}
+        @searchMessage={{this.searchMessage}}
+        @searchPlaceholder={{this.searchPlaceholder}}
+        @selected={{@selected}}
+        @selectedItemComponent={{this.selectedItemComponent}}
+        @tabindex={{this.tabindex}}
+        @triggerClass={{this.concatenatedTriggerClasses}}
+        @triggerComponent={{component triggerComponent
+            loadingComponent=this.loadingComponent
+            inputClass=this.inputClass
+        }}
+        @triggerId={{this.triggerId}}
+        @triggerRole={{null}}
+        @verticalPosition={{this.verticalPosition}}
+        @calculatePosition={{this.calculatePosition}}
+    as |option term|>
         {{yield option term}}
-    {{/power-select-with-scroll}}
+    </PowerSelectWithScroll>
 {{/if}}

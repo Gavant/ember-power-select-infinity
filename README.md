@@ -35,112 +35,116 @@ If your using `ember-cli-sass` in your project, an import statement will automat
 
 Your Component
 ```
-{{#power-select-infinity
-    search=(action 'search')
-    loadMore=(action 'loadMore')
-    selected=selected
-    onchange=(action (mut selected))
-    as |name|}}
+<PowerSelectInfinity
+    @search={{action this.search}}
+    @loadMore={{action this.loadMore}}
+    @selected={{this.selected}}
+    @onchange={{action (mut this.selected)}}
+    as |name|>
         {{name}}
-{{/power-select-infinity
+</PowerSelectInfinity>
 ```
 
 Your Controller
 
 Paging using page numbers
 ```
-export default Controller.extend({
-    page: 1,
-    actions: {
-        search(term) {
-            //API call
-            let page = get(this, 'page');
-            return get(this, 'ajax').request(`names?page=${page}&search=${term}`);
-        },
-        loadMore(term) {
-            let page = get(this, 'page');
-            let newPage = get(this, 'page');
-            return get(this, 'ajax').request(`names?page=${newPage}&search=${term}`).then(() => {
-                set(this, 'page', newPage);
-            });
-        }
+export default class PagingController extends Controller {
+    page = 1;
+
+    @action
+    search(term) {
+        //API call
+        let page = get(this, 'page');
+        return get(this, 'ajax').request(`names?page=${page}&search=${term}`);
     }
-});
+
+    @action
+    loadMore(term) {
+        let page = get(this, 'page');
+        let newPage = get(this, 'page');
+        return get(this, 'ajax').request(`names?page=${newPage}&search=${term}`).then(() => {
+            this.page = newPage;
+        });
+    }
+}
 ```
 Paging using page offset & limit
 ```
-export default Controller.extend({
-    page: 1,
-    actions: {
-        search(term) {
-            return get(this, 'ajax').request(`names?search=${term}`);
-        },
-        async loadMore(term, select) {
-            return get(this, 'ajax').request(`names?search=${term}&offset=${get(select, 'resultsCount')}&limit=10`);
-        }
+export default class PagingOffsetController extends Controller {
+    page = 1;
+
+    @action
+    search(term) {
+        return get(this, 'ajax').request(`names?search=${term}`);
     }
-});
+
+    @action
+    async loadMore(term, select) {
+        return get(this, 'ajax').request(`names?search=${term}&offset=${get(select, 'resultsCount')}&limit=10`);
+    }
+}
 ```
 
 If you want the power select to open when the input is focused, just pass a list of options via the options parameter.
 ```
-{{#power-select-infinity
-    options=options
-    search=(action 'search')
-    loadMore=(action 'loadMore')
-    selected=selected
-    onchange=(action (mut selected))
-    as |name|}}
+<PowerSelectInfinity
+    @options={{this.options}}
+    @search={{action this.search}}
+    @loadMore={{action this.loadMore}}
+    @selected={{this.selected}}
+    @onchange={{action (mut this.selected)}}
+    as |name|>
         {{name}}
-{{/power-select-infinity
+</PowerSelectInfinity>
 ```
 
 
 If your using a complex objects as the options, you need to tell `power-select-infinity` what value to display when an option is selected using
 ```
-{{#power-select-infinity
-    options=options
-    search=(action 'search')
-    loadMore=(action 'loadMore')
-    selected=selected
-    onchange=(action (mut selected))
-    extra=(hash labelPath="name")
-    as |user|}}
+<PowerSelectInfinity
+    @options={{this.options}}
+    @search={{action this.search}}
+    @loadMore={{action this.loadMore}}
+    @selected={{this.selected}}
+    @onchange={{action (mut this.selected)}}
+    @extra={{hash labelPath="name"}}
+    as |user|>
         {{user.name}}
-{{/power-select-infinity
+</PowerSelectInfinity>
 ```
 In the example above, Im using a user object which has a property of `name` that I want to display when selected.
 
 There are some options you can pass to https://github.com/html-next/vertical-collection, which is what we use for the occlusion rendering. The three options are estimateHeight, bufferSize, and staticHeight. Read the vertical collection documentation for what they do and how to use them
 
 ```
-{{#power-select-infinity
-    options=options
-    estimateHeight=75
-    bufferSize=10
-    staticHeight=true
-    search=(action 'search')
-    loadMore=(action 'loadMore')
-    selected=selected
-    onchange=(action (mut selected))
-    as |name|}}
+<PowerSelectInfinity
+    @options={{this.options}}
+    @estimateHeight={{75}}
+    @bufferSize={{10}}
+    @staticHeight={{true}}
+    @search={{action this.search}}
+    @loadMore={{action this.loadMore}}
+    @selected={{this.selected}}
+    @onchange={{action (mut this.selected)}}
+    as |name|>
         {{name}}
-{{/power-select-infinity
+</PowerSelectInfinity>
 ```
 
 You can also customize the loading component by passing in your own `loadingComponent` property.
 
 ```
-{{#power-select-infinity
-    options=options
-    search=(action 'search')
-    loadMore=(action 'loadMore')
-    selected=selected
-    onchange=(action (mut selected))
+<PowerSelectInfinity
+    @options={{this.options}}
+    @search={{action this.search}}
+    @loadMore={{action this.loadMore}}
+    @selected={{this.selected}}
+    @onchange={{action (mut this.selected)}}
     loadingComponent='my-loading-component'
-    as |name|}}
+    as |name|>
         {{name}}
-{{/power-select-infinity
+</PowerSelectInfinity>
 ```
 
 Contributing
