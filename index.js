@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    name: '@gavant/ember-power-select-infinity',
+name: require('./package').name,
     contentFor: function(type, config) {
         var emberPowerSelect = this.addons.filter(function(addon) {
             return addon.name === 'ember-power-select';
