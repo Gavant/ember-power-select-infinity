@@ -5,16 +5,16 @@
   @class={{this.concatenatedInputClasses}}
   @autocomplete="off"
   @placeholder={{this.placeholder}}
-  @oninput={{this.onInput}}
-  @onfocus={{this.onFocus}}
-  @onblur={{this.onBlur}}
+  @onInput={{this.onInput}}
+  @onFocus={{this.onFocus}}
+  @onBlur={{this.onBlur}}
   @disabled={{this.select.disabled}}
-  @onkeydown={{fn this.handleKeydown}}
-  @onmousedown={{fn this.stopPropagation}}>
+  @onKeydown={{this.handleKeydown}}
+  @onMousedown={{this.stopPropagation}}>
 {{#if this.select.loading}}
     {{component this.loadingComponent}}
 {{/if}}
 {{#if this.canClear}}
-    <span class="ember-power-select-infinity-clear-btn" @onmousedown={{fn this.clear}} @ontouchstart={{fn this.clear}}>&times;</span>
+    <span class="ember-power-select-infinity-clear-btn" {{on "mousedown" this.clear}}{{on "touchstart" this.clear}}>&times;</span>
 {{/if}}
 <span class="ember-power-select-status-icon"></span>

@@ -3,7 +3,7 @@ import layout from '../../templates/components/power-select-infinity/options';
 import { action } from '@ember/object';
 
 export default class Options extends OptionsComponent {
-    layout;
+    layout = layout;
 
     @action
     onScroll() {

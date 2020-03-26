@@ -7,11 +7,11 @@
     @containerSelector=".ember-power-select-options"
      as |opt index|>
      <li class="ember-power-select-option"
-       aria-selected="{{ember-power-select-is-selected opt select.selected}}"
+       aria-selected="{{ember-power-select-is-selected opt this.select.selected}}"
        aria-disabled={{ember-power-select-true-string-if-present opt.disabled}}
-       aria-current="{{eq opt select.highlighted}}"
-       data-option-index="{{groupIndex}}{{index}}"
+       aria-current="{{eq opt this.select.highlighted}}"
+       data-option-index="{{this.groupIndex}}{{this.index}}"
        role="option">
-       {{yield opt select}}
+       {{yield opt this.select}}
      </li>
 </VerticalCollection>

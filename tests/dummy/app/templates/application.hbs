@@ -7,12 +7,12 @@
     <div class="col-4">
         <PowerSelectInfinity
             @options={{this.options}}
-            @search={{action this.search}}
-            @loadMore={{action this.loadMore}}
+            @search={{this.search}}
+            @loadMore={{this.loadMore}}
             @selected={{this.selected}}
-            @onchange={{action (mut this.selected)}}
+            @onChange={{fn (mut this.selected)}}
             @inputClass="form-control"
-            !extra={{hash labelPath="name"}}
+            @extra={{hash labelPath="name"}}
             as |user|>
                 {{user.name}}
         </PowerSelectInfinity>
@@ -23,10 +23,10 @@
         With Custom buffer size
         <PowerSelectInfinity
             @options={{this.options}}
-            @search={{action this.search}}
-            @loadMore={{action this.loadMore}}
+            @search={{this.search}}
+            @loadMore={{this.loadMore}}
             @selected={{this.selected}}
-            @onchange={{action (mut this.selected)}}
+            @onChange={{fn (mut this.selected)}}
             @inputClass="form-control"
             @extra={{hash labelPath="name"}}
             @bufferSize={{1}}
@@ -41,10 +41,10 @@
         With Custom Loading Component
         <PowerSelectInfinity
             @options={{this.options}}
-            @search={{action this.search}}
-            @loadMore={{action this.loadMore}}
+            @search={{this.search}}
+            @loadMore={{this.loadMore}}
             @selected={{this.selected}}
-            @onchange={{action (mut this.selected)}}
+            @onChange={{fn (mut this.selected)}}
             @extra={{hash labelPath="name"}}
             @inputClass="form-control"
             @loadingComponent='loading-component'

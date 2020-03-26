@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { get, action } from '@ember/object';
+import { get, action, computed } from '@ember/object';
 import layout from '../templates/components/power-select-infinity';
 import { scheduleOnce } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
@@ -7,7 +7,7 @@ import { getOwner } from '@ember/application';
 
 export default class PowerSelectInfinityComponent extends Component {
     tagName = '';
-    layout;
+    layout = layout;
     tabindex = -1;
     allowClear = true;
     triggerComponent = 'power-select-infinity/trigger';
@@ -20,14 +20,13 @@ export default class PowerSelectInfinityComponent extends Component {
     estimateHeight = 28;
     bufferSize = 5;
     staticHeight = false;
-    triggerClass;
-    dropdownClass;
 
     get fastboot() {
         return getOwner(this).lookup(`service:fastboot`);
     }
 
     // CPs
+    @computed('triggerClass')
     get concatenatedTriggerClasses() {
         let classes = ['ember-power-select-infinity-trigger'];
         let passedClass = get(this, 'triggerClass');
@@ -37,6 +36,7 @@ export default class PowerSelectInfinityComponent extends Component {
         return classes.join(' ');
     }
 
+    @computed('dropdownClass')
     get concatenatedDropdownClasses() {
         let classes = ['ember-power-select-infinity-dropdown'];
         let passedClass = get(this, 'dropdownClass');

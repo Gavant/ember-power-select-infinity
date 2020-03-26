@@ -36,10 +36,10 @@ If your using `ember-cli-sass` in your project, an import statement will automat
 Your Component
 ```
 <PowerSelectInfinity
-    @search={{fn this.search}}
-    @loadMore={{fn this.loadMore}}
+    @search={{this.search}}
+    @loadMore={{this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{fn (mut this.selected)}}
+    @onChange={{fn (mut this.selected)}}
     as |name|>
         {{name}}
 </PowerSelectInfinity>
@@ -90,10 +90,10 @@ If you want the power select to open when the input is focused, just pass a list
 ```
 <PowerSelectInfinity
     @options={{this.options}}
-    @search={{fn this.search}}
-    @loadMore={{fn this.loadMore}}
+    @search={{this.search}}
+    @loadMore={{this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{fn (mut this.selected)}}
+    @onChange={{fn (mut this.selected)}}
     as |name|>
         {{name}}
 </PowerSelectInfinity>
@@ -104,10 +104,10 @@ If your using a complex objects as the options, you need to tell `power-select-i
 ```
 <PowerSelectInfinity
     @options={{this.options}}
-    @search={{action this.search}}
-    @loadMore={{fn this.loadMore}}
+    @search={{this.search}}
+    @loadMore={{this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{fn (mut this.selected)}}
+    @onChange={{fn (mut this.selected)}}
     @extra={{hash labelPath="name"}}
     as |user|>
         {{user.name}}
@@ -123,10 +123,10 @@ There are some options you can pass to https://github.com/html-next/vertical-col
     @estimateHeight={{75}}
     @bufferSize={{10}}
     @staticHeight={{true}}
-    @search={{fn this.search}}
-    @loadMore={{fn this.loadMore}}
+    @search={{this.search}}
+    @loadMore={{this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{fn (mut this.selected)}}
+    @onChange={{fn (mut this.selected)}}
     as |name|>
         {{name}}
 </PowerSelectInfinity>
@@ -137,10 +137,10 @@ You can also customize the loading component by passing in your own `loadingComp
 ```
 <PowerSelectInfinity
     @options={{this.options}}
-    @search={{fn this.search}}
-    @loadMore={{fn this.loadMore}}
+    @search={{this.search}}
+    @loadMore={{this.loadMore}}
     @selected={{this.selected}}
-    @onchange={{fn (mut this.selected)}}
+    @onChange={{fn (mut this.selected)}}
     @loadingComponent='my-loading-component'
     as |name|>
         {{name}}

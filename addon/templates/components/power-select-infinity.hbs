@@ -1,7 +1,7 @@
 {{#if (hasBlock "inverse")}}
     <PowerSelectWithScroll
         @afterOptionsComponent={{this.afterOptionsComponent}}
-        @allowClear={{this.allowClear}}
+        @allowClear={{@allowClear}}
         @ariaDescribedBy={{this.ariaDescribedBy}}
         @ariaInvalid={{this.ariaInvalid}}
         @ariaLabel={{this.ariaLabel}}
@@ -22,21 +22,21 @@
         @matcher={{this.matcher}}
         @matchTriggerWidth={{this.matchTriggerWidth}}
         @noMatchesMessage={{this.noMatchesMessage}}
-        @onblur={{this.onblur}}
-        @onchange={{@onchange}}
-        @onclose={{@onclose}}
-        @onfocus={{fn this.handleFocus}}
-        @oninput={{@oninput}}
-        @onkeydown={{fn this.onKeyDown}}
-        @onopen={{this.onopen}}
+        @onBlur={{this.onblur}}
+        @onChange={{@onChange}}
+        @onClose={{@onClose}}
+        @onFocus={{this.handleFocus}}
+        @onInput={{@onInput}}
+        @onKeydown={{this.onKeyDown}}
+        @onOpen={{this.onopen}}
         @opened={{this.opened}}
         @options={{@options}}
-        @optionsComponent=(unless fastboot.isFastBoot (component optionsComponent
-            onScroll={{this.onScroll}}
-            @estimateHeight={{@estimateHeight}}
-            @bufferSize={{@bufferSize}}
-            @staticHeight={{@staticHeight}}
-        ))
+        @optionsComponent={{unless fastboot.isFastBoot (component this.optionsComponent
+            onScroll=this.onScroll
+            estimateHeight=this.estimateHeight
+            bufferSize=this.bufferSize
+            staticHeight=this.staticHeight
+        )}}
         @placeholder={{@placeholder}}
         @renderInPlace={{@renderInPlace}}
         @search={{@search}}
@@ -48,10 +48,10 @@
         @selectedItemComponent={{this.selectedItemComponent}}
         @tabindex={{this.tabindex}}
         @triggerClass={{this.concatenatedTriggerClasses}}
-        @triggerComponent=(component triggerComponent
-            loadingComponent={{@loadingComponent}}
-            inputClass={{this.inputClass}}
-        )
+        @triggerComponent={{component this.triggerComponent
+            loadingComponent=this.loadingComponent
+            inputClass=this.inputClass
+        }}
         @triggerId={{this.triggerId}}
         @triggerRole={{null}}
         @verticalPosition={{this.verticalPosition}}
@@ -84,20 +84,21 @@
         @matchTriggerWidth={{this.matchTriggerWidth}}
         @noMatchesMessage={{this.noMatchesMessage}}
         @onblur={{@onblur}}
-        @onchange={{@onchange}}
-        @onclose={{@onclose}}
-        @onfocus={{fn this.handleFocus}}
-        @oninput={{@oninput}}
-        @onkeydown={{fn this.onKeyDown}}
-        @onopen={{@onopen}}
+        @onChange={{@onChange}}
+        @onClose={{@onClose}}
+        @onFocus={{this.handleFocus}}
+        @onInput={{@onInput}}
+        @onKeydown={{this.onKeyDown}}
+        @onOpen={{@onOpen}}
         @opened={{this.opened}}
         @options={{@options}}
-        @optionsComponent=(unless fastboot.isFastBoot (component optionsComponent
-            onScroll={{this.onScroll}}
-            @estimateHeight={{@estimateHeight}}
-            @bufferSize={{@bufferSize}}
-            @staticHeight={{@staticHeight}}
-        ))
+        @selectedItemComponent={{@selectedItemComponent}}
+        @optionsComponent={{unless fastboot.isFastBoot (component this.optionsComponent
+            onScroll=this.onScroll
+            estimateHeight=this.estimateHeight
+            bufferSize=this.bufferSize
+            staticHeight=this.staticHeight
+        )}}
         @placeholder={{@placeholder}}
         @renderInPlace={{@renderInPlace}}
         @search={{@search}}
@@ -106,13 +107,12 @@
         @searchMessage={{this.searchMessage}}
         @searchPlaceholder={{this.searchPlaceholder}}
         @selected={{@selected}}
-        @selectedItemComponent={{this.selectedItemComponent}}
         @tabindex={{this.tabindex}}
         @triggerClass={{this.concatenatedTriggerClasses}}
-        @triggerComponent=(component triggerComponent
-            loadingComponent={{@loadingComponent}}
-            inputClass={{this.inputClass}}
-        )
+        @triggerComponent={{component this.triggerComponent
+            loadingComponent=this.loadingComponent
+            inputClass=this.inputClass
+        }}
         @triggerId={{this.triggerId}}
         @triggerRole={{null}}
         @verticalPosition={{this.verticalPosition}}

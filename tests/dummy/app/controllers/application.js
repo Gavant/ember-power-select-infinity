@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import RSVP from 'rsvp';
 import { later } from '@ember/runloop';
+import { action } from '@ember/object';
 
 const users = [
   { name: 'Arthur' },
@@ -36,26 +37,28 @@ const newUsers = [
     { name: 'Jon' }
 ];
 
-export default Controller.extend({
-    options: users,
-    actions: {
-        search(term) {
-            return new RSVP.Promise(function(resolve) {
-                if (term.length === 0) {
-                    resolve([]);
-                } else {
-                    later(function() {
-                        resolve(users.filter((u) => u.name.indexOf(term) > -1));
-                    }, 600);
-                }
-            });
-        },
-        loadMore(term) {
-            return new RSVP.Promise(function(resolve) {
+export default class ApplicationController extends Controller {
+    options = users;
+
+    @action
+    search(term) {
+        return new RSVP.Promise(function(resolve) {
+            if (term.length === 0) {
+                resolve([]);
+            } else {
                 later(function() {
-                    resolve(newUsers);
+                    resolve(users.filter((u) => u.name.indexOf(term) > -1));
                 }, 600);
-            });
-        }
+            }
+        });
     }
-});
+
+    @action
+    loadMore(term) {
+        return new RSVP.Promise(function(resolve) {
+            later(function() {
+                resolve(newUsers);
+            }, 600);
+        });
+    }
+}

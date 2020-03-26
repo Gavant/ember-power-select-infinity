@@ -14,13 +14,11 @@ const KEYCODE_ENTER = 13;
 const KEYCODE_ESCAPE = 27;
 
 export default class TriggerComponent extends Component {
-    layout;
+    layout = layout;
     tagName = '';
     text = '';
-    inputClass;
-    text;
-    allowClear;
 
+    @computed('inputClass')
     get concatenatedInputClasses() {
         let classes = ['ember-power-select-infinity-input'];
         let passedClass = get(this, 'inputClass');
@@ -30,7 +28,7 @@ export default class TriggerComponent extends Component {
         return classes.join(' ');
     }
 
-    @computed('select.disabled')
+    @computed('select.disabled', 'allowClear', 'text')
     get canClear() {
         return !isEmpty(get(this, 'text')) && !get(this, 'select.disabled') && get(this, 'allowClear');
     }
@@ -44,7 +42,7 @@ export default class TriggerComponent extends Component {
    * @private
    * @method didReceiveAttrs
    */
-    didReceiveAttrs() {
+    get didReceiveAttrs() {
         super.didReceiveAttrs(...arguments);
         let oldSelect = get(this, 'oldSelect');
         oldSelect = get(this, 'select');
@@ -84,7 +82,7 @@ export default class TriggerComponent extends Component {
      * @private
      * @method getSelectedAsText
      */
-    getSelectedAsText() {
+    get getSelectedAsText() {
         let labelPath = get(this, 'extra.labelPath');
         let selected = get(this, 'select.selected');
         let value = null;
