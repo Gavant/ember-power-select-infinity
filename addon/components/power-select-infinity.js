@@ -56,10 +56,10 @@ export default class PowerSelectInfinityComponent extends Component {
 
     @action
     onKeyDown(select, e) {
-        let action = get(this, 'onkeydown');
+        let keyAction = get(this, 'onkeydown');
 
         // if user passes `onkeydown` action
-        if (!action || action(select, e) !== false) {
+        if (!keyAction || keyAction(select, e) !== false) {
             // if escape, then clear out selection
             if (e.keyCode === 27) {
                 select.actions.choose(null);
