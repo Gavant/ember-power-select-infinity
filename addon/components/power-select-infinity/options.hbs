@@ -1,0 +1,44 @@
+<ul role="listbox" class={{@optionsClass}} aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}} ...attributes>
+    {{#if @select.loading}}
+        <li class=" ember-power-select-infinity-loading-indicator ember-power-select-option ember-power-select-option--loading-message" role="option">
+            {{#if @loadingComponent}}
+                {{component @loadingComponent}}
+            {{else}}
+                {{or @loadingMessage "Loading options..."}}
+            {{/if}}
+        </li>
+    {{/if}}
+    {{#unless this.extra.isSearching}}
+        <VerticalCollection
+            @items={{@options}}
+            @select={{@select}}
+            @estimateHeight={{@extra.estimateHeight}}
+            @staticHeight={{@extra.staticHeight}}
+            @bufferSize={{@extra.bufferSize}}
+            @optionsComponent={{@optionsComponent}}
+            @extra={{@extra}}
+            @lastReached={{@extra.lastReached}}
+            @containerSelector=".ember-power-select-options"
+            as |opt index|
+        >
+            <li class="ember-power-select-option {{if opt.borderBottom "border-bottom-brand"}}"
+                aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
+                aria-disabled="{{if opt.disabled "true"}}"
+                aria-current="{{eq opt @select.highlighted}}"
+                data-option-index="{{index}}"
+                role="option"
+            >
+                {{yield opt @select}}
+            </li>
+        </VerticalCollection>
+        {{#if @select.loading}}
+            <li class="ember-power-select-infinity-loading-indicator ember-power-select-option ember-power-select-option--loading-message" role="option">
+                {{#if @loadingComponent}}
+                    {{component @loadingComponent}}
+                {{else}}
+                    {{or @loadingMessage "Loading options..."}}
+                {{/if}}
+            </li>
+        {{/if}}
+    {{/unless}}
+</ul>

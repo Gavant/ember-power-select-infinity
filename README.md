@@ -55,14 +55,14 @@ export default class PagingController extends Controller {
     @action
     search(term) {
         //API call
-        let page = get(this, 'page');
+        let page = this.page;
         return get(this, 'ajax').request(`names?page=${page}&search=${term}`);
     }
 
     @action
     loadMore(term) {
-        let page = get(this, 'page');
-        let newPage = get(this, 'page');
+        let page = this.page;
+        let newPage = this.page;
         return get(this, 'ajax').request(`names?page=${newPage}&search=${term}`).then(() => {
             this.page = newPage;
         });

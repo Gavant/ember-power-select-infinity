@@ -6,6 +6,26 @@
 <div class="row justify-content-center">
     <div class="col-4">
         <PowerSelectInfinity
+            @selected={{this.selected}}
+            @onChange={{fn (mut this.selected)}}
+            @options={{this.options}}
+            @canLoadMore={{this.canLoadMore}}
+            @loadMore={{this.loadMore}}
+            @search={{this.search}}
+            @allowClear={{this.allowClear}}
+            @searchField="name"
+            @estimateHeight={{51}}
+            @uniqueId="1"
+            @searchEnabled="true"
+            @renderInPlace={{true}}
+            as |option|
+        >
+            <div class="text-truncate">
+                {{option.name}}
+            </div>
+        </PowerSelectInfinity>
+
+        {{!-- <PowerSelectInfinity
             @options={{this.options}}
             @search={{this.search}}
             @loadMore={{this.loadMore}}
@@ -15,13 +35,34 @@
             @extra={{hash labelPath="name"}}
             as |user|>
                 {{user.name}}
-        </PowerSelectInfinity>
+        </PowerSelectInfinity> --}}
     </div>
 </div>
 <div class="row justify-content-center">
     <div class="col-4">
         With Custom buffer size
         <PowerSelectInfinity
+            @selected={{this.selected}}
+            @onChange={{fn (mut this.selected)}}
+            @options={{this.options}}
+            @canLoadMore={{this.canLoadMore}}
+            @loadMore={{this.loadMore}}
+            @search={{this.search}}
+            @allowClear={{this.allowClear}}
+            @searchField="name"
+            @estimateHeight={{51}}
+            @uniqueId="2"
+            @triggerClass="form-control"
+            @renderInPlace={{true}}
+            @extra={{hash bufferSize=1}}
+            as |option|
+        >
+            <div class="text-truncate">
+                {{option.name}}
+            </div>
+        </PowerSelectInfinity>
+
+        {{!-- <PowerSelectInfinity
             @options={{this.options}}
             @search={{this.search}}
             @loadMore={{this.loadMore}}
@@ -32,7 +73,7 @@
             @bufferSize={{1}}
             as |user|>
                 {{user.name}}
-        </PowerSelectInfinity>
+        </PowerSelectInfinity> --}}
     </div>
 </div>
 
@@ -40,6 +81,27 @@
     <div class="col-4">
         With Custom Loading Component
         <PowerSelectInfinity
+            @selected={{this.selected}}
+            @onChange={{fn (mut this.selected)}}
+            @options={{this.options}}
+            @canLoadMore={{this.canLoadMore}}
+            @loadMore={{this.loadMore}}
+            @search={{this.search}}
+            @allowClear={{this.allowClear}}
+            @searchField="name"
+            @uniqueId="3"
+            @triggerClass="form-control"
+            @estimateHeight={{51}}
+            @renderInPlace={{true}}
+            @loadingComponent='loading-component'
+            as |option|
+        >
+            <div class="text-truncate">
+                {{option.name}}
+            </div>
+        </PowerSelectInfinity>
+
+        {{!-- <PowerSelectInfinity
             @options={{this.options}}
             @search={{this.search}}
             @loadMore={{this.loadMore}}
@@ -50,6 +112,6 @@
             @loadingComponent='loading-component'
             as |user|>
                 {{user.name}}
-        </PowerSelectInfinity>
+        </PowerSelectInfinity> --}}
     </div>
 </div>

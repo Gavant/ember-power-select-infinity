@@ -1,0 +1,40 @@
+<PowerSelect
+    class="ember-power-select-infinity"
+    @options={{this.options}}
+    @selected={{@selected}}
+    @placeholder={{@placeholder}}
+    @placeholderComponent={{@placeholderComponent}}
+    @searchEnabled={{@searchEnabled}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @searchMessage={{@searchMessage}}
+    @searchField={{@searchField}}
+    @onChange={{@onChange}}
+    @renderInPlace={{@renderInPlace}}
+    @onInput={{this.onSearchInput}}
+    @loadingMessage={{@loadingMessage}}
+    @loadingComponent={{@loadingComponent}}
+    @loadMore={{@loadMore}}
+    @canLoadMore={{@canLoadMore}}
+    @matchTriggerWidth={{@matchTriggerWidth}}
+    @allowClear={{@allowClear}}
+    @triggerId={{@triggerId}}
+    @listBoxId={{@listBoxId}}
+    @uniqueId={{@uniqueId}}
+    @triggerClass="ember-power-select-infinity-trigger {{this.triggerClass}}"
+    @triggerComponent={{@triggerComponent}}
+    @dropdownClass={{@dropdownClass}}
+    @optionsComponent={{unless fastboot.isFastboot "power-select-infinity/options"}}
+    @selectedItemComponent={{@selectedItemComponent}}
+    @extra={{assign
+        (hash
+            bufferSize=this.bufferSize
+            estimateHeight=this.estimateHeight
+            staticHeight=this.staticHeight
+            lastReached=this.onLastReached
+        )
+        @extra
+    }}
+    as |option|
+>
+    {{yield option}}
+</PowerSelect>
