@@ -1,0 +1,48 @@
+<input
+    type="search"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck={{false}}
+    role="combobox"
+    id="ember-power-select-infinity-input-{{@select.uniqueId}}"
+    aria-controls="ember-power-select-infinity-trigger-{{@select.uniqueId}}"
+    class={{this.concatenatedInputClasses}}
+    value={{this.text}}
+    placeholder={{@select.placeholder}}
+    disabled={{@select.disabled}}>
+{{#if @select.loading}}
+    {{#if @loadingMessage}}
+        <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">{{@loadingMessage}}</li>
+    {{else}}
+        {{component @loadingComponent}}
+    {{/if}}
+{{/if}}
+{{#if @select.selected}}
+  {{#if @selectedItemComponent}}
+    {{component @selectedItemComponent extra=(readonly @extra) option=(readonly @select.selected) select=(readonly @select)}}
+  {{else}}
+    <span class="ember-power-select-selected-item">{{yield @select.selected @select}}</span>
+  {{/if}}
+    {{#if this.canClear}}
+        <span class="ember-power-select-infinity-clear-btn" {{on "mousedown" this.clear}} {{on "touchstart" this.clear}}>&times;</span>
+    {{/if}}
+{{else}}
+  {{component @placeholderComponent placeholder=@placeholder}}
+{{/if}}
+<span class="ember-power-select-status-icon"></span>
+
+
+{{!-- {{#if @select.selected}}
+  {{#if @selectedItemComponent}}
+    {{component @selectedItemComponent extra=(readonly @extra) option=(readonly @select.selected) select=(readonly @select)}}
+  {{else}}
+    <span class="ember-power-select-selected-item">{{yield @select.selected @select}}</span>
+  {{/if}}
+  {{#if (and @allowClear (not @select.disabled))}}
+    <span class="ember-power-select-clear-btn" {{on "mousedown" this.clear}} {{on "touchstart" this.clear}}>&times;</span>
+  {{/if}}
+{{else}}
+  {{component @placeholderComponent placeholder=@placeholder}}
+{{/if}}
+<span class="ember-power-select-status-icon"></span> --}}

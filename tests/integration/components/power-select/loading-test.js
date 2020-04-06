@@ -4,22 +4,20 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import 'qunit-dom';
 
-module('Integration | Component | power-select-infinity', function(hooks) {
+module('Integration | Component | power-select/loading', function(hooks) {
     setupRenderingTest(hooks);
 
     test('it renders', async function(assert) {
         // Set any properties with this.set('myProperty', 'value');
         // Handle any actions with this.set('myAction', function(val) { ... });
 
-        this.set('onChange', function(event) { event.preventDefault(); });
-
         // Template block usage:
         await render(hbs`
-        <PowerSelectInfinity @onChange={{this.onChange}}>
+        {{#power-select-infinity/loading}}
             template block text
-        </PowerSelectInfinity>
+        {{/power-select-infinity/loading}}
         `);
 
-        assert.dom(this.element).hasText('template block text');
+        assert.dom(this.element).hasText('');
     });
 });
