@@ -1,9 +1,8 @@
 import PowerSelect from 'ember-power-select/components/power-select';
-import { action } from '@ember/object';
+import { action, get } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
-import { isEmpty } from '@ember/utils';
+import { isEmpty, isBlank } from '@ember/utils';
 import { getOwner } from '@ember/application';
-import { isBlank } from '@ember/utils';
 
 export default class PowerSelectInfinityComponent extends PowerSelect {
     tagName = '';
@@ -63,10 +62,7 @@ export default class PowerSelectInfinityComponent extends PowerSelect {
 
     @action
     async handleFocus(select) {
-        await select.actions.search();
-        if (!isEmpty(select.options)) {
-            scheduleOnce('actions', select, select.actions.open);
-        }
+        await select.actions.search(select.searchText);
     }
 
     @action

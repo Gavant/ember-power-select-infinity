@@ -2,10 +2,12 @@
     <VerticalCollection
         @select={{@select}}
         @items={{@options}}
+        @extra={{@extra}}
         @estimateHeight={{@estimateHeight}}
         @staticHeight={{@staticHeight}}
         @bufferSize={{@bufferSize}}
         @lastReached={{this.onScroll}}
+        @optionsComponent={{@optionsComponent}}
         class="ember-power-select-options"
         as |opt index|>
             <li class="ember-power-select-option"

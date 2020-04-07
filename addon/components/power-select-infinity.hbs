@@ -31,7 +31,7 @@
         @onOpen={{@onOpen}}
         @opened={{@opened}}
         @options={{@options}}
-        @optionsComponent={{unless fastboot.isFastBoot (component this.optionsComponent
+        @optionsComponent={{unless this.fastboot.isFastBoot (component this.optionsComponent
             onScroll=this.onScroll
             estimateHeight=this.estimateHeight
             bufferSize=this.bufferSize
@@ -94,7 +94,7 @@
         @onopen={{@onopen}}
         @opened={{@opened}}
         @options={{@options}}
-        @optionsComponent={{unless fastboot.isFastBoot (component this.optionsComponent
+        @optionsComponent={{unless this.fastboot.isFastBoot (component this.optionsComponent
             onScroll=this.onScroll
             estimateHeight=this.estimateHeight
             bufferSize=this.bufferSize
@@ -107,14 +107,13 @@
         @searchField={{this.searchField}}
         @searchMessage={{@searchMessage}}
         @searchPlaceholder={{@searchPlaceholder}}
-        @selected={{@selected}}
+        @selected={{this.selected}}
         @selectedItemComponent={{@selectedItemComponent}}
         @tabindex={{@tabindex}}
         @triggerClass={{this.concatenatedTriggerClasses}}
         @triggerComponent={{component this.triggerComponent
             loadingComponent=this.loadingComponent
             inputClass=this.inputClass
-            searchText=this.searchText
         }}
         @triggerId={{@triggerId}}
         @triggerRole={{null}}

@@ -17,7 +17,7 @@ const KEYCODE_ESCAPE = 27;
 
 class PowerSelectInfinityTriggerComponent extends Component {
     tagName = '';
-    @tracked text = '';
+    @tracked _text = '';
 
     get concatenatedInputClasses() {
         let classes = ['ember-power-select-infinity-input'];
@@ -29,7 +29,7 @@ class PowerSelectInfinityTriggerComponent extends Component {
     }
 
     get canClear() {
-        return !isEmpty(this.args.select.searchText) && !this.args.select.disabled && this.args.allowClear;
+        return !isEmpty(this.select.searchText) && !this.select.disabled && this.select.allowClear;
     }
 
   /**
@@ -43,9 +43,9 @@ class PowerSelectInfinityTriggerComponent extends Component {
 
     get text() {
         let oldSelect = this.oldSelect;
-        let newSelect = set(this, 'oldSelect', get(this, 'select'));
+        let newSelect = set(this, 'oldSelect', this.select);
         if (!oldSelect) {
-            return;
+            return this._text;
         }
         /*
         * We need to update the input field with value of the selected option whenever we're closing
@@ -57,20 +57,22 @@ class PowerSelectInfinityTriggerComponent extends Component {
             if (input.value !== newText) {
                 input.value = newText;
             }
-            return newText;
+            return this._text = newText;
         }
 
         if (newSelect.lastSearchedText !== oldSelect.lastSearchedText) {
-        if (isBlank(newSelect.lastSearchedText)) {
-            run.schedule('actions', null, newSelect.actions.close, null, true);
-        } else {
-            run.schedule('actions', null, newSelect.actions.open);
-        }
+            if (isBlank(newSelect.lastSearchedText)) {
+                run.schedule('actions', null, newSelect.actions.close, null, true);
+            } else {
+                run.schedule('actions', null, newSelect.actions.open);
+            }
         }
 
         if (oldSelect.selected !== newSelect.selected) {
-            return this.selectedAsText;
+            return this._text = this.selectedAsText;
         }
+
+        return this._text;
     }
 
     /**
@@ -82,14 +84,14 @@ class PowerSelectInfinityTriggerComponent extends Component {
     get selectedAsText() {
         let labelPath = this.extra.labelPath;
         let selected = this.select.selected;
-        let value = null;
+        let value = '';
         if (selected) {
             if (labelPath) {
                 // complex object
                 value = get(this, `select.selected.${labelPath}`);
             } else {
                 // primitive value
-                value = this.args.select.selected;
+                value = this.select.selected;
             }
         }
         return value;
