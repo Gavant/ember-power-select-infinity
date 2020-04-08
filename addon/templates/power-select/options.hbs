@@ -1,8 +1,16 @@
 <ul role="listbox" aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}} ...attributes>
+    {{#if @select.loading}}
+        {{#if @loadingComponent}}
+            {{component @loadingComponent}}
+        {{else}}
+            <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">{{@loadingMessage}}</li>
+        {{/if}}
+    {{/if}}
     <VerticalCollection
         @select={{@select}}
         @items={{@options}}
         @extra={{@extra}}
+        @loadMore={{@loadMore}}
         @estimateHeight={{@estimateHeight}}
         @staticHeight={{@staticHeight}}
         @bufferSize={{@bufferSize}}

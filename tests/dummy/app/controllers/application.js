@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { Promise } from 'rsvp';
+import RSVP from 'rsvp';
 import { later } from '@ember/runloop';
 import { action } from '@ember/object';
 
@@ -29,15 +29,6 @@ export default class ApplicationController extends Controller {
         { name: 'Jessica' }
     ];
 
-    newUsers = [
-          { name: 'James' },
-          { name: 'Jimmy' },
-          { name: 'Joel' },
-          { name: 'Mike' },
-          { name: 'Matt' },
-          { name: 'Jon' }
-    ];
-
     options = this.users;
 
     @action
@@ -54,11 +45,20 @@ export default class ApplicationController extends Controller {
     }
 
     @action
-    loadMore() {
-        return new Promise((resolve) => {
-            later(this, () => {
-                resolve(this.newUsers);
-            }, 600);
-        });
+    async loadMore(term) {
+        await this.set('options', generatePromise());
     }
+}
+
+function generatePromise() {
+    return new RSVP.Promise((resolve) => {
+        setTimeout(() => resolve([
+            { name: 'James' },
+            { name: 'Jimmy' },
+            { name: 'Joel' },
+            { name: 'Mike' },
+            { name: 'Matt' },
+            { name: 'Jon' }
+        ]), 600);
+    });
 }

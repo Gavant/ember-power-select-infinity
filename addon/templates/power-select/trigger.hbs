@@ -11,13 +11,6 @@
     value={{this.text}}
     placeholder={{@placeholder}}
     disabled={{@select.disabled}}>
-{{#if @select.loading}}
-    {{#if @loadingMessage}}
-        <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">{{@loadingMessage}}</li>
-    {{else}}
-        {{component @loadingComponent}}
-    {{/if}}
-{{/if}}
 {{#if this.canClear}}
     <span class="ember-power-select-infinity-clear-btn" role="button" {{on "mousedown" this.clear}} {{on "touchstart" this.clear}}>&times;</span>
 {{/if}}

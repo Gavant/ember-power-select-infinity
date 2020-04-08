@@ -1,7 +1,6 @@
 import PowerSelect from 'ember-power-select/components/power-select';
-import { action, get } from '@ember/object';
-import { scheduleOnce } from '@ember/runloop';
-import { isEmpty, isBlank } from '@ember/utils';
+import { action } from '@ember/object';
+import { isBlank } from '@ember/utils';
 import { getOwner } from '@ember/application';
 
 export default class PowerSelectInfinityComponent extends PowerSelect {
@@ -16,9 +15,6 @@ export default class PowerSelectInfinityComponent extends PowerSelect {
     searchField = 'name';
     loadingMessage = null;
     noMatchesMessage = null;
-    estimateHeight = 28;
-    bufferSize = 5;
-    staticHeight = false;
     mustShowSearchMessage = false;
     canLoadMore = true;
 
@@ -45,11 +41,15 @@ export default class PowerSelectInfinityComponent extends PowerSelect {
     }
 
     get estimateHeight() {
-        return this.args.estimateHeight || this.estimateHeight;
+        return this.args.estimateHeight || 28;
+    }
+
+    get bufferSize() {
+        return this.args.bufferSize || 5;
     }
 
     get staticHeight() {
-        return this.args.staticHeight || this.staticHeight;
+        return this.args.staticHeight || false;
     }
 
     get inputClass() {
@@ -91,14 +91,18 @@ export default class PowerSelectInfinityComponent extends PowerSelect {
     }
 
     @action
-    onScroll() {
-        if (this.canLoadMore) {
+    async onScroll() {
+        if (this.canLoadMore && this.args.loadMore) {
             this.loading = true;
             let term = this.lastSearchedText;
-            this.args.loadMore(term).then(results => {
-                this._filter(results, term);
+            let currentResults = this.results;
+            await this.args.loadMore([term, this]).then((results) => {
+                let plainArray = toPlainArray(results);
+                let newResults = currentResults.concat(plainArray);
+                this.lastSearchedText = term;
                 this.loading = false;
                 this.canLoadMore = results.length !== 0;
+                this._resolvedOptions = newResults;
             }).catch(() => {
                 this.lastSearchedText = term;
                 this.loading = false;
