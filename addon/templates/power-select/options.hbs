@@ -1,5 +1,5 @@
 <ul role="listbox" aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}} ...attributes>
-    {{#if @select.loading}}
+    {{#if @loading}}
         {{#if @loadingComponent}}
             {{component @loadingComponent}}
         {{else}}
@@ -10,7 +10,6 @@
         @select={{@select}}
         @items={{@options}}
         @extra={{@extra}}
-        @loadMore={{@loadMore}}
         @estimateHeight={{@estimateHeight}}
         @staticHeight={{@staticHeight}}
         @bufferSize={{@bufferSize}}

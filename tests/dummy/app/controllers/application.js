@@ -46,7 +46,8 @@ export default class ApplicationController extends Controller {
 
     @action
     async loadMore(term) {
-        await this.set('options', generatePromise());
+        const result = await generatePromise();
+        await this.set('options', this.options.concat(result));
     }
 }
 
