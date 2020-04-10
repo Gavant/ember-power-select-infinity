@@ -10,9 +10,9 @@
             @search={{this.search}}
             @loadMore={{this.loadMore}}
             @selected={{this.selected}}
+            @searchField={{'name'}}
             @onChange={{fn (mut this.selected)}}
             @inputClass="form-control"
-            @extra={{hash labelPath="name"}}
             as |user|>
                 {{user.name}}
          </PowerSelectInfinity>
@@ -27,8 +27,8 @@
             @loadMore={{this.loadMore}}
             @selected={{this.selected}}
             @onChange={{fn (mut this.selected)}}
+            @searchField={{'name'}}
             @inputClass="form-control"
-            @extra={{hash labelPath="name"}}
             @bufferSize={{1}}
             as |user|>
                 {{user.name}}
@@ -45,7 +45,7 @@
             @loadMore={{this.loadMore}}
             @selected={{this.selected}}
             @onChange={{fn (mut this.selected)}}
-            @extra={{hash labelPath="name"}}
+            @searchField={{'name'}}
             @inputClass="form-control"
             @loadingComponent='loading-component'
             as |user|>

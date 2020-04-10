@@ -1,4 +1,4 @@
-import { Select } from 'ember-power-select/components/power-select';
+import { InfinitySelect } from '../power-select-infinity';
 import PowerSelectTrigger, { Args } from 'ember-power-select/components/power-select/trigger';
 import { get, set, action } from '@ember/object';
 import { isBlank, isEmpty } from '@ember/utils';
@@ -17,9 +17,7 @@ const KEYCODE_ENTER = 13;
 const KEYCODE_ESCAPE = 27;
 
 interface InfinityArgs extends Args {
-    select: Select
-    onKeydown: (e: Event) => false | void
-    autofocus?: boolean
+    select: InfinitySelect
 }
 
 class PowerSelectInfinityTriggerComponent extends PowerSelectTrigger<InfinityArgs> {
@@ -90,13 +88,13 @@ class PowerSelectInfinityTriggerComponent extends PowerSelectTrigger<InfinityArg
      * @method selectedAsText
      */
     get selectedAsText() {
-        let labelPath = this.args.extra.labelPath;
+        let searchField = this.args.searchField;
         let selected = this.args.select.selected;
         let value = '';
         if (selected) {
-            if (labelPath) {
+            if (searchField) {
                 // complex object
-                value = get(this, `args.select.selected.${labelPath}`);
+                value = get(this, `args.select.selected.${searchField}`);
             } else {
                 // primitive value
                 value = this.args.select.selected;
@@ -134,10 +132,9 @@ class PowerSelectInfinityTriggerComponent extends PowerSelectTrigger<InfinityArg
         let isLetter = e.keyCode >= KEYCODE_0 && e.keyCode <= KEYCODE_Z || e.keyCode === KEYCODE_SPACE; // Keys 0-9, a-z or SPACE
         // if isLetter, escape or enter, prevent parent handlers from being notified
         if (isLetter || [KEYCODE_ENTER, KEYCODE_ESCAPE].indexOf(e.keyCode) > -1) {
-            let select = this.args.select;
             // open if loading msg configured
-            if (!select.isOpen && this.args.loadingMessage) {
-                run.schedule('actions', null, select.actions.open);
+            if (!this.args.select.isOpen && !!this.args.loadingMessage) {
+                run.schedule('actions', null, this.args.select.actions.open);
             }
             e.stopPropagation();
         }

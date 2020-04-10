@@ -38,7 +38,7 @@ export default class ApplicationController extends Controller {
                 resolve([]);
             } else {
                 later(this, () => {
-                    resolve(this.users.filter((u) => u.name.indexOf(term) > -1));
+                    resolve(this.options.filter((u) => u.name.toLowerCase().indexOf(term.toLowerCase()) > -1));
                 }, 600);
             }
         });

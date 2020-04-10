@@ -1,4 +1,4 @@
-import PowerSelect, { PowerSelectArgs, Select } from 'ember-power-select/components/power-select';
+import PowerSelect, { PowerSelectArgs, Select, SelectActions } from 'ember-power-select/components/power-select';
 import { action } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { getOwner } from '@ember/application';
@@ -8,32 +8,34 @@ interface PromiseProxy<T> extends Promise<T> {
     content: any
 }
 
-export interface PowerSelectInfinityArgs extends PowerSelectArgs {
-    loadingComponent?: string
-    optionsComponent?: string
-    beforeOptionsComponent?: string
-    canLoadMore?: boolean
-    allowClear?: boolean
-    loadingMessage?: string;
-    mustShowSearchMessage?: boolean;
-    noMatchesMessage?: string
-    searchField?: string
-    searchEnabled?: boolean
-    tabindex?: number | string
-    triggerComponent?: string
-    onChange: (selection: any, select: Select, event?: Event) => void
-    search?: (term: string, select: Select) => any[] | PromiseProxy<any[]>
-    onOpen?: (select: Select, e: Event) => boolean | undefined
-    onClose?: (select: Select, e: Event) => boolean | undefined
-    onInput?: (term: string, select: Select, e: Event) => string | false | void
-    onKeydown?: (select: Select, e: KeyboardEvent) => boolean | undefined | void
-    onFocus?: (select: Select, event: FocusEvent) => void
-    onBlur?: (select: Select, event: FocusEvent) => void
+interface InfinitySelectActions extends SelectActions {
+    onScroll: (term: string) => void
 }
 
-export default class PowerSelectInfinityComponent extends PowerSelect<PowerSelectInfinityArgs> {
-    @tracked private _resolvedOptions?: any[];
+export interface InfinitySelect extends Select {
+    text: string
+    loading: boolean
+    actions: InfinitySelectActions
+}
 
+export interface InfinityArgs extends PowerSelectArgs {
+    loadingComponent?: string
+    canLoadMore?: boolean
+    onScroll?: (term: string, select: InfinitySelect) => any[] | PromiseProxy<any[]>
+    buildSelection?: (selected: any, select: InfinitySelect) => any
+    onChange: (selection: any, select: InfinitySelect, event?: Event) => void
+    search?: (term: string, select: InfinitySelect) => any[] | PromiseProxy<any[]>
+    onOpen?: (select: InfinitySelect, e: Event) => boolean | undefined
+    onClose?: (select: InfinitySelect, e: Event) => boolean | undefined
+    onInput?: (term: string, select: InfinitySelect, e: Event) => string | false | void
+    onKeydown?: (select: InfinitySelect, e: KeyboardEvent) => boolean | undefined
+    onFocus?: (select: InfinitySelect, event: FocusEvent) => void
+    onBlur?: (select: InfinitySelect, event: FocusEvent) => void
+    scrollTo?: (option: any, select: InfinitySelect) => void
+    registerAPI?: (select: InfinitySelect) => void
+}
+
+export default class PowerSelectInfinityComponent extends PowerSelect<InfinityArgs> {
     tagName = '';
     tabindex = -1;
     allowClear = true;
@@ -92,7 +94,7 @@ export default class PowerSelectInfinityComponent extends PowerSelect<PowerSelec
     }
 
     @action
-    async handleFocus(select: Select) {
+    async handleFocus(select: InfinitySelect) {
         await select.actions.search(select.searchText);
     }
 
@@ -105,13 +107,13 @@ export default class PowerSelectInfinityComponent extends PowerSelect<PowerSelec
     // }
 
     @action
-    handleInput(term: string, select: Select, e: InputEvent): void {
+    handleInput(term: string, select: InfinitySelect, e: InputEvent): void {
         if (e.target === null) return;
         this.search(term, select);
     }
 
     @action
-    handleKeydown(select: Select, e: KeyboardEvent) {
+    handleKeydown(select: InfinitySelect, e: KeyboardEvent) {
         if (this.args.onKeydown && this.args.onKeydown(select, e) === false) {
             return false;
         }
@@ -119,42 +121,31 @@ export default class PowerSelectInfinityComponent extends PowerSelect<PowerSelec
     }
 
     @action
-    search(term: string, select: Select) {
+    search(term: string, select: InfinitySelect) {
         this.canLoadMore = true;
         if (isBlank(term)) {
-            this.loading = false;
+            select.lastSearchedText = "";
+            select.searchText = "";
+            select.loading = false;
         } else if (this.args.search) {
-            return this._performSearch(select, term);
+            return this.args.search(term, select);
         } else {
-            return this._filter(term);
+            return this._filter(this.options, term);
         }
     }
 
     @action
-    async onScroll() {
+    async onScroll(select: InfinitySelect) {
         if (this.canLoadMore && this.args.loadMore) {
-            this.loading = true;
-            let term = this.lastSearchedText;
-            let currentResults = this.results;
-            await this.args.loadMore(term).then((results: []) => {
-                let plainArray = toPlainArray(results);
-                let newResults = currentResults.concat(plainArray);
-                this.lastSearchedText = term;
-                this.loading = false;
-                this.canLoadMore = results.length !== 0;
-                this._resolvedOptions = newResults;
+            select.loading = true;
+            let term = select.lastSearchedText;
+            await this.args.loadMore([term, this]).then((results: []) => {
+                select.lastSearchedText = term;
+                select.loading = false;
             }).catch(() => {
-                this.lastSearchedText = term;
-                this.loading = false;
+                select.lastSearchedText = term;
+                select.loading = false;
             });
         }
-    }
-}
-
-function toPlainArray(collection) {
-    if (collection) {
-        return collection.toArray ? collection.toArray() : collection;
-    } else {
-        return [];
     }
 }

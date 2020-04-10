@@ -37,6 +37,7 @@ Your Component
 ```
 <PowerSelectInfinity
     @search={{this.search}}
+    @searchField='name'
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
@@ -91,6 +92,7 @@ If you want the power select to open when the input is focused, just pass a list
 <PowerSelectInfinity
     @options={{this.options}}
     @search={{this.search}}
+    @searchField='name'
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
@@ -105,10 +107,10 @@ If your using a complex objects as the options, you need to tell `power-select-i
 <PowerSelectInfinity
     @options={{this.options}}
     @search={{this.search}}
+    @searchField='name'
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
-    @extra={{hash labelPath="name"}}
     as |user|>
         {{user.name}}
 </PowerSelectInfinity>
@@ -124,6 +126,7 @@ There are some options you can pass to https://github.com/html-next/vertical-col
     @bufferSize={{10}}
     @staticHeight={{true}}
     @search={{this.search}}
+    @searchField='name'
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
@@ -138,6 +141,7 @@ You can also customize the loading component by passing in your own `loadingComp
 <PowerSelectInfinity
     @options={{this.options}}
     @search={{this.search}}
+    @searchField='name'
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
