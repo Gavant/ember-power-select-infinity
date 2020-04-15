@@ -11,7 +11,7 @@ module('Integration | Component | power-select-infinity', function(hooks) {
         // Set any properties with this.set('myProperty', 'value');
         // Handle any actions with this.set('myAction', function(val) { ... });
 
-        this.set('onChange', function(event) { event.preventDefault(); });
+        this.set('onChange', function(event: Event) { event.preventDefault(); });
 
         // Template block usage:
         await render(hbs`
