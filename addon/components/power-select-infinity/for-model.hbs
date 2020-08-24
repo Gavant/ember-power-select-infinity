@@ -1,0 +1,19 @@
+<PowerSelectInfinity
+    @selected={{@selected}}
+    @onChange={{@onChange}}
+    @options={{this.options}}
+    @canLoadMore={{this.canLoadMore}}
+    @loadMore={{this.loadMore}}
+    @search={{this.search}}
+    @allowClear={{this.allowClear}}
+    @placeholder={{@placeholder}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @loadingMessage={{@loadingMessage}}
+    @estimateHeight={{this.estimateHeight}}
+    @renderInPlace={{@renderInPlace}}
+    @searchField={{@searchField}}
+    @triggerClass={{@triggerClass}}
+    as |option select|
+>
+    {{yield option select}}
+</PowerSelectInfinity>

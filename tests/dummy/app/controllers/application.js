@@ -37,9 +37,13 @@ export default class ApplicationController extends Controller {
             if (term.length === 0) {
                 resolve([]);
             } else {
-                later(this, () => {
-                    resolve(this.options.filter((u) => u.name.toLowerCase().indexOf(term.toLowerCase()) > -1));
-                }, 600);
+                later(
+                    this,
+                    () => {
+                        resolve(this.options.filter((u) => u.name.toLowerCase().indexOf(term.toLowerCase()) > -1));
+                    },
+                    600
+                );
             }
         });
     }
@@ -53,13 +57,17 @@ export default class ApplicationController extends Controller {
 
 function generatePromise() {
     return new RSVP.Promise((resolve) => {
-        setTimeout(() => resolve([
-            { name: 'James' },
-            { name: 'Jimmy' },
-            { name: 'Joel' },
-            { name: 'Mike' },
-            { name: 'Matt' },
-            { name: 'Jon' }
-        ]), 600);
+        setTimeout(
+            () =>
+                resolve([
+                    { name: 'James' },
+                    { name: 'Jimmy' },
+                    { name: 'Joel' },
+                    { name: 'Mike' },
+                    { name: 'Matt' },
+                    { name: 'Jon' }
+                ]),
+            600
+        );
     });
 }

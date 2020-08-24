@@ -1,0 +1,35 @@
+<ul role="listbox" class={{@optionsClass}} aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}} ...attributes>
+    {{#if (and @extra.isSearching @extra.loadingBelow)}}
+        {{#if @loadingMessage}}
+            <li class="ember-power-select-option ember-power-select-option--loading-message pl-3 py-2" role="option">
+                <ProgressSpinner />
+            </li>
+        {{/if}}
+    {{/if}}
+    {{#unless @extra.isSearching}}
+        <VerticalCollection
+            @items={{@options}}
+            @estimateHeight={{@extra.estimateHeight}}
+            @staticHeight={{@extra.staticHeight}}
+            @bufferSize={{@extra.bufferSize}}
+            @lastReached={{@extra.onLastReached}}
+            @containerSelector=".ember-power-select-options"
+            as |opt index|
+        >
+            <li class="ember-power-select-option {{if opt.borderBottom "border-bottom-brand"}}"
+                aria-selected="{{ember-power-select-is-selected opt this.select.selected}}"
+                aria-disabled="{{if opt.disabled "true"}}"
+                aria-current="{{eq opt this.select.highlighted}}"
+                data-option-index="{{this.groupIndex}}{{index}}"
+                role="option"
+            >
+                {{yield opt this.select}}
+            </li>
+        </VerticalCollection>
+        {{#if @extra.isLoadingMore}}
+            <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">
+                <ProgressSpinner />
+            </li>
+        {{/if}}
+    {{/unless}}
+</ul>

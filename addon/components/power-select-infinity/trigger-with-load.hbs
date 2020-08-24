@@ -1,0 +1,30 @@
+<input
+    class="ember-power-select-trigger-multiple-input power-select-search-input"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
+    value={{@select.searchText}}
+    aria-controls={{@listboxId}}
+    placeholder={{if (not (and @select.selected @selectOnly)) @placeholder}}
+    disabled={{@select.disabled}}
+    maxlength="128"
+    {{!-- template-lint-disable no-positive-tabindex  --}}
+    tabindex={{or @tabindex "-1"}}
+    {{on "focus" @onFocus}}
+    {{on "blur" @onBlur}}
+    {{on "input" this.handleInput}}
+    {{on "keydown" this.handleKeydown}}
+    {{did-insert this.storeInputStyles}}
+>
+{{#if (and @selectedItemComponent @selectOnly)}}
+    {{component
+        @selectedItemComponent 
+        extra=(readonly @extra)
+        option=(readonly @select.selected)
+        select=(readonly @select)
+    }}
+{{/if}}
+{{#if @extra.isSearching}}
+    <ProgressSpinner class="progress-spinner-infinity-trigger" />
+{{/if}}

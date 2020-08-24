@@ -1,0 +1,33 @@
+<div class="docs-container">
+    <div class="docs-section">
+        <div class="docs-md">
+            <h1 class="docs-md__h1">
+                Power Select Infinity For Model
+            </h1>
+            <h2 class="docs-md__h2">
+                Basic Power Select
+            </h2>
+            <p>A basic power-select-infinity component.</p>
+            <DocsDemo as |demo|>
+                <demo.example @name="power-select-infinity-default.hbs">
+                    <div>
+                        <h3 class="mb-3">
+                            <u>Selected</u>
+                        </h3>
+                        <ul>
+                            <li>Name: {{this.selectedItem.name}}</li>
+                            <li>DOB: {{this.selectedItem.dob}}</li>
+                        </ul>
+                    </div>
+                    <BasicPowerSelectForModel
+                        @onChange={{this.selectItem}}
+                        @selected={{this.selectedItem}}
+                    />
+                </demo.example>
+                {{!-- <demo.snippet @name="basic-power-select-for-model-demo.ts" @label="Component"/> --}}
+                <demo.snippet @name="basic-power-select-for-model-demo.hbs" @label="Template"/>
+                <demo.snippet @name="person.ts" @label="Model" />
+            </DocsDemo>
+        </div>
+    </div>
+</div>

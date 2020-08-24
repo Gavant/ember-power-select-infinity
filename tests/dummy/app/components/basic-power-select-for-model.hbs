@@ -1,0 +1,22 @@
+{{!-- BEGIN-SNIPPET basic-power-select-for-model-demo.hbs --}}
+<PowerSelectInfinity::ForModel
+    @modelName="person"
+    @selected={{@selected}}
+    @onChange={{@onChange}}
+    @placeholder="Select a person"
+    @searchPlaceholder="Search for people..."
+    @triggerClass="form-control"
+    as |option|
+>
+    <div class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}">
+        {{#if option.heading}}
+            <div class="ember-power-select-option-section-heading font-weight-bold">
+                {{option.heading}}
+            </div>
+        {{/if}}
+        <div class="text-truncate">
+            {{option.name}}
+        </div>
+    </div>
+</PowerSelectInfinity::ForModel>
+{{!-- END-SNIPPET --}}

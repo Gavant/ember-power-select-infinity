@@ -1,151 +1,201 @@
-import PowerSelect, { PowerSelectArgs, Select, SelectActions } from 'ember-power-select/components/power-select';
+import Component from '@glimmer/component';
+import { PowerSelectArgs } from 'ember-power-select/components/power-select';
 import { action } from '@ember/object';
 import { isBlank } from '@ember/utils';
-import { getOwner } from '@ember/application';
 import { tracked } from '@glimmer/tracking';
+import { dontRunInFastboot, argDefault } from '../decorators/power-select-infinity';
+import { TaskGenerator, timeout, didCancel, TaskCancelation } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { taskFor } from 'ember-concurrency-ts';
 
-interface PromiseProxy<T> extends Promise<T> {
-    content: any
+interface PowerSelectInfinityArgs extends PowerSelectArgs {
+    beforeOptionsComponent?: string;
+    /**
+     * Used by ember-vertical-collection for occlusion rendering.
+     *
+     * @type {number}
+     * @argument bufferSize
+     */
+    bufferSize?: number;
+    /**
+     * Allow/disallow loading of more options when scrolling.
+     *
+     * @type {boolean}
+     * @argument canLoadMore
+     */
+    canLoadMore: boolean;
+    /**
+     * Used by ember-vertical-collection for occlusion rendering.
+     *
+     * @type {number}
+     * @argument estimateHeight
+     */
+    estimateHeight?: number;
+    /**
+     * The method invoked when `canLoadMore` is true and
+     * the bottom of the list is reached.
+     *
+     * @type {(keyword: string | null) => any[]}
+     * @argument loadMore
+     */
+    loadMore: (keyword: string | null) => any[];
+    /**
+     * The message shown when no options are returned.
+     *
+     * @type {string}
+     * @argument noMatchesMessage
+     */
+    noMatchesMessage?: string;
+    /**
+     * The method invoked when searching.
+     *
+     * @type {(keyword: string | null) => any[]}
+     * @argument search
+     *
+     */
+    search: (keyword: string | null) => any[];
+    /**
+     * The delay for invoking the `@search` method
+     * when typing.
+     *
+     * @type {number}
+     * @argument searchDebounceDelay
+     */
+    searchDebounceDelay?: number;
+    /**
+     * Used by ember-vertical-collection for occlusion rendering.
+     *
+     * @type {boolean}
+     * @argument staticHeight
+     */
+    staticHeight?: boolean;
+    triggerComponent?: string;
+    /**
+     * Toggles the search being within the dropdown trigger.
+     *
+     * @type {boolean}
+     * @argument triggerIsSearch
+     */
+    triggerIsSearch?: boolean;
 }
 
-interface InfinitySelectActions extends SelectActions {
-    onScroll: (term: string) => void
-}
+/**
+ * Simple Usage:
+ * ```handlebars
+ * <PowerSelectInfinity @onChange={{this.onChange}} />
+ * ```
+ *
+ * @export
+ * @class PowerSelectInfinity
+ * @extends {Component<PowerSelectInfinityArgs>}
+ * @public
+ */
+export default class PowerSelectInfinity extends Component<PowerSelectInfinityArgs> {
+    @argDefault allowClear: boolean = true;
+    @argDefault bufferSize: number = 5;
+    @argDefault canLoadMore: boolean = true;
+    @argDefault estimateHeight: number = 30;
+    @argDefault loadingBelow: boolean = true;
+    @argDefault loadingComponent: string = 'power-select-infinity/loading';
+    @argDefault matchTriggerWidth: boolean = true;
+    @argDefault noMatchesMessage: string | null = null;
+    @argDefault optionsComponent: string = 'power-select-infinity/options';
+    @argDefault search: boolean = false;
+    @argDefault searchBelow: boolean = true;
+    @argDefault searchDebounceDelay: number = 300;
+    @argDefault searchEnabled: boolean = true;
+    @argDefault searchField: string | null = null;
+    @argDefault staticHeight: boolean = false;
+    @argDefault tabindex: number = -1;
 
-export interface InfinitySelect extends Select {
-    text: string
-    loading: boolean
-    actions: InfinitySelectActions
-}
-
-export interface InfinityArgs extends PowerSelectArgs {
-    loadingComponent?: string
-    canLoadMore?: boolean
-    onScroll?: (term: string, select: InfinitySelect) => any[] | PromiseProxy<any[]>
-    buildSelection?: (selected: any, select: InfinitySelect) => any
-    onChange: (selection: any, select: InfinitySelect, event?: Event) => void
-    search?: (term: string, select: InfinitySelect) => any[] | PromiseProxy<any[]>
-    onOpen?: (select: InfinitySelect, e: Event) => boolean | undefined
-    onClose?: (select: InfinitySelect, e: Event) => boolean | undefined
-    onInput?: (term: string, select: InfinitySelect, e: Event) => string | false | void
-    onKeydown?: (select: InfinitySelect, e: KeyboardEvent) => boolean | undefined
-    onFocus?: (select: InfinitySelect, event: FocusEvent) => void
-    onBlur?: (select: InfinitySelect, event: FocusEvent) => void
-    scrollTo?: (option: any, select: InfinitySelect) => void
-    registerAPI?: (select: InfinitySelect) => void
-}
-
-export default class PowerSelectInfinityComponent extends PowerSelect<InfinityArgs> {
-    tagName = '';
-    tabindex = -1;
-    allowClear = true;
-    triggerComponent = 'power-select-infinity/trigger';
-    optionsComponent = 'power-select-infinity/options';
-    loadingComponent = 'power-select-infinity/loading';
-    beforeOptionsComponent = null;
-    searchEnabled = false;
-    loadingMessage = null;
-    noMatchesMessage = null;
-    mustShowSearchMessage = false;
-    canLoadMore = true;
-    lastSearchedText = '';
+    @tracked isLoadingMore: boolean = false;
     @tracked loading = false;
+    @tracked searchText: string | null = null;
 
-    get fastboot() {
-        return getOwner(this).lookup(`service:fastboot`);
+    get triggerComponent() {
+        return this.args.triggerComponent ?? this.loadingBelow ? '' : 'power-select-infinity/trigger-with-load';
     }
 
-    get concatenatedTriggerClasses() {
-        let classes = ['ember-power-select-infinity-trigger'];
-        let passedClass = this.args.triggerClass;
-        if (passedClass) {
-            classes.push(passedClass);
+    get beforeOptionsComponent() {
+        return this.args.beforeOptionsComponent ?? this.loadingBelow ? undefined : null;
+    }
+
+    /**
+     * The delayed search task for the power select.
+     *
+     * @param {(string | null)} term
+     * @returns {TaskGenerator<any[]>}
+     * @method searchTask
+     * @private
+     */
+    @restartableTask
+    private *searchTask(term: string | null): TaskGenerator<any[]> {
+        yield timeout(this.searchDebounceDelay);
+        try {
+            const results = this.args.search(term);
+            return results;
+        } catch (errors) {
+            if (didCancel(errors)) {
+                throw errors;
+            }
+            return errors;
         }
-        return classes.join(' ');
     }
 
-    get concatenatedDropdownClasses() {
-        let classes = ['ember-power-select-infinity-dropdown'];
-        let passedClass = this.args.dropdownClass;
-        if (passedClass) {
-            classes.push(passedClass);
-        }
-        return classes.join(' ');
-    }
-
-    get estimateHeight() {
-        return this.args.estimateHeight || 28;
-    }
-
-    get bufferSize() {
-        return this.args.bufferSize || 5;
-    }
-
-    get staticHeight() {
-        return this.args.staticHeight || false;
-    }
-
-    get inputClass() {
-        return this.args.inputClass;
-    }
-
-    get searchField() {
-        return this.args.searchField || 'name';
-    }
-
+    /**
+     * Keeps track of the currently entered search input.
+     *
+     * @param {string | null} term
+     * @method onSearchInput
+     * @returns {void}
+     * @public
+     */
     @action
-    async handleFocus(select: InfinitySelect) {
-        await select.actions.search(select.searchText);
-    }
+    onSearchInput(term: string | null): void {
+        this.searchText = term;
 
-    // @action
-    // handleKeydown(select: Select, e: KeyboardEvent) {
-    //     // if escape, then clear out selection
-    //     if (e.keyCode === 27) {
-    //         select.actions.choose(null);
-    //     }
-    // }
-
-    @action
-    handleInput(term: string, select: InfinitySelect, e: InputEvent): void {
-        if (e.target === null) return;
-        this.search(term, select);
-    }
-
-    @action
-    handleKeydown(select: InfinitySelect, e: KeyboardEvent) {
-        if (this.args.onKeydown && this.args.onKeydown(select, e) === false) {
-            return false;
-        }
-        return this._routeKeydown(select, e);
-    }
-
-    @action
-    search(term: string, select: InfinitySelect) {
-        this.canLoadMore = true;
+        // Since the search action is not invoked when the search term is blank,
+        // invoke it manually, so that the options are reset
         if (isBlank(term)) {
-            select.lastSearchedText = "";
-            select.searchText = "";
-            select.loading = false;
-        } else if (this.args.search) {
-            return this.args.search(term, select);
-        } else {
-            return this._filter(this.options, term);
+            this.onSearch('');
         }
     }
 
+    /**
+     * Invokes the search action after a debounced delay when the user types in the search box
+     * @param {(String | null)} term
+     * @returns {Promise<any[]>}
+     * @method onSearch
+     * @private
+     */
     @action
-    async onScroll(select: InfinitySelect) {
-        if (this.canLoadMore && this.args.loadMore) {
-            select.loading = true;
-            let term = select.lastSearchedText;
-            await this.args.loadMore([term, this]).then((results: []) => {
-                select.lastSearchedText = term;
-                select.loading = false;
-            }).catch(() => {
-                select.lastSearchedText = term;
-                select.loading = false;
-            });
+    onSearch(term: string | null): Promise<any[]> {
+        return taskFor(this.searchTask).perform(term);
+    }
+
+    /**
+     * Invokes the loadMore action when the bottom of the options list is reached
+     *
+     * @returns {(Promise<any[] | void | TaskCancelation>)}
+     * @method onLastReached
+     * @public
+     */
+    @action
+    async onLastReached(): Promise<any[] | void | TaskCancelation> {
+        if (this.isLoadingMore || !this.args.canLoadMore) {
+            return;
+        }
+        try {
+            this.isLoadingMore = true;
+            const result = await this.args.loadMore(this.searchText);
+            this.isLoadingMore = false;
+            return result;
+        } catch (errors) {
+            this.isLoadingMore = false;
+            if (!didCancel(errors)) {
+                throw errors;
+            }
+            return errors;
         }
     }
 }

@@ -1,126 +1,145 @@
 {{#if (hasBlock "inverse")}}
     <PowerSelect
         @afterOptionsComponent={{@afterOptionsComponent}}
-        @allowClear={{@allowClear}}
+        @allowClear={{this.allowClear}}
+        @animationEnabled={{@animationEnabled}}
         @ariaDescribedBy={{@ariaDescribedBy}}
-        @ariaInvalid={{@ariaInvalid}}
-        @ariaLabel={{@ariaLabel}}
+        @ariaLabel={{@arieLabel}}
         @ariaLabelledBy={{@ariaLabelledBy}}
         @beforeOptionsComponent={{@beforeOptionsComponent}}
         @buildSelection={{@buildSelection}}
+        @calculatePosition={{@calculatePosition}}
+        @canLoadMore={{this.canLoadMore}}
         @closeOnSelect={{@closeOnSelect}}
         @defaultHighlighted={{@defaultHighlighted}}
-        @dir={{@dir}}
         @destination={{@destination}}
         @disabled={{@disabled}}
-        @dropdownClass={{this.concatenatedDropdownClasses}}
-        @extra={{@extra}}
+        @dropdownClass={{@dropdownClass}}
+        @eventType={{@eventType}}
+        @extra={{assign
+            (hash
+                bufferSize=this.bufferSize
+                estimateHeight=this.estimateHeight
+                staticHeight=this.staticHeight
+                isLoadingMore=this.isLoadingMore
+                isSearching=this.searchTask.isRunning
+                onLastReached=this.onLastReached
+                loadingBelow=this.loadingBelow
+            ) 
+            @extra
+        }}
+        @groupComponent={{@groupComponent}}
+        @highlightOnHover={{@highlightOnHover}}
         @horizontalPosition={{@horizontalPosition}}
-        @initiallyOpened={{@initiallyOpened}}
+        @initiallyOpened={{@intiallyOpened}}
+        @loadingComponent={{@loadingComponent}}
         @loadingMessage={{@loadingMessage}}
         @loadMore={{@loadMore}}
         @matcher={{@matcher}}
-        @matchTriggerWidth={{@matchTriggerWidth}}
+        @matchTriggerWidth={{this.matchTriggerWidth}}
         @noMatchesMessage={{@noMatchesMessage}}
         @onBlur={{@onBlur}}
         @onChange={{@onChange}}
         @onClose={{@onClose}}
-        @onFocus={{this.handleFocus}}
-        @onInput={{this.handleInput}}
-        @onKeydown={{this.onKeydown}}
+        @onFocus={{@onFocus}}
+        @onInput={{this.onSearchInput}}
+        @onKeydown={{@onKeydown}}
         @onOpen={{@onOpen}}
-        @opened={{@opened}}
         @options={{@options}}
-        @optionsComponent={{unless this.fastboot.isFastBoot (component this.optionsComponent
-            onScroll=this.onScroll
-            estimateHeight=this.estimateHeight
-            bufferSize=this.bufferSize
-            staticHeight=this.staticHeight
-        )}}
+        @optionsComponent={{this.optionsComponent}}
         @placeholder={{@placeholder}}
+        @preventScroll={{@preventScroll}}
+        @registerAPI={{@registerAPI}}
         @renderInPlace={{@renderInPlace}}
-        @search={{this.search}}
-        @searchEnabled={{@searchEnabled}}
+        @scrollTo={{@scrollTo}}
+        @search={{this.onSearch}}
+        @searchEnabled={{this.searchEnabled}}
         @searchField={{this.searchField}}
-        @searchMessage={{@searchMessage}}
+        @searchMessage={{false}}
         @searchPlaceholder={{@searchPlaceholder}}
         @selected={{@selected}}
-        @select={{@select}}
         @selectedItemComponent={{@selectedItemComponent}}
-        @tabindex={{@tabindex}}
-        @triggerClass={{this.concatenatedTriggerClasses}}
-        @triggerComponent={{component this.triggerComponent
-            loadingComponent=this.loadingComponent
-            inputClass=this.inputClass
-        }}
+        @tabindex={{this.tabindex}}
+        @triggerClass={{@triggerClass}}
+        @triggerComponent={{this.triggerComponent}}
         @triggerId={{@triggerId}}
-        @triggerRole={{null}}
+        @triggerRole={{@triggerRole}}
+        @typeAheadMatcher={{@typeAheadMatcher}}
         @verticalPosition={{@verticalPosition}}
-        @calculatePosition={{@calculatePosition}}
-        ...attributes
-    as |option term|>
-        {{yield to="inverse"}}
+        as |option select|
+    >
+        {{yield option select to="inverse"}}
     </PowerSelect>
 {{else}}
     <PowerSelect
         @afterOptionsComponent={{@afterOptionsComponent}}
-        @allowClear={{@allowClear}}
+        @allowClear={{this.allowClear}}
+        @animationEnabled={{@animationEnabled}}
         @ariaDescribedBy={{@ariaDescribedBy}}
-        @ariaInvalid={{@ariaInvalid}}
-        @ariaLabel={{@ariaLabel}}
+        @ariaLabel={{@arieLabel}}
         @ariaLabelledBy={{@ariaLabelledBy}}
-        @beforeOptionsComponent={{@beforeOptionsComponent}}
+        @beforeOptionsComponent={{this.beforeOptionsComponent}}
         @buildSelection={{@buildSelection}}
+        @calculatePosition={{@calculatePosition}}
+        @canLoadMore={{this.canLoadMore}}
         @closeOnSelect={{@closeOnSelect}}
         @defaultHighlighted={{@defaultHighlighted}}
-        @dir={{@dir}}
         @destination={{@destination}}
         @disabled={{@disabled}}
-        @dropdownClass={{this.concatenatedDropdownClasses}}
-        @extra={{@extra}}
+        @dropdownClass={{@dropdownClass}}
+        @eventType={{@eventType}}
+        @extra={{assign
+            (hash
+                bufferSize=this.bufferSize
+                estimateHeight=this.estimateHeight
+                staticHeight=this.staticHeight
+                isLoadingMore=this.isLoadingMore
+                isSearching=this.searchTask.isRunning
+                onLastReached=this.onLastReached
+                loadingBelow=this.loadingBelow
+            ) 
+            @extra
+        }}
+        @groupComponent={{@groupComponent}}
+        @highlightOnHover={{@highlightOnHover}}
         @horizontalPosition={{@horizontalPosition}}
-        @initiallyOpened={{@initiallyOpened}}
+        @initiallyOpened={{@intiallyOpened}}
+        @loadingComponent={{@loadingComponent}}
         @loadingMessage={{@loadingMessage}}
         @loadMore={{@loadMore}}
         @matcher={{@matcher}}
-        @matchTriggerWidth={{@matchTriggerWidth}}
+        @matchTriggerWidth={{this.matchTriggerWidth}}
         @noMatchesMessage={{@noMatchesMessage}}
         @onBlur={{@onBlur}}
         @onChange={{@onChange}}
-        @onClose={{@onclose}}
-        @onFocus={{this.handleFocus}}
-        @onInput={{this.handleInput}}
-        @onKeydown={{this.handleKeydown}}
-        @onopen={{@onopen}}
-        @opened={{@opened}}
+        @onClose={{@onClose}}
+        @onFocus={{@onFocus}}
+        @onInput={{this.onSearchInput}}
+        @onKeydown={{@onKeydown}}
+        @onOpen={{@onOpen}}
         @options={{@options}}
-        @optionsComponent={{unless this.fastboot.isFastBoot (component this.optionsComponent
-            onScroll=this.onScroll
-            estimateHeight=this.estimateHeight
-            bufferSize=this.bufferSize
-            staticHeight=this.staticHeight
-        )}}
+        @optionsComponent={{this.optionsComponent}}
         @placeholder={{@placeholder}}
+        @preventScroll={{@preventScroll}}
+        @registerAPI={{@registerAPI}}
         @renderInPlace={{@renderInPlace}}
-        @search={{this.search}}
-        @searchEnabled={{@searchEnabled}}
+        @scrollTo={{@scrollTo}}
+        @search={{this.onSearch}}
+        @searchEnabled={{this.searchEnabled}}
         @searchField={{this.searchField}}
-        @searchMessage={{@searchMessage}}
+        @searchMessage={{false}}
         @searchPlaceholder={{@searchPlaceholder}}
-        @selected={{this.selected}}
+        @selected={{@selected}}
         @selectedItemComponent={{@selectedItemComponent}}
-        @tabindex={{@tabindex}}
-        @triggerClass={{this.concatenatedTriggerClasses}}
-        @triggerComponent={{component this.triggerComponent
-            loadingComponent=this.loadingComponent
-            inputClass=this.inputClass
-        }}
+        @tabindex={{this.tabindex}}
+        @triggerClass={{@triggerClass}}
+        @triggerComponent={{this.triggerComponent}}
         @triggerId={{@triggerId}}
-        @triggerRole={{null}}
+        @triggerRole={{@triggerRole}}
+        @typeAheadMatcher={{@typeAheadMatcher}}
         @verticalPosition={{@verticalPosition}}
-        @calculatePosition={{@calculatePosition}}
-        ...attributes
-    as |option term|>
-        {{yield option term}}
+        as |option select|
+    >
+        {{yield option select}}
     </PowerSelect>
 {{/if}}

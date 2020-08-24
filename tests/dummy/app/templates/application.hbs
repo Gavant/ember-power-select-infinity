@@ -1,55 +1,6 @@
-<h2 id="title" class="text-center">Welcome to Ember</h2>
+<DocsHeader
+    @prefix='Gavant'
+    @name='Ember Power Select Infinity'
+/>
 
 {{outlet}}
-
-
-<div class="row justify-content-center">
-    <div class="col-4">
-        <PowerSelectInfinity
-            @options={{this.options}}
-            @search={{this.search}}
-            @loadMore={{this.loadMore}}
-            @selected={{this.selected}}
-            @searchField={{'name'}}
-            @onChange={{fn (mut this.selected)}}
-            @inputClass="form-control"
-            as |user|>
-                {{user.name}}
-         </PowerSelectInfinity>
-    </div>
-</div>
-<div class="row justify-content-center">
-    <div class="col-4">
-        With Custom buffer size
-        <PowerSelectInfinity
-            @options={{this.options}}
-            @search={{this.search}}
-            @loadMore={{this.loadMore}}
-            @selected={{this.selected}}
-            @onChange={{fn (mut this.selected)}}
-            @searchField={{'name'}}
-            @inputClass="form-control"
-            @bufferSize={{1}}
-            as |user|>
-                {{user.name}}
-         </PowerSelectInfinity>
-    </div>
-</div>
-
-<div class="row justify-content-center">
-    <div class="col-4">
-        With Custom Loading Component
-        <PowerSelectInfinity
-            @options={{this.options}}
-            @search={{this.search}}
-            @loadMore={{this.loadMore}}
-            @selected={{this.selected}}
-            @onChange={{fn (mut this.selected)}}
-            @searchField={{'name'}}
-            @inputClass="form-control"
-            @loadingComponent='loading-component'
-            as |user|>
-                {{user.name}}
-        </PowerSelectInfinity>
-    </div>
-</div>
