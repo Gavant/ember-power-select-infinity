@@ -20,7 +20,7 @@ interface PowerSelectInfinityForModelArgs {
 
 export default class PowerSelectInfinityForModel extends Component<PowerSelectInfinityForModelArgs> {
     @tracked canLoadMore: boolean = true;
-    @tracked options: any[] = [];
+    @tracked options!: any[];
 
     @argDefault useSearchParamFilter: boolean = true;
     @argDefault pageSize: number = 25;
@@ -85,7 +85,6 @@ export default class PowerSelectInfinityForModel extends Component<PowerSelectIn
      */
     @action
     @dontRunInFastboot
-    @dontRunInTests
     async loadInitialPage(): Promise<any[]> {
         const options = (await this.search('')) ?? [];
         this.options = options;

@@ -3,7 +3,7 @@ import { PowerSelectArgs } from 'ember-power-select/components/power-select';
 import { action } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
-import { dontRunInFastboot, argDefault } from '../decorators/power-select-infinity';
+import { argDefault } from '../decorators/power-select-infinity';
 import { TaskGenerator, timeout, didCancel, TaskCancelation } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { taskFor } from 'ember-concurrency-ts';
@@ -70,6 +70,7 @@ interface PowerSelectInfinityArgs extends PowerSelectArgs {
      */
     staticHeight?: boolean;
     triggerComponent?: string;
+    triggerLoading?: boolean;
     /**
      * Toggles the search being within the dropdown trigger.
      *
@@ -95,7 +96,6 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
     @argDefault bufferSize: number = 5;
     @argDefault canLoadMore: boolean = true;
     @argDefault estimateHeight: number = 30;
-    @argDefault loadingBelow: boolean = true;
     @argDefault loadingComponent: string = 'power-select-infinity/loading';
     @argDefault matchTriggerWidth: boolean = true;
     @argDefault noMatchesMessage: string | null = null;
@@ -107,17 +107,18 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
     @argDefault searchField: string | null = null;
     @argDefault staticHeight: boolean = false;
     @argDefault tabindex: number = -1;
+    @argDefault triggerLoading: boolean = false;
 
     @tracked isLoadingMore: boolean = false;
     @tracked loading = false;
-    @tracked searchText: string | null = null;
+    @tracked searchText: string = '';
 
     get triggerComponent() {
-        return this.args.triggerComponent ?? this.loadingBelow ? '' : 'power-select-infinity/trigger-with-load';
+        return this.args.triggerComponent ?? this.triggerLoading ? 'power-select-infinity/trigger-with-load' : '';
     }
 
     get beforeOptionsComponent() {
-        return this.args.beforeOptionsComponent ?? this.loadingBelow ? undefined : null;
+        return this.args.beforeOptionsComponent ?? this.triggerLoading ? null : undefined;
     }
 
     /**
@@ -129,7 +130,7 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
      * @private
      */
     @restartableTask
-    private *searchTask(term: string | null): TaskGenerator<any[]> {
+    private *searchTask(term: string): TaskGenerator<any[]> {
         yield timeout(this.searchDebounceDelay);
         try {
             const results = this.args.search(term);
@@ -151,7 +152,7 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
      * @public
      */
     @action
-    onSearchInput(term: string | null): void {
+    onSearchInput(term: string): void {
         this.searchText = term;
 
         // Since the search action is not invoked when the search term is blank,
@@ -169,7 +170,7 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
      * @private
      */
     @action
-    onSearch(term: string | null): Promise<any[]> {
+    onSearch(term: string): Promise<any[]> {
         return taskFor(this.searchTask).perform(term);
     }
 

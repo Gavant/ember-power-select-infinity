@@ -1,5 +1,5 @@
 <ul role="listbox" class={{@optionsClass}} aria-controls="ember-power-select-trigger-{{@select.uniqueId}}" {{did-insert this.addHandlers}} ...attributes>
-    {{#if (and @extra.isSearching @extra.loadingBelow)}}
+    {{#if (and @extra.isSearching (not @extra.triggerLoading))}}
         {{#if @loadingMessage}}
             <li class="ember-power-select-option ember-power-select-option--loading-message pl-3 py-2" role="option">
                 <ProgressSpinner />
@@ -8,7 +8,7 @@
     {{/if}}
     {{#unless @extra.isSearching}}
         <VerticalCollection
-            @items={{@options}}
+            @items={{@extra.options}}
             @estimateHeight={{@extra.estimateHeight}}
             @staticHeight={{@extra.staticHeight}}
             @bufferSize={{@extra.bufferSize}}
