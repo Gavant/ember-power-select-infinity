@@ -6,25 +6,20 @@
     id="ember-power-select-trigger-multiple-input-{{@select.uniqueId}}"
     value={{@select.searchText}}
     aria-controls={{@listboxId}}
-    placeholder={{if (not (and @select.selected @selectOnly)) @placeholder}}
+    placeholder={{@placeholder}}
     disabled={{@select.disabled}}
     maxlength="128"
     {{!-- template-lint-disable no-positive-tabindex  --}}
     tabindex={{or @tabindex "-1"}}
     {{on "focus" @onFocus}}
-    {{on "blur" @onBlur}}
+    {{on "blur" this.onBlur}}
     {{on "input" this.handleInput}}
     {{on "keydown" this.handleKeydown}}
-    {{did-insert this.storeInputStyles}}
 >
-{{#if (and @selectedItemComponent @selectOnly)}}
-    {{component
-        @selectedItemComponent 
-        extra=(readonly @extra)
-        option=(readonly @select.selected)
-        select=(readonly @select)
-    }}
-{{/if}}
 {{#if @extra.isSearching}}
-    <ProgressSpinner class="progress-spinner-infinity-trigger" />
+    <ProgressSpinner class="infinity-trigger-progress-spinner" />
+{{else if (and (is-empty @extra.options) @extra.hasInvokedSearch @select.searchText)}}
+    <span class="infinity-trigger-no-results-label">
+        {{@extra.noMatchesMessage}}
+    </span>
 {{/if}}

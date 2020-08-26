@@ -6,7 +6,7 @@
         @ariaDescribedBy={{@ariaDescribedBy}}
         @ariaLabel={{@arieLabel}}
         @ariaLabelledBy={{@ariaLabelledBy}}
-        @beforeOptionsComponent={{@beforeOptionsComponent}}
+        @beforeOptionsComponent={{this.beforeOptionsComponent}}
         @buildSelection={{@buildSelection}}
         @calculatePosition={{@calculatePosition}}
         @canLoadMore={{this.canLoadMore}}
@@ -14,7 +14,7 @@
         @defaultHighlighted={{@defaultHighlighted}}
         @destination={{@destination}}
         @disabled={{@disabled}}
-        @dropdownClass={{@dropdownClass}}
+        @dropdownClass={{this.dropdownClass}}
         @eventType={{@eventType}}
         @extra={{assign
             (hash
@@ -24,8 +24,10 @@
                 isLoadingMore=this.isLoadingMore
                 isSearching=this.searchTask.isRunning
                 onLastReached=this.onLastReached
-                triggerLoading=this.triggerLoading
+                triggerIsSearch=this.triggerIsSearch
                 options=@options
+                noMatchesMessage=this.noMatchesMessage
+                hasInvokedSearch=this.hasInvokedSearch
             ) 
             @extra
         }}
@@ -38,14 +40,14 @@
         @loadMore={{@loadMore}}
         @matcher={{@matcher}}
         @matchTriggerWidth={{this.matchTriggerWidth}}
-        @noMatchesMessage={{@noMatchesMessage}}
-        @onBlur={{@onBlur}}
+        @noMatchesMessage={{this.noMatchesMessage}}
+        @onBlur={{this.onBlur}}
         @onChange={{@onChange}}
         @onClose={{@onClose}}
         @onFocus={{@onFocus}}
         @onInput={{this.onSearchInput}}
         @onKeydown={{@onKeydown}}
-        @onOpen={{@onOpen}}
+        @onOpen={{this.onOpen}}
         @options={{@options}}
         @optionsComponent={{this.optionsComponent}}
         @placeholder={{@placeholder}}
@@ -87,7 +89,7 @@
         @defaultHighlighted={{@defaultHighlighted}}
         @destination={{@destination}}
         @disabled={{@disabled}}
-        @dropdownClass={{@dropdownClass}}
+        @dropdownClass={{this.dropdownClass}}
         @eventType={{@eventType}}
         @extra={{assign
             (hash
@@ -97,8 +99,10 @@
                 isLoadingMore=this.isLoadingMore
                 isSearching=this.searchTask.isRunning
                 onLastReached=this.onLastReached
-                triggerLoading=this.triggerLoading
+                triggerIsSearch=this.triggerIsSearch
                 options=@options
+                noMatchesMessage=this.noMatchesMessage
+                hasInvokedSearch=this.hasInvokedSearch
             ) 
             @extra
         }}
@@ -111,14 +115,14 @@
         @loadMore={{@loadMore}}
         @matcher={{@matcher}}
         @matchTriggerWidth={{this.matchTriggerWidth}}
-        @noMatchesMessage={{@noMatchesMessage}}
-        @onBlur={{@onBlur}}
+        @noMatchesMessage={{this.noMatchesMessage}}
+        @onBlur={{this.onBlur}}
         @onChange={{@onChange}}
         @onClose={{@onClose}}
         @onFocus={{@onFocus}}
         @onInput={{this.onSearchInput}}
         @onKeydown={{@onKeydown}}
-        @onOpen={{@onOpen}}
+        @onOpen={{this.onOpen}}
         @options={{@options}}
         @optionsComponent={{this.optionsComponent}}
         @placeholder={{@placeholder}}

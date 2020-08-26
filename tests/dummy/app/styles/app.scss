@@ -202,11 +202,17 @@ section.item-section {
     }
 }
 
-.progress-spinner {
-    &-infinity-trigger.active {
+.infinity-trigger {
+    &-progress-spinner.active {
         position: absolute;
         right: 20px;
         top: 10px;
+    }
+    &-no-results-label {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 12px;
     }
 }
 

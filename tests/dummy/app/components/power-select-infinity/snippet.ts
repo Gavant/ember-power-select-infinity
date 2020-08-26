@@ -1,5 +1,6 @@
+// @ts-nocheck
 interface Model {}
-// BEGIN-SNIPPET basic-power-select-demo.ts
+// BEGIN-SNIPPET basic-power-select-snippet.ts
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
@@ -49,7 +50,6 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
             return models;
         } catch (errors) {
             if (!didCancel(errors)) {
-                this.notifications.groupErrors(errors);
                 throw errors;
             }
         }

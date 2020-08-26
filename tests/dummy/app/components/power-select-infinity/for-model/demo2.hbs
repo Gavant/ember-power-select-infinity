@@ -1,15 +1,13 @@
-{{!-- BEGIN-SNIPPET trigger-loading-demo.hbs --}}
-<PowerSelectInfinity
+<PowerSelectInfinity::ForModel
+    @modelName="person"
     @selected={{@selected}}
     @onChange={{@onChange}}
-    @options={{@options}}
-    @canLoadMore={{this.canLoadMore}}
-    @loadMore={{this.loadMore}}
-    @allowClear={{this.allowClear}}
-    @placeholder="Select an item"
-    @searchPlaceholder="Search items..."
-    @triggerClass="form-control p-0"
-    @triggerLoading={{true}}
+    @placeholder="Select a person"
+    @searchPlaceholder="Search for people..."
+    @triggerClass="form-control"
+    @processQueryParams={{@processQueryParams}}
+    @filters={{@filters}}
+    @loadOptionsOnRender={{false}}
     as |option|
 >
     <div class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}">
@@ -22,5 +20,4 @@
             {{option.name}}
         </div>
     </div>
-</PowerSelectInfinity>
-{{!-- END-SNIPPET --}}
+</PowerSelectInfinity::ForModel>

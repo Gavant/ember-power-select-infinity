@@ -1,4 +1,4 @@
-import OptionsComponent from 'ember-power-select/components/power-select/options';
+import Options from 'ember-power-select/components/power-select/options';
 
 interface PowerSelectInfinityOptionsArgs {
     items: any[];
@@ -12,4 +12,4 @@ interface PowerSelectInfinityOptionsArgs {
     optionsClass?: string;
 }
 
-export default class PowerSelectInfinityOptions extends OptionsComponent<PowerSelectInfinityOptionsArgs> {}
+export default class PowerSelectInfinityOptions extends Options<PowerSelectInfinityOptionsArgs> {}
