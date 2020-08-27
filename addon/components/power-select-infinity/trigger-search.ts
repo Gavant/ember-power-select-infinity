@@ -17,4 +17,23 @@ export default class PowerSelectTriggerWithLoad extends Trigger<PowerSelectTrigg
         scheduleOnce('actions', this.args.select.actions, 'search', '');
         this.args.onBlur();
     }
+
+    @action
+    onClear(select: Select) {
+        select.actions.select(null);
+        this.args.extra.clearSearch();
+        this.args.extra.clearOptions?.();
+        scheduleOnce('afterRender', this, 'focusTrigger');
+    }
+
+    @action
+    handleKeydown(e: KeyboardEvent) {
+        super.handleKeydown(e);
+    }
+
+    @action
+    async focusTrigger() {
+        await new Promise((r) => setTimeout(r, 300));
+        this.args.select.actions.open();
+    }
 }

@@ -10,8 +10,8 @@ This addon provides a power select which uses occlusion rendering to infinitely 
 Compatibility
 ------------------------------------------------------------------------------
 
-* Ember.js v3.12 or above
-* Ember CLI v2.13 or above
+* Ember.js v3.16 or above
+* Ember CLI v3.16 or above
 * Node.js v10 or above
 
 
@@ -34,7 +34,7 @@ Either way, `power-select-infinity` just provides a `loadMore` action where you 
 If your using `ember-cli-sass` in your project, an import statement will automatically be added to your project.
 
 Your Component
-```
+```hbs
 <PowerSelectInfinity
     @search={{this.search}}
     @searchField='name'
@@ -49,7 +49,7 @@ Your Component
 Your Controller
 
 Paging using page numbers
-```
+```ts
 export default PagingController extends Controller {
     page = 1;
 
@@ -71,7 +71,7 @@ export default PagingController extends Controller {
 }
 ```
 Paging using page offset & limit
-```
+```ts
 export default PagingController extends Controller {
     page = 1;
     
@@ -88,7 +88,7 @@ export default PagingController extends Controller {
 ```
 
 If you want the power select to open when the input is focused, just pass a list of options via the options parameter.
-```
+```hbs
 <PowerSelectInfinity
     @options={{this.options}}
     @search={{this.search}}
@@ -103,7 +103,7 @@ If you want the power select to open when the input is focused, just pass a list
 
 
 If your using a complex objects as the options, you need to tell `power-select-infinity` what value to display when an option is selected using
-```
+```hbs
 <PowerSelectInfinity
     @options={{this.options}}
     @search={{this.search}}
@@ -119,7 +119,7 @@ In the example above, Im using a user object which has a property of `name` that
 
 There are some options you can pass to https://github.com/html-next/vertical-collection, which is what we use for the occlusion rendering. The three options are estimateHeight, bufferSize, and staticHeight. Read the vertical collection documentation for what they do and how to use them
 
-```
+```hbs
 <PowerSelectInfinity
     @options={{this.options}}
     @estimateHeight={{75}}
@@ -137,7 +137,7 @@ There are some options you can pass to https://github.com/html-next/vertical-col
 
 You can also customize the loading component by passing in your own `loadingComponent` property.
 
-```
+```hbs
 <PowerSelectInfinity
     @options={{this.options}}
     @search={{this.search}}

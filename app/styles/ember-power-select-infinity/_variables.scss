@@ -1,4 +1,14 @@
-$power-select-infinity-loading-height: 20px !default;
-$power-select-infinity-loading-width: 20px !default;
-$power-select-infinity-loading-color: #333 !default;
-$power-select-infinity-loading-background-color: transparent !default;
+$gvnt-power-select-infinity-loading-height: 20px !default;
+$gvnt-power-select-infinity-loading-width: 20px !default;
+$gvnt-power-select-infinity-loading-color: #333 !default;
+$gvnt-power-select-infinity-loading-background-color: transparent !default;
+
+// Loading Trigger
+$gvnt-power-select-infinity-trigger-spinner-right: 1rem !default;
+$gvnt-power-select-infinity-trigger-spinner-top: 0.6rem !default;
+$gvnt-power-select-infinity-trigger-no-results-label-right: 1rem !default;
+$gvnt-power-select-infinity-trigger-no-results-label-top: 0.6rem !default;
+$gvnt-power-select-infinity-trigger-no-results-label-font-size: 12px !default;
+$gvnt-power-select-infinity-trigger-clear-btn-right: 1rem !default;
+$gvnt-power-select-infinity-trigger-clear-btn-top: 0.2rem !default;
+$gvnt-power-select-infinity-trigger-selected-item-wrapper-padding: 0.3rem 1rem !default;

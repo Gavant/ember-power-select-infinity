@@ -12,7 +12,7 @@ Router.map(function () {
         this.route('components', function () {
             this.route('power-select-infinity');
             this.route('power-select-infinity-for-model');
-            this.route('power-select-infinity-trigger-with-load');
+            this.route('power-select-infinity-trigger-search');
         });
     });
     this.route('not-found', { path: '/*path' });

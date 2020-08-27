@@ -1,4 +1,3 @@
-{{!-- BEGIN-SNIPPET power-select-infinity-trigger-with-load-demo.hbs --}}
 <PowerSelectInfinity
     @selected={{@selected}}
     @onChange={{@onChange}}
@@ -11,6 +10,7 @@
     @noMatchesMessage="No droids here"
     @triggerClass="form-control p-0"
     @triggerIsSearch={{@triggerIsSearch}}
+    @clearOptions={{this.clearOptions}}
     as |option|
 >
     <div class="ember-power-select-option-section">
@@ -19,4 +19,3 @@
         </div>
     </div>
 </PowerSelectInfinity>
-{{!-- END-SNIPPET --}}

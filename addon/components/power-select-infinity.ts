@@ -1,13 +1,41 @@
 import Component from '@glimmer/component';
 import { Select } from 'ember-power-select/addon/components/power-select';
 import { isEmpty } from '@ember/utils';
-import { action } from '@ember/object';
+import { action, get } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
 import { argDefault } from '../decorators/power-select-infinity';
 import { TaskGenerator, timeout, didCancel, TaskCancelation } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { taskFor } from 'ember-concurrency-ts';
+import { later } from '@ember/runloop';
+
+function indexOfOption(collection: any, option: any): number {
+    let index = 0;
+    return (function walk(collection): number {
+        if (!collection) {
+            return -1;
+        }
+        for (let i = 0; i < get(collection, 'length'); i++) {
+            let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
+            if (isGroup(entry)) {
+                let result = walk(get(entry, 'options'));
+                if (result > -1) {
+                    return result;
+                }
+            } else if (entry === option) {
+                return index;
+            } else {
+                index++;
+            }
+        }
+        return -1;
+    })(collection);
+}
+
+function isGroup(entry: any): boolean {
+    return !!entry && !!get(entry, 'groupName') && !!get(entry, 'options');
+}
 
 interface PowerSelectArgs {
     afterOptionsComponent?: string;
@@ -121,6 +149,24 @@ export interface PowerSelectInfinityArgs extends PowerSelectArgs {
      * @argument canLoadMore
      */
     canLoadMore: boolean;
+    /**
+     * Method used to clear the options.
+     *
+     * This should be passed in when using `triggerIsSearch`
+     *
+     * @type {() => any}
+     * @argument clearOptions
+     */
+    clearOptions?: () => any;
+    /**
+     * Whether to clear the search text on blur or not.
+     *
+     * Defaults to `true` when `triggerIsSearch` is `true`.
+     *
+     * @type {boolean}
+     * @argument clearSearchOnBlur
+     */
+    clearSearchOnBlur?: boolean;
     /**
      * The class for the dropdown options
      *
@@ -241,7 +287,7 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
         return this.args.triggerComponent !== undefined
             ? this.args.triggerComponent
             : this.triggerIsSearch
-            ? 'power-select-infinity/trigger-with-load'
+            ? 'power-select-infinity/trigger-search'
             : '';
     }
 
@@ -257,6 +303,10 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
         } else {
             return this.args.dropdownClass;
         }
+    }
+
+    get clearSearchOnBlur() {
+        return this.args.clearSearchOnBlur !== undefined ? this.args.clearSearchOnBlur : this.triggerIsSearch;
     }
 
     /**
@@ -340,8 +390,85 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
     }
 
     @action
+    clearSearch() {
+        this.searchText = '';
+    }
+
+    @action
     onBlur(select: Select, event: FocusEvent) {
         this.hasInvokedSearch = false;
+        if (this.clearSearchOnBlur) {
+            later(
+                this,
+                function (select: Select) {
+                    if (!select.isActive) {
+                        this.clearSearch();
+                        this.args.clearOptions?.();
+                    }
+                },
+                [select],
+                100
+            );
+        }
         this.args.onBlur?.(select, event);
     }
+
+    @action
+    scrollTo(option: any, select: Select) {
+        let optionsList = document.querySelector(
+            `[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`
+        ) as HTMLElement;
+        if (!optionsList) {
+            return;
+        }
+        let index = indexOfOption(select.results, option);
+        if (index === -1) {
+            return;
+        }
+        let optionElement =
+            (optionsList.querySelectorAll('[data-option-index]') as NodeListOf<HTMLElement>).item(index) ??
+            optionsList.querySelector(`[data-option-index="${index}"]`);
+        if (!optionElement) {
+            return;
+        }
+        let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
+        let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+        if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
+            optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
+        } else if (optionTopScroll < optionsList.scrollTop) {
+            optionsList.scrollTop = optionTopScroll;
+        }
+    }
 }
+
+//     @action
+//     scrollTo(option: any, select: Select) {
+//         let optionsList = document.querySelector(
+//             `[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`
+//         ) as HTMLElement;
+//         if (!optionsList) {
+//             return;
+//         }
+//         let index = indexOfOption(select.results, option);
+//         if (index === -1) {
+//             return;
+//         }
+//         let optionsArray = Array.from(optionsList.querySelectorAll('[data-option-index]')) as any[];
+//         if (optionsArray.length) {
+//             optionsArray.unshift(...Array(Number(optionsArray[0].attributes['data-option-index'].value)));
+//             optionsArray = optionsArray.concat(
+//                 ...Array.apply(null, Array(select.options.length - optionsArray.length)).map(function () {})
+//             );
+//         }
+//         let optionElement = optionsArray[index];
+//         if (!optionElement) {
+//             return;
+//         }
+//         let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
+//         let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
+//         if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
+//             optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
+//         } else if (optionTopScroll < optionsList.scrollTop) {
+//             optionsList.scrollTop = optionTopScroll;
+//         }
+//     }

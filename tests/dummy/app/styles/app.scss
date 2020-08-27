@@ -202,20 +202,6 @@ section.item-section {
     }
 }
 
-.infinity-trigger {
-    &-progress-spinner.active {
-        position: absolute;
-        right: 20px;
-        top: 10px;
-    }
-    &-no-results-label {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        font-size: 12px;
-    }
-}
-
 .dropdown {
     &-sub-label-xs {
         font-size: 9px;

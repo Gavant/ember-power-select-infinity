@@ -28,6 +28,9 @@
                 options=@options
                 noMatchesMessage=this.noMatchesMessage
                 hasInvokedSearch=this.hasInvokedSearch
+                searchText=this.searchText
+                clearSearch=this.clearSearch
+                clearOptions=@clearOptions
             ) 
             @extra
         }}
@@ -103,6 +106,9 @@
                 options=@options
                 noMatchesMessage=this.noMatchesMessage
                 hasInvokedSearch=this.hasInvokedSearch
+                searchText=this.searchText
+                clearSearch=this.clearSearch
+                clearOptions=@clearOptions
             ) 
             @extra
         }}
@@ -129,7 +135,7 @@
         @preventScroll={{@preventScroll}}
         @registerAPI={{@registerAPI}}
         @renderInPlace={{@renderInPlace}}
-        @scrollTo={{@scrollTo}}
+        @scrollTo={{this.scrollTo}}
         @search={{this.onSearch}}
         @searchEnabled={{this.searchEnabled}}
         @searchField={{this.searchField}}

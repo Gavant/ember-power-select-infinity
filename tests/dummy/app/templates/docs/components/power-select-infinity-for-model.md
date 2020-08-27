@@ -27,7 +27,9 @@ A power-select-infinity used to retrieve model data.
 
 {{#docs-demo as |demo|}}
     {{#demo.example name="power-select-infinity-for-model-2.hbs"}}
-        The query params can be manipulated using `processQueryParams` and `filters`
+        The query params can be manipulated using `processQueryParams` and `filters` arguments.  
+        <br>
+        Check out the console to see what's happening!
         <div class="col-5 px-0 mt-3">
             {{power-select-infinity/for-model/demo2
                 onChange=this.selectPerson2

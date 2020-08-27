@@ -1,4 +1,4 @@
-// BEGIN-SNIPPET power-select-infinity-trigger-with-load.ts
+// BEGIN-SNIPPET power-select-infinity-trigger-search.ts
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
@@ -91,7 +91,7 @@ export default class PowerSelectInfinityTriggerLoading extends Component<PowerSe
     }
 
     @action
-    onBlur() {
+    clearOptions() {
         this.options = [];
     }
 }
