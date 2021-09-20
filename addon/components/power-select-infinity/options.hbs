@@ -4,13 +4,6 @@
     {{did-insert this.addHandlers}}
     ...attributes
 >
-    {{#if (and @extra.isSearching (not @extra.triggerIsSearch))}}
-        {{#if @loadingMessage}}
-            <li class="ember-power-select-option ember-power-select-option--loading-message pl-3 py-2" role="option">
-                <ProgressSpinner />
-            </li>
-        {{/if}}
-    {{/if}}
     {{#unless @extra.isSearching}}
         <VerticalCollection
             @items={{@extra.options}}
@@ -32,8 +25,8 @@
             </li>
         </VerticalCollection>
         {{#if @extra.isLoadingMore}}
-            <li class="ember-power-select-option ember-power-select-option--loading-message" role="option">
-                <ProgressSpinner />
+            <li class="ember-power-select-option ember-power-select-option--loading-message">
+                <LoadingPulse />
             </li>
         {{/if}}
     {{/unless}}

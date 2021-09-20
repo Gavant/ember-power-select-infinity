@@ -1,139 +1,15 @@
-import Component from '@glimmer/component';
-import { Select } from 'ember-power-select/addon/components/power-select';
-import { isEmpty } from '@ember/utils';
-import { action, get } from '@ember/object';
-import { isBlank } from '@ember/utils';
-import { tracked } from '@glimmer/tracking';
-import { argDefault } from '../decorators/power-select-infinity';
-import { TaskGenerator, timeout, didCancel, TaskCancelation } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
-import { taskFor } from 'ember-concurrency-ts';
+import { action } from '@ember/object';
 import { later } from '@ember/runloop';
+import { isBlank, isEmpty } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
 
-function indexOfOption(collection: any, option: any): number {
-    let index = 0;
-    return (function walk(collection): number {
-        if (!collection) {
-            return -1;
-        }
-        for (let i = 0; i < get(collection, 'length'); i++) {
-            let entry = collection.objectAt ? collection.objectAt(i) : collection[i];
-            if (isGroup(entry)) {
-                let result = walk(get(entry, 'options'));
-                if (result > -1) {
-                    return result;
-                }
-            } else if (entry === option) {
-                return index;
-            } else {
-                index++;
-            }
-        }
-        return -1;
-    })(collection);
-}
+import Component from '@glimmer/component';
+import { didCancel, restartableTask, TaskCancelation, timeout } from 'ember-concurrency';
+import { taskFor } from 'ember-concurrency-ts';
+import { Select } from 'ember-power-select/addon/components/power-select';
+import { PowerSelectComponentArgs } from 'ember-power-select/power-select';
 
-function isGroup(entry: any): boolean {
-    return !!entry && !!get(entry, 'groupName') && !!get(entry, 'options');
-}
-
-interface PowerSelectArgs {
-    afterOptionsComponent?: string;
-    allowClear?: boolean;
-    animationEnabled?: boolean;
-    ariaDescribedBy?: string;
-    ariaInvalid?: string;
-    ariaLabel?: string;
-    ariaLabelledBy?: string;
-    beforeOptionsComponent?: string;
-    buildSelection?: (lastSelection: unknown, select: Select) => unknown | null;
-    calculatePosition?: (
-        trigger: HTMLElement,
-        content: HTMLElement,
-        destination: HTMLElement,
-        options: CalculatePositionOptions
-    ) => {
-        horizontalPosition: HorizontalPositions;
-        verticalPosition: VerticalPositions;
-        style: PositionStyle;
-    };
-    class?: string;
-    closeOnSelect?: boolean;
-    defaultHighlighted?: unknown;
-    destination?: string;
-    disabled?: boolean;
-    dropdownClass?: string;
-    extra?: { [index: string]: any };
-    groupComponent?: string;
-    highlightOnHover?: boolean;
-    horizontalPosition?: HorizontalPositions;
-    intiallyOpened?: boolean;
-    loadingMessage?: string;
-    eventType?: string;
-    matcher?: (option: unknown, searchTerm: string) => boolean;
-    matchTriggerWidth?: boolean;
-    noMatchesMessage?: string;
-    onBlur?: (select: Select, event: FocusEvent) => void;
-    onChange?: (selection: unknown, select: Selection, event?: Event) => void;
-    onClose?: (select: Select, e: Event) => boolean | undefined;
-    onFocus?: (select: Select, event: FocusEvent) => void;
-    onInput?: (term: string, select: Select, e: Event) => string | false | void;
-    onKeydown?: (select: Select, e: KeyboardEvent) => boolean | undefined;
-    onOpen?: (select: Select, e: Event) => boolean | undefined;
-    options: unknown[];
-    optionsComponent?: string;
-    placeholder?: string;
-    placeholderComponent?: string;
-    preventScroll?: boolean;
-    registerAPI?: (select: Select) => void;
-    renderInPlace?: boolean;
-    scrollTo?: (option: unknown, select: Select) => void;
-    search?: (term: string, select: Select) => any[] | Promise<unknown[]>;
-    searchEnabled?: boolean;
-    searchField?: string;
-    searchMessage?: string;
-    searchPlaceholder?: string;
-    selected?: unknown | unknown[];
-    selectedItemComponent?: string;
-    tabindex?: string;
-    triggerClass?: string;
-    triggerComponent?: string;
-    triggerId?: string;
-    triggerRole?: string;
-    typeAheadMatcher?: (option: unknown, searchTerm: string) => boolean;
-    verticalPosition?: VerticalPositions;
-}
-
-interface CalculatePositionOptions {
-    previousHorizontalPosition: HorizontalPositions;
-    horizontalPosition: HorizontalPositions;
-    previousVerticalPosition: VerticalPositions;
-    verticalPosition: VerticalPositions;
-    matchTriggerWidth: boolean;
-    renderInPlace: boolean;
-}
-
-interface PositionStyle {
-    top?: number;
-    left?: number;
-    right?: number;
-    width?: number;
-}
-
-enum HorizontalPositions {
-    LEFT = 'left',
-    RIGHT = 'right',
-    CENTER = 'center',
-    AUTO = 'auto'
-}
-
-enum VerticalPositions {
-    ABOVE = 'above',
-    BELOW = 'below',
-    AUTO = 'auto'
-}
-
-export interface PowerSelectInfinityArgs extends PowerSelectArgs {
+export interface PowerSelectInfinityArgs<T> extends PowerSelectComponentArgs<T> {
     beforeOptionsComponent?: string;
     /**
      * Used by ember-vertical-collection for occlusion rendering.
@@ -188,7 +64,7 @@ export interface PowerSelectInfinityArgs extends PowerSelectArgs {
      * @type {(keyword: string | null) => any[]}
      * @argument loadMore
      */
-    loadMore: (keyword: string | null) => any[];
+    loadMore: (keyword: string | null) => Promise<any[]>;
     /**
      * The message shown when no options are returned.
      *
@@ -217,7 +93,7 @@ export interface PowerSelectInfinityArgs extends PowerSelectArgs {
      * @argument search
      *
      */
-    search: (keyword: string | null) => any[];
+    search: (keyword: string | null) => Promise<any[]>;
     /**
      * The delay for invoking the `@search` method
      * when typing.
@@ -247,41 +123,81 @@ export interface PowerSelectInfinityArgs extends PowerSelectArgs {
      * @argument triggerIsSearch
      */
     triggerIsSearch?: boolean;
+    /**
+     * Determines whether the search box renders inside the options or not.
+     */
+    searchBelow?: boolean;
 }
 
-/**
- * Simple Usage:
- * ```handlebars
- * <PowerSelectInfinity @onChange={{this.onChange}} />
- * ```
- *
- * @export
- * @class PowerSelectInfinity
- * @extends {Component<PowerSelectInfinityArgs>}
- * @public
- */
-export default class PowerSelectInfinity extends Component<PowerSelectInfinityArgs> {
-    @argDefault allowClear: boolean = true;
-    @argDefault bufferSize: number = 5;
-    @argDefault canLoadMore: boolean = true;
-    @argDefault estimateHeight: number = 30;
-    @argDefault loadingComponent: string = 'power-select-infinity/loading';
-    @argDefault matchTriggerWidth: boolean = true;
-    @argDefault noMatchesMessage: string = 'No results found';
-    @argDefault optionsComponent: string = 'power-select-infinity/options';
-    @argDefault search: boolean = false;
-    @argDefault searchBelow: boolean = true;
-    @argDefault searchDebounceDelay: number = 300;
-    @argDefault searchEnabled: boolean = true;
-    @argDefault searchField: string | null = null;
-    @argDefault staticHeight: boolean = false;
-    @argDefault tabindex: number = -1;
-    @argDefault triggerIsSearch: boolean = false;
+export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinityArgs<T>> {
+    get allowClear() {
+        return this.args.allowClear ?? true;
+    }
 
-    @tracked isLoadingMore: boolean = false;
+    get bufferSize() {
+        return this.args.bufferSize ?? 5;
+    }
+
+    get canLoadMore() {
+        return this.args.canLoadMore ?? true;
+    }
+
+    get estimateHeight() {
+        return this.args.estimateHeight ?? 30;
+    }
+
+    get loadingComponent() {
+        return this.args.loadingComponent ?? 'power-select-infinity/loading';
+    }
+
+    get matchTriggerWidth() {
+        return this.args.matchTriggerWidth ?? true;
+    }
+
+    get noMatchesMessage() {
+        return this.args.noMatchesMessage ?? 'No results found';
+    }
+
+    get optionsComponent() {
+        return this.args.optionsComponent ?? 'power-select-infinity/options';
+    }
+
+    get search() {
+        return this.args.search ?? false;
+    }
+
+    get searchBelow() {
+        return this.args.searchBelow ?? true;
+    }
+
+    get searchDebounceDelay() {
+        return this.args.searchDebounceDelay ?? 300;
+    }
+
+    get searchEnabled() {
+        return this.args.searchEnabled ?? true;
+    }
+
+    get searchField() {
+        return this.args.searchField ?? undefined;
+    }
+
+    get staticHeight() {
+        return this.args.staticHeight ?? 0;
+    }
+
+    get tabindex() {
+        return this.args.tabindex ?? '-1';
+    }
+
+    get triggerIsSearch() {
+        return this.args.triggerIsSearch ?? false;
+    }
+
+    @tracked isLoadingMore = false;
     @tracked loading = false;
-    @tracked searchText: string = '';
-    @tracked hasInvokedSearch: boolean = false;
+    @tracked searchText = '';
+    @tracked hasInvokedSearch = false;
 
     get triggerComponent() {
         return this.args.triggerComponent !== undefined
@@ -289,6 +205,12 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
             : this.triggerIsSearch
             ? 'power-select-infinity/trigger-search'
             : '';
+    }
+
+    get triggerClass() {
+        return this.args.triggerIsSearch
+            ? `power-select-infinity-trigger-is-search ${this.args.triggerClass}`
+            : this.args.triggerClass;
     }
 
     get beforeOptionsComponent() {
@@ -310,15 +232,24 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
     }
 
     /**
+     * This is required for glint to get the correct type.
+     * (breaks TS when referencing this.searchTask.isRunning directly, for example)
+     *
+     * @readonly
+     */
+    get task() {
+        return taskFor(this.searchTask);
+    }
+
+    /**
      * The delayed search task for the power select.
      *
      * @param {(string | null)} term
-     * @return {TaskGenerator<any[]>}
      * @method searchTask
      * @private
      */
     @restartableTask
-    private *searchTask(term: string): TaskGenerator<any[]> {
+    private *searchTask(term: string) {
         yield timeout(this.searchDebounceDelay);
         try {
             const results = this.args.search(term);
@@ -353,12 +284,12 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
     /**
      * Invokes the search action after a debounced delay when the user types in the search box
      * @param {(String | null)} term
-     * @return {Promise<any[]>}
+     * @return {Promise<T[]>}
      * @method onSearch
      * @private
      */
     @action
-    onSearch(term: string): Promise<any[]> {
+    onSearch(term: string): Promise<T[]> {
         this.hasInvokedSearch = true;
         return taskFor(this.searchTask).perform(term);
     }
@@ -366,12 +297,12 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
     /**
      * Invokes the loadMore action when the bottom of the options list is reached
      *
-     * @return {(Promise<any[] | void | TaskCancelation>)}
+     * @return {(Promise<T[] | void | TaskCancelation>)}
      * @method onLastReached
      * @public
      */
     @action
-    async onLastReached(): Promise<any[] | void | TaskCancelation> {
+    async onLastReached(): Promise<T[] | void | TaskCancelation> {
         if (this.isLoadingMore || !this.args.canLoadMore) {
             return;
         }
@@ -389,11 +320,21 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
         }
     }
 
+    /**
+     * Clear the current search text.
+     *
+     */
     @action
     clearSearch() {
         this.searchText = '';
     }
 
+    /**
+     * Clears the search and results on blur if necessary.
+     *
+     * @param {Select} select
+     * @param {FocusEvent} event
+     */
     @action
     onBlur(select: Select, event: FocusEvent) {
         this.hasInvokedSearch = false;
@@ -412,63 +353,4 @@ export default class PowerSelectInfinity extends Component<PowerSelectInfinityAr
         }
         this.args.onBlur?.(select, event);
     }
-
-    @action
-    scrollTo(option: any, select: Select) {
-        let optionsList = document.querySelector(
-            `[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`
-        ) as HTMLElement;
-        if (!optionsList) {
-            return;
-        }
-        let index = indexOfOption(select.results, option);
-        if (index === -1) {
-            return;
-        }
-        let optionElement =
-            (optionsList.querySelectorAll('[data-option-index]') as NodeListOf<HTMLElement>).item(index) ??
-            optionsList.querySelector(`[data-option-index="${index}"]`);
-        if (!optionElement) {
-            return;
-        }
-        let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
-        let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
-        if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
-            optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
-        } else if (optionTopScroll < optionsList.scrollTop) {
-            optionsList.scrollTop = optionTopScroll;
-        }
-    }
 }
-
-//     @action
-//     scrollTo(option: any, select: Select) {
-//         let optionsList = document.querySelector(
-//             `[aria-controls="ember-power-select-trigger-${select.uniqueId}"]`
-//         ) as HTMLElement;
-//         if (!optionsList) {
-//             return;
-//         }
-//         let index = indexOfOption(select.results, option);
-//         if (index === -1) {
-//             return;
-//         }
-//         let optionsArray = Array.from(optionsList.querySelectorAll('[data-option-index]')) as any[];
-//         if (optionsArray.length) {
-//             optionsArray.unshift(...Array(Number(optionsArray[0].attributes['data-option-index'].value)));
-//             optionsArray = optionsArray.concat(
-//                 ...Array.apply(null, Array(select.options.length - optionsArray.length)).map(function () {})
-//             );
-//         }
-//         let optionElement = optionsArray[index];
-//         if (!optionElement) {
-//             return;
-//         }
-//         let optionTopScroll = optionElement.offsetTop - optionsList.offsetTop;
-//         let optionBottomScroll = optionTopScroll + optionElement.offsetHeight;
-//         if (optionBottomScroll > optionsList.offsetHeight + optionsList.scrollTop) {
-//             optionsList.scrollTop = optionBottomScroll - optionsList.offsetHeight;
-//         } else if (optionTopScroll < optionsList.scrollTop) {
-//             optionsList.scrollTop = optionTopScroll;
-//         }
-//     }

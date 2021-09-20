@@ -5,16 +5,12 @@ import { restartableTask } from 'ember-concurrency-decorators';
 import { scheduleOnce } from '@ember/runloop';
 import { didCancel } from 'ember-concurrency';
 import { taskFor } from 'ember-concurrency-ts';
-import {
-    dontRunInFastboot,
-    argDefault,
-    dontRunInTests
-} from '@gavant/ember-power-select-infinity/decorators/power-select-infinity';
-import { removeEmptyQueryParams } from '@gavant/ember-power-select-infinity/utils';
+import { removeEmptyQueryParams } from '@gavant/ember-pagination/utils/query-params';
 import { getOwner } from '@ember/application';
-import { PowerSelectInfinityArgs } from '../power-select-infinity';
+import { PowerSelectInfinityArgs } from 'portal-app/pods/components/power-select-infinity/component';
+import { dontRunInFastboot } from '@gavant/ember-power-select-infinity/decorators/power-select-infinity';
 
-export interface PowerSelectInfinityForModelArgs extends PowerSelectInfinityArgs {
+export interface PowerSelectInfinityForModelArgs<T> extends PowerSelectInfinityArgs<T> {
     /**
      * An object containing additional query filters.
      *
@@ -57,52 +53,34 @@ export interface PowerSelectInfinityForModelArgs extends PowerSelectInfinityArgs
      * @argument useSearchParamFilter [true]
      */
     useSearchParamFilter?: boolean;
+    /**
+     * Whether or not the dropdown options are loaded on component render
+     *
+     * @type {boolean}
+     */
+    loadOptionsOnRender?: boolean;
+    include?: string[];
 }
 
-/**
- * Default ProcessQueryParams:
- * ```ts
- *     return removeEmptyQueryParams({
-        filter: {
-            ...this.args.filters,
-            [this.searchParamKey]: this.useSearchParamFilter ? term : null
-        },
-        page: {
-            limit: this.pageSize,
-            offset: offset || 0
-        }
-    });
- * ```
- *
- * @export
- * @class PowerSelectInfinityForModel
- * @extends {GlimmerComponent<PowerSelectInfinityForModelArgs>}
- * @public
- */
-export default class PowerSelectInfinityForModel extends Component<PowerSelectInfinityForModelArgs> {
+export default class PowerSelectInfinityForModel<T> extends Component<PowerSelectInfinityForModelArgs<T>> {
     @tracked canLoadMore: boolean = true;
     @tracked options!: any[];
 
-    @argDefault loadOptionsOnRender: boolean = true;
-    @argDefault pageSize: number = 25;
-    @argDefault processQueryParams: (...args: any[]) => { [x: string]: any } = function (
-        this: PowerSelectInfinityForModel,
-        term,
-        offset
-    ) {
-        return removeEmptyQueryParams({
-            filter: {
-                ...this.args.filters,
-                [this.searchParamKey]: this.useSearchParamFilter ? term : null
-            },
-            page: {
-                limit: this.pageSize,
-                offset: offset || 0
-            }
-        });
-    };
-    @argDefault searchParamKey: string = 'keyword';
-    @argDefault useSearchParamFilter: boolean = true;
+    get loadOptionsOnRender() {
+        return this.args.loadOptionsOnRender ?? true;
+    }
+
+    get pageSize() {
+        return this.args.pageSize ?? 25;
+    }
+
+    get searchParamKey() {
+        return this.args.searchParamKey ?? 'keyword';
+    }
+
+    get useSearchParamFilter() {
+        return this.args.useSearchParamFilter ?? true;
+    }
 
     get modelType() {
         return this.store.modelFor(this.args.modelName);
@@ -112,11 +90,37 @@ export default class PowerSelectInfinityForModel extends Component<PowerSelectIn
         return getOwner(this).lookup('service:store');
     }
 
-    constructor(owner: unknown, args: PowerSelectInfinityForModelArgs) {
+    /**
+     * Load the initial page of results if necessary.
+     * @param {unknown} owner
+     * @param {PowerSelectInfinityForModelArgs<T>} args
+     */
+    constructor(owner: unknown, args: PowerSelectInfinityForModelArgs<T>) {
         super(owner, args);
         if (this.loadOptionsOnRender) {
             scheduleOnce('afterRender', this, 'loadInitialPage');
         }
+    }
+
+    /**
+     * Processes the query params using
+     * gavant-ember-pagination utility methods.
+     *
+     * @param {string} term
+     * @param {number} offset
+     */
+    processQueryParams(term: string, offset: number) {
+        return removeEmptyQueryParams({
+            filter: {
+                ...this.args.filters,
+                [this.searchParamKey]: this.useSearchParamFilter ? term : null
+            },
+            page: {
+                limit: this.pageSize,
+                offset: offset || 0
+            },
+            include: this.args.include ?? undefined
+        });
     }
 
     /**
@@ -129,9 +133,11 @@ export default class PowerSelectInfinityForModel extends Component<PowerSelectIn
      * @method loadOptions
      */
     @restartableTask
-    *loadOptions(this: PowerSelectInfinityForModel, term: string, offset: number = 0) {
+    *loadOptions(this: PowerSelectInfinityForModel<T>, term: string, offset: number = 0) {
         try {
-            const params = this.processQueryParams(term, offset, this.searchParamKey, this.args.filters);
+            const params =
+                this.args.processQueryParams?.(term, offset, this.searchParamKey, this.args.filters) ??
+                this.processQueryParams(term, offset);
             const result = yield this.store.query(this.args.modelName, params);
             const models = result.toArray();
             this.canLoadMore = models.length >= this.pageSize;
@@ -151,7 +157,6 @@ export default class PowerSelectInfinityForModel extends Component<PowerSelectIn
      */
     @action
     @dontRunInFastboot
-    @dontRunInTests
     async loadInitialPage(): Promise<any[]> {
         const options = (await this.search('')) ?? [];
         this.options = options;
@@ -187,5 +192,14 @@ export default class PowerSelectInfinityForModel extends Component<PowerSelectIn
         options.push(...nextPage);
         this.options = options;
         return options;
+    }
+
+    /**
+     * Clear the current options.
+     *
+     */
+    @action
+    clearOptions() {
+        this.options = [];
     }
 }

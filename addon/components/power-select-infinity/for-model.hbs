@@ -5,14 +5,16 @@
     @canLoadMore={{this.canLoadMore}}
     @loadMore={{this.loadMore}}
     @search={{this.search}}
-    @allowClear={{this.allowClear}}
+    @allowClear={{@allowClear}}
     @placeholder={{@placeholder}}
     @searchPlaceholder={{@searchPlaceholder}}
     @loadingMessage={{@loadingMessage}}
-    @estimateHeight={{this.estimateHeight}}
+    @estimateHeight={{@estimateHeight}}
     @renderInPlace={{@renderInPlace}}
     @searchField={{@searchField}}
     @triggerClass={{@triggerClass}}
+    @triggerIsSearch={{@triggerIsSearch}}
+    @clearOptions={{this.clearOptions}}
     ...attributes
     as |option select|
 >

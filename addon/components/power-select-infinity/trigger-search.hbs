@@ -1,52 +1,26 @@
-{{#if @select.selected}}
-    {{#if @selectedItemComponent}}
-        {{component
-            @selectedItemComponent 
-            extra=(readonly @extra)
-            option=(readonly @select.selected)
-            select=(readonly @select)
-        }}
-    {{else}}
-    <div class="ember-power-select-infinity-trigger-selected-item-wrapper">
-        <span class="ember-power-select-infinity-trigger-selected-item">{{yield @select.selected @select}}</span>
-        {{#if (and @allowClear (not @select.disabled))}}
-            <span
-                role="button"
-                class="ember-power-select-infinity-trigger-select-clear-btn"
-                {{on "mousedown" (fn this.onClear @select)}}
-                {{on "touchstart" (fn this.onClear @select)}}
-            >
-                &times;
-            </span>
-        {{/if}}
-    </div>
-    {{/if}}
-{{else}}
-    <input
-        class="ember-power-select-infinity-trigger-input power-select-search-input"
-        type="search"
-        role="searchbox"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        id="ember-power-select-infinity-trigger-{{@select.uniqueId}}"
-        value={{@extra.searchText}}
-        aria-controls={{@listboxId}}
-        placeholder={{@placeholder}}
-        disabled={{@select.disabled}}
-        maxlength="128"
-        {{!-- template-lint-disable no-positive-tabindex  --}}
-        tabindex={{or @tabindex "-1"}}
-        {{on "focus" @onFocus}}
-        {{on "blur" this.onBlur}}
-        {{on "input" this.handleInput}}
-        {{on "keydown" this.handleKeydown}}
-    >
-    {{#if @extra.isSearching}}
-        <ProgressSpinner class="ember-power-select-infinity-trigger-progress-spinner" />
-    {{else if (and (is-empty @extra.options) @extra.hasInvokedSearch @extra.searchText)}}
-        <span class="ember-power-select-infinity-trigger-no-results-label">
-            {{@extra.noMatchesMessage}}
-        </span>
-    {{/if}}
+<input
+    value={{@extra.searchText}}
+    placeholder={{@placeholder}}
+    maxlength="256"
+    class="ember-power-select-trigger-input power-select-search-input position-relative text-md"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    id="ember-power-select-infinity-trigger-{{@select.uniqueId}}"
+    aria-controls={{@listBoxId}}
+    disabled={{@select.disabled}}
+    {{!-- template-lint-disable no-positive-tabindex  --}}
+    tabindex={{or @tabindex "-1"}}
+    {{on "focus" @onFocus}}
+    {{on "blur" this.onBlur}}
+    {{on "input" this.handleInput}}
+    {{on "keydown" this.handleKeydown}}
+/>
+<FaIcon @icon="search" class="power-select-trigger-search-icon" />
+{{#if @extra.isSearching}}
+    <LoadingPulse class="trigger-loading-pulse"/>
+{{else if (and (is-empty @extra.options) @extra.hasInvokedSearch @extra.searchText)}}
+    <span class="ember-power-select-infinity-trigger-no-results-label">
+        {{@extra.noMatchesMessage}}
+    </span>
 {{/if}}

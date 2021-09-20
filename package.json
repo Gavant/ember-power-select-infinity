@@ -36,6 +36,7 @@
     "devDependencies": {
         "@ember/optional-features": "^1.3.0",
         "@ember/render-modifiers": "^1.0.2",
+        "@gavant/glint-template-types": "^0.0.19",
         "@glimmer/component": "^1.0.0",
         "@glimmer/tracking": "^1.0.0",
         "@types/ember": "^3.1.2",

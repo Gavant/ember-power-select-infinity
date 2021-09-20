@@ -1943,6 +1943,11 @@
     postcss "7.0.32"
     purgecss "^2.3.0"
 
+"@gavant/glint-template-types@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@gavant/glint-template-types/-/glint-template-types-0.0.19.tgz#657d82e5dd3d62619dc1224e4ea46dade9e07e01"
+  integrity sha512-dQ9H1F4msol7p4Ii4pmyp784y6nCRMU9P0hMEB4jDBtbL6gW3nNDyaWOzhhRV01iBIF0qlycQ+N1WKz6Wv9LQg==
+
 "@glimmer/component@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@glimmer/component/-/component-1.0.0.tgz#f9052c8e99fb7b3d48d27c65891c5f0e59084a82"
