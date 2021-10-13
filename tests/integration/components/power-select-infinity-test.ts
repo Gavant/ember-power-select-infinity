@@ -1,25 +1,30 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+
+import { setupRenderingTest } from 'ember-qunit';
+
 import 'qunit-dom';
 
-module('Integration | Component | power-select-infinity', function(hooks) {
+import hbs from 'htmlbars-inline-precompile';
+import { module, test } from 'qunit';
+
+module('Integration | Component | power-select-infinity', function (hooks) {
     setupRenderingTest(hooks);
 
-    test('it renders', async function(assert) {
+    test('it renders', async function (assert) {
         // Set any properties with this.set('myProperty', 'value');
         // Handle any actions with this.set('myAction', function(val) { ... });
 
-        this.set('onChange', function(event: Event) { event.preventDefault(); });
+        await render(hbs`{{power-select-infinity}}`);
+
+        assert.equal(this.element.textContent.trim(), '');
 
         // Template block usage:
         await render(hbs`
-        <PowerSelectInfinity @onChange={{this.onChange}}>
-            template block text
-        </PowerSelectInfinity>
-        `);
+      {{#power-select-infinity}}
+        template block text
+      {{/power-select-infinity}}
+    `);
 
-        assert.dom(this.element).hasText('template block text');
+        assert.equal(this.element.textContent.trim(), 'template block text');
     });
 });

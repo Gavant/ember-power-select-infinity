@@ -1,7 +1,6 @@
 <PowerSelect
     @afterOptionsComponent={{@afterOptionsComponent}}
     @allowClear={{this.allowClear}}
-    @animationEnabled={{@animationEnabled}}
     @ariaDescribedBy={{@ariaDescribedBy}}
     @ariaLabel={{@ariaLabel}}
     @ariaLabelledBy={{@ariaLabelledBy}}
@@ -19,16 +18,15 @@
             bufferSize=this.bufferSize
             estimateHeight=this.estimateHeight
             staticHeight=this.staticHeight
-            isLoadingMore=this.isLoadingMore
-            isSearching=this.task.isRunning
+            isSearching=(or this.isLoadingMore this.task.isRunning)
             onLastReached=this.onLastReached
-            triggerIsSearch=this.triggerIsSearch
-            options=@options
             noMatchesMessage=this.noMatchesMessage
-            hasInvokedSearch=this.hasInvokedSearch
             searchText=this.searchText
             clearSearch=this.clearSearch
-            clearOptions=@clearOptions
+            showCreateMessage=this.showCreateMessage
+            createOption=this.createOption
+            clearSearchOnBlur=this.clearSearchOnBlur
+            loadingComponent=this.loadingComponent
         )
         @extra
     }}
@@ -36,12 +34,11 @@
     @highlightOnHover={{@highlightOnHover}}
     @horizontalPosition={{@horizontalPosition}}
     @initiallyOpened={{@initiallyOpened}}
-    @loadingComponent={{@loadingComponent}}
     @loadingMessage={{@loadingMessage}}
     @matcher={{@matcher}}
     @matchTriggerWidth={{this.matchTriggerWidth}}
     @noMatchesMessage={{this.noMatchesMessage}}
-    @onBlur={{this.onBlur}}
+    @onBlur={{@onBlur}}
     @onChange={{@onChange}}
     @onClose={{@onClose}}
     @onFocus={{@onFocus}}
@@ -52,13 +49,12 @@
     @optionsComponent={{this.optionsComponent}}
     @placeholder={{@placeholder}}
     @preventScroll={{@preventScroll}}
-    @registerAPI={{@registerAPI}}
+    @registerAPI={{this.registerAPI}}
     @renderInPlace={{@renderInPlace}}
     @scrollTo={{@scrollTo}}
     @search={{this.onSearch}}
     @searchEnabled={{this.searchEnabled}}
     @searchField={{this.searchField}}
-    @searchMessage={{false}}
     @searchPlaceholder={{@searchPlaceholder}}
     @selected={{@selected}}
     @selectedItemComponent={{@selectedItemComponent}}
@@ -67,7 +63,6 @@
     @triggerComponent={{this.triggerComponent}}
     @triggerId={{@triggerId}}
     @triggerRole={{@triggerRole}}
-    @typeAheadMatcher={{@typeAheadMatcher}}
     @verticalPosition={{@verticalPosition}}
     ...attributes
     as |option select|
