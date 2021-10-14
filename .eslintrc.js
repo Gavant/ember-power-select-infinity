@@ -14,32 +14,22 @@ module.exports = {
     env: {
         browser: true
     },
-    rules: {
-        'ember/no-jquery': 'error',
-        'ember/no-classic-components': 'off',
-        'ember/require-tagless-components': 'off',
-        '@typescript-eslint/no-inferrable-types': 'off',
-        '@typescript-eslint/no-explicit-any': 'off',
-        '@typescript-eslint/no-var-requires': 'off',
-        '@typescript-eslint/no-empty-function': 'off',
-        '@typescript-eslint/no-empty-interface': 'off',
-        '@typescript-eslint/ban-ts-comment': 'off',
-        '@typescript-eslint/explicit-module-boundary-types': 'off'
-    },
+
+    rules: {},
     overrides: [
+        // node files
         {
             files: [
-                '.eslintrc.js',
-                '.prettierrc.js',
-                '.template-lintrc.js',
-                'ember-cli-build.js',
-                'index.js',
-                'testem.js',
-                'blueprints/*/index.js',
-                'config/**/*.js',
-                'tests/dummy/config/**/*.js'
+                './.eslintrc.js',
+                './.prettierrc.js',
+                './.template-lintrc.js',
+                './ember-cli-build.js',
+                './index.js',
+                './testem.js',
+                './blueprints/*/index.js',
+                './config/**/*.js',
+                './tests/dummy/config/**/*.js'
             ],
-            excludedFiles: ['addon/**', 'addon-test-support/**', 'app/**', 'tests/dummy/app/**'],
             parserOptions: {
                 sourceType: 'script'
             },
@@ -49,6 +39,11 @@ module.exports = {
             },
             plugins: ['node'],
             extends: ['plugin:node/recommended']
+        },
+        {
+            // Test files:
+            files: ['tests/**/*-test.{js,ts}'],
+            extends: ['plugin:qunit/recommended']
         }
     ]
 };

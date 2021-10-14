@@ -1,30 +1,22 @@
-ember-power-select-infinity
-==============================================================================
+# ember-power-select-infinity
 
 ![To Infinity & Beyond](https://media.giphy.com/media/U2BASTIsaw8WQ/giphy.gif)
 
-
 This addon provides a power select which uses occlusion rendering to infinitely load and search for a large list of items.
 
+## Compatibility
 
-Compatibility
-------------------------------------------------------------------------------
+-   Ember.js v3.20 or above
+-   Ember CLI v3.20 or above
+-   Node.js v12 or above
 
-* Ember.js v3.16 or above
-* Ember CLI v3.16 or above
-* Node.js v10 or above
-
-
-Installation
-------------------------------------------------------------------------------
+## Installation
 
 ```
 ember install @gavant/ember-power-select-infinity
 ```
 
-
-Usage
-------------------------------------------------------------------------------
+## Usage
 
 To use `power-select-infinity` you just declare it in a template.
 Both `search` and `loadMore` must return a promise to that `power-select-infinity` can display the loading indicator.
@@ -34,6 +26,7 @@ Either way, `power-select-infinity` just provides a `loadMore` action where you 
 If your using `ember-cli-sass` in your project, an import statement will automatically be added to your project.
 
 Your Component
+
 ```hbs
 <PowerSelectInfinity
     @search={{this.search}}
@@ -41,14 +34,16 @@ Your Component
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
-    as |name|>
-        {{name}}
+    as |name|
+>
+    {{name}}
 </PowerSelectInfinity>
 ```
 
 Your Controller
 
 Paging using page numbers
+
 ```ts
 export default PagingController extends Controller {
     page = 1;
@@ -70,11 +65,13 @@ export default PagingController extends Controller {
     }
 }
 ```
+
 Paging using page offset & limit
+
 ```ts
 export default PagingController extends Controller {
     page = 1;
-    
+
     @action
     search(term) {
         return get(this, 'ajax').request(`names?search=${term}`);
@@ -88,6 +85,7 @@ export default PagingController extends Controller {
 ```
 
 If you want the power select to open when the input is focused, just pass a list of options via the options parameter.
+
 ```hbs
 <PowerSelectInfinity
     @options={{this.options}}
@@ -96,13 +94,14 @@ If you want the power select to open when the input is focused, just pass a list
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
-    as |name|>
-        {{name}}
+    as |name|
+>
+    {{name}}
 </PowerSelectInfinity>
 ```
-
 
 If your using a complex objects as the options, you need to tell `power-select-infinity` what value to display when an option is selected using
+
 ```hbs
 <PowerSelectInfinity
     @options={{this.options}}
@@ -111,10 +110,12 @@ If your using a complex objects as the options, you need to tell `power-select-i
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
-    as |user|>
-        {{user.name}}
+    as |user|
+>
+    {{user.name}}
 </PowerSelectInfinity>
 ```
+
 In the example above, Im using a user object which has a property of `name` that I want to display when selected.
 
 There are some options you can pass to https://github.com/html-next/vertical-collection, which is what we use for the occlusion rendering. The three options are estimateHeight, bufferSize, and staticHeight. Read the vertical collection documentation for what they do and how to use them
@@ -130,8 +131,9 @@ There are some options you can pass to https://github.com/html-next/vertical-col
     @loadMore={{this.loadMore}}
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
-    as |name|>
-        {{name}}
+    as |name|
+>
+    {{name}}
 </PowerSelectInfinity>
 ```
 
@@ -146,18 +148,16 @@ You can also customize the loading component by passing in your own `loadingComp
     @selected={{this.selected}}
     @onChange={{fn (mut this.selected)}}
     @loadingComponent='my-loading-component'
-    as |name|>
-        {{name}}
+    as |name|
+>
+    {{name}}
 </PowerSelectInfinity>
 ```
 
-Contributing
-------------------------------------------------------------------------------
+## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
-
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
