@@ -1,0 +1,4 @@
+{{#if (and @select.searchText (not @extra.isSearching))}}
+    {{! template-lint-disable no-bare-strings }}
+    <div class="ember-power-select-option border-bottom">Press enter to create the group "{{@select.searchText}}"</div>
+{{/if}}

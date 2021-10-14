@@ -1,0 +1,38 @@
+<div class="position-relative">
+    {{! template-lint-disable no-positive-tabindex }}
+    <input
+        value={{this.text}}
+        placeholder={{@placeholder}}
+        maxlength="256"
+        class="ember-power-select-trigger-input power-select-search-input position-relative text-md form-control"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        id="ember-power-select-infinity-trigger-{{@select.uniqueId}}"
+        aria-controls={{@listboxId}}
+        disabled={{@select.disabled}}
+        tabindex={{-1}}
+        {{on "focus" @onFocus}}
+        {{on "blur" (fn this.onBlur @select)}}
+        {{on "input" @onInput}}
+        {{on "keydown" this.handleKeydown}}
+        {{did-update this.onSelectUpdate @select}}
+    />
+
+    {{#if @extra.isSearching}}
+        <span class="ember-power-select-infinity-searching-indicator">{{t "actions.search"}}</span>
+    {{/if}}
+
+    {{#if this.canClear}}
+        {{! template-lint-disable no-bare-strings }}
+        <a
+            href="#clear"
+            class="ember-power-select-infinity-clear-btn"
+            {{on "mousedown" (fn this.clear @select)}}
+            {{on "touchstart" (fn this.clear @select)}}
+        >
+            &times;
+        </a>
+    {{/if}}
+</div>

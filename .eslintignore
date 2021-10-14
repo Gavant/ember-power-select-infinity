@@ -13,6 +13,7 @@
 # misc
 /coverage/
 !.*
+.eslintcache
 
 # ember-try
 /.node_modules.ember-try/
@@ -21,3 +22,5 @@
 
 # ember-cli-mirage
 /mirage/mirage
+
+/tests

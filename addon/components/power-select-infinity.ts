@@ -348,11 +348,23 @@ export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinit
         this.searchText = '';
     }
 
+    /**
+     * Register the API so we can use the select in this component
+     *
+     * @param {Select} select
+     * @memberof PowerSelectInfinity
+     */
     @action
     registerAPI(select: Select) {
         this.select = select;
     }
 
+    /**
+     *  Create an option with the passed in text
+     *
+     * @param {string} text
+     * @memberof PowerSelectInfinity
+     */
     @action
     createOption(text: string) {
         this.args.createOption?.(text);
