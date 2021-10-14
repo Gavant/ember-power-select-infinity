@@ -1,0 +1,33 @@
+<ul
+    role="listbox"
+    aria-controls="ember-power-select-trigger-{{@select.uniqueId}}"
+    ...attributes
+    {{did-insert this.addHandlers}}
+>
+    <VerticalCollection
+        @items={{@select.options}}
+        @estimateHeight={{this.estimateHeight}}
+        @staticHeight={{@extra.staticHeight}}
+        @bufferSize={{@extra.bufferSize}}
+        @lastReached={{@extra.onLastReached}}
+        @containerSelector=".ember-power-select-options"
+        as |opt index|
+    >
+        <li
+            class="ember-power-select-option {{if opt.borderBottom "border-bottom-brand"}}"
+            aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
+            aria-disabled="{{if opt.disabled "true"}}"
+            aria-current="{{eq opt @select.highlighted}}"
+            data-option-index="{{@groupIndex}}{{index}}"
+            role="option"
+        >
+
+            {{yield opt @select}}
+        </li>
+    </VerticalCollection>
+    {{#if @extra.isLoadingMore}}
+        <li class="ember-power-select-option ember-power-select-option--loading-message">
+            {{t "loading"}}
+        </li>
+    {{/if}}
+</ul>

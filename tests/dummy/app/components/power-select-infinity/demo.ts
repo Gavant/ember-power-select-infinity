@@ -1,24 +1,34 @@
-import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency-decorators';
 import { scheduleOnce } from '@ember/runloop';
-import { didCancel } from 'ember-concurrency';
-import { taskFor } from 'ember-concurrency-ts';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+
 import Ember from 'ember';
+import { didCancel } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { taskFor } from 'ember-concurrency-ts';
 
 interface BasicPowerSelectArgs {}
 
 export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
     @tracked canLoadMore: boolean = true;
     @tracked pageSize: number = 20;
-    @tracked options: any[] = [];
+    @tracked options: any[] = [
+        {
+            date: new Date().toISOString(),
+            name: `New row 0`,
+            age: 150,
+            tall: false,
+            short: true,
+            id: `${Date.now() + 0}`
+        }
+    ];
 
     constructor(owner: unknown, args: BasicPowerSelectArgs) {
         super(owner, args);
-        if (!Ember.testing) {
-            scheduleOnce('afterRender', this, 'loadInitialPage');
-        }
+        // if (!Ember.testing) {
+        //     scheduleOnce('afterRender', this, 'loadInitialPage');
+        // }
     }
 
     /**
@@ -93,7 +103,7 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
      */
     @action
     async search(keyword: string): Promise<any[]> {
-        const options = (await taskFor(this.loadOptions).perform(keyword)) ?? [];
+        const options = (await taskFor(this.loadOptions).perform(keyword, 10)) ?? [];
         this.options = options;
         return options;
     }
@@ -113,4 +123,7 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
         this.options = options;
         return options;
     }
+
+    @action
+    onChange() {}
 }

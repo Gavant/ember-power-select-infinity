@@ -7,7 +7,7 @@ import { PowerSelectInfinityExtra } from '@gavant/ember-power-select-infinity/co
 
 // import Options from '@gavant/glint-template-types/types/ember-power-select/components/power-select/options';
 // @ts-ignore its a template file - so ignore warning for now
-import Template from './template';
+// import Template from './options';
 
 export default class PowerSelectInfinityOptions<T, E extends PowerSelectInfinityExtra> extends PowerSelectOptions<
     T,
@@ -17,4 +17,4 @@ export default class PowerSelectInfinityOptions<T, E extends PowerSelectInfinity
         return this.args.extra.estimateHeight ?? 30;
     }
 }
-setComponentTemplate(Template, PowerSelectInfinityOptions);
+// setComponentTemplate(Template, PowerSelectInfinityOptions);

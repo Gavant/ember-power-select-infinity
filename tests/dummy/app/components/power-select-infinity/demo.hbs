@@ -1,31 +1,37 @@
-{{!-- BEGIN-SNIPPET basic-power-select-demo.hbs --}}
+{{! BEGIN-SNIPPET basic-power-select-demo.hbs }}
+
 <PowerSelectInfinity
-    @selected={{@selected}}
-    @onChange={{@onChange}}
+    @selected={{this.selected}}
+    @onChange={{this.onChange}}
     @options={{this.options}}
-    @canLoadMore={{this.canLoadMore}}
+    @canLoadMore={{true}}
     @loadMore={{this.loadMore}}
     @search={{this.search}}
-    @allowClear={{this.allowClear}}
-    @placeholder="Select an item"
-    @searchPlaceholder="Search items..."
-    @loadingMessage={{true}}
-    @estimateHeight={{51}}
-    @renderInPlace={{@renderInPlace}}
-    @searchField="name"
-    @triggerClass="form-control"
-    as |option|
+    @allowClear={{true}}
+    @placeholder={{"Search"}}
+    @canCreate={{true}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @loadingMessage={{"loading"}}
+    @searchField={{@searchField}}
+    @triggerClass={{@triggerClass}}
+    @clearOptions={{this.clearOptions}}
+    @createOption={{this.createOption}}
+    as |option select|
 >
     <div
-        class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}">
+        class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}"
+    >
         {{#if option.heading}}
             <div class="ember-power-select-option-section-heading font-weight-bold">
                 {{option.heading}}
             </div>
         {{/if}}
         <div class="text-truncate">
+            {{!-- {{debugger}} --}}
+            {{log option}}
             {{option.name}}
         </div>
     </div>
 </PowerSelectInfinity>
-{{!-- END-SNIPPET --}}
+
+{{! END-SNIPPET }}
