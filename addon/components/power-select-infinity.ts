@@ -220,10 +220,11 @@ export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinit
     @tracked select: Select | null = null;
 
     get showCreateMessage() {
+        const searchText = this.select?.searchText;
         const numOptions = guard(this.args.options, 'content')
             ? this.args.options.content.length
             : this.args.options.length;
-        return this.args.canCreate && numOptions === 0 && this.select?.searchText !== '' && !this.task.isRunning;
+        return this.args.canCreate && numOptions === 0 && searchText !== '' && !this.task.isRunning;
     }
 
     get triggerComponent() {
@@ -231,7 +232,7 @@ export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinit
     }
 
     get triggerClass() {
-        return 'ember-power-select-trigger-search';
+        return 'ember-power-select-infinity-trigger';
     }
 
     get beforeOptionsComponent() {
@@ -244,7 +245,7 @@ export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinit
     }
 
     get dropdownClass() {
-        return `${this.args.dropdownClass ?? ''} power-select-infinity-dropdown`;
+        return `${this.args.dropdownClass ?? ''} ember-power-select-infinity-dropdown`;
     }
 
     get clearSearchOnBlur() {

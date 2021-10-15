@@ -10,6 +10,7 @@
     @allowClear={{true}}
     @placeholder={{"Search"}}
     @canCreate={{true}}
+    @labelPath="name"
     @searchPlaceholder={{@searchPlaceholder}}
     @loadingMessage={{"loading"}}
     @searchField={{@searchField}}
@@ -27,8 +28,7 @@
             </div>
         {{/if}}
         <div class="text-truncate">
-            {{!-- {{debugger}} --}}
-            {{log option}}
+
             {{option.name}}
         </div>
     </div>

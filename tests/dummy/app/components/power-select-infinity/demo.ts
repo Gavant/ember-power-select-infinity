@@ -1,31 +1,40 @@
 import { action } from '@ember/object';
-import { scheduleOnce } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-import Ember from 'ember';
 import { didCancel } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { taskFor } from 'ember-concurrency-ts';
 
 interface BasicPowerSelectArgs {}
 
-export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
-    @tracked canLoadMore: boolean = true;
-    @tracked pageSize: number = 20;
-    @tracked options: any[] = [
-        {
+const generateOptions = (number: number) => {
+    const newRows: any[] = [];
+    for (let i = 0; i <= number - 1; i++) {
+        newRows.push({
             date: new Date().toISOString(),
-            name: `New row 0`,
+            name: `New row ${i}`,
             age: 150,
             tall: false,
             short: true,
-            id: `${Date.now() + 0}`
-        }
-    ];
+            id: `${Date.now() + i}`
+        });
+    }
+    return newRows;
+};
+
+export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
+    @tracked selected = null;
+    @tracked canLoadMore: boolean = true;
+    @tracked pageSize: number = 20;
+    @tracked data = [];
+    @tracked options: any[] = [];
 
     constructor(owner: unknown, args: BasicPowerSelectArgs) {
         super(owner, args);
+
+        this.data = generateOptions(1000);
+        this.options = this.data;
         // if (!Ember.testing) {
         //     scheduleOnce('afterRender', this, 'loadInitialPage');
         // }
@@ -41,33 +50,13 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
      */
     @restartableTask
     *loadOptions(this: BasicPowerSelect, term: string, offset: number = 0) {
-        // try {
-        //     const params: ModelParameters = {
-        //         filter: {
-        //             keyword: term
-        //         },
-        //         page: {
-        //             limit: this.pageSize,
-        //             offset: offset || 0
-        //         }
-        //     };
-        //     const result = yield this.store.query('model-name', params);
-        //     const models = result.toArray();
-        //     this.canLoadMore = models.length >= this.pageSize;
-        //     return models;
-        // } catch (errors) {
-        //     if (!didCancel(errors)) {
-        //         this.notifications.groupErrors(errors);
-        //         throw errors;
-        //     }
-        // }
         try {
             yield new Promise((r) => setTimeout(r, 500));
             const newRows: any[] = [];
             for (let i = offset; i <= offset + 10; i++) {
                 newRows.push({
                     date: new Date().toISOString(),
-                    name: `${term ? term : 'New row'} ${i}`,
+                    name: `New row ${i}`,
                     age: 150,
                     tall: false,
                     short: true,
@@ -84,18 +73,6 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
     }
 
     /**
-     * Loads the initial page of options.
-     *
-     * @returns {Promise<any[]>}
-     */
-    @action
-    async loadInitialPage(): Promise<any[]> {
-        const options = (await this.search('')) ?? [];
-        this.options = options;
-        return options;
-    }
-
-    /**
      * Searches for records matching the given keyword.
      *
      * @param {string} keyword
@@ -103,7 +80,9 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
      */
     @action
     async search(keyword: string): Promise<any[]> {
-        const options = (await taskFor(this.loadOptions).perform(keyword, 10)) ?? [];
+        const options = this.data.filter((option) => {
+            return option.name.includes(keyword);
+        });
         this.options = options;
         return options;
     }
@@ -125,5 +104,7 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
     }
 
     @action
-    onChange() {}
+    onChange(item: any) {
+        this.selected = item;
+    }
 }

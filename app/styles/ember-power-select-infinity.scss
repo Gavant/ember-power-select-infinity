@@ -3,25 +3,30 @@
 
 .ember-power-select-infinity {
     &-trigger {
-        &-progress-spinner.active {
+        &.ember-power-select-trigger.ember-basic-dropdown-trigger,
+        &.ember-basic-dropdown-trigger--left.ember-power-select-trigger.ember-basic-dropdown-trigger,
+        &.ember-basic-dropdown-trigger--down.ember-power-select-trigger.ember-basic-dropdown-trigger {
+            border: none;
+            outline: none;
+            padding: 0;
+            height: auto;
+            line-height: 1.5;
+            min-height: 34px;
+            border-radius: 4px;
+        }
+
+        &-progress-spinner {
             position: absolute;
             right: $gvnt-power-select-infinity-trigger-spinner-right;
             top: $gvnt-power-select-infinity-trigger-spinner-top;
         }
-        &-no-results-label {
-            position: absolute;
-            right: $gvnt-power-select-infinity-trigger-no-results-label-right;
-            top: $gvnt-power-select-infinity-trigger-no-results-label-top;
-            font-size: $gvnt-power-select-infinity-trigger-no-results-label-font-size;
-        }
-        &-select-clear-btn {
+        &-clear-btn {
             position: absolute;
             right: $gvnt-power-select-infinity-trigger-clear-btn-right;
             top: $gvnt-power-select-infinity-trigger-clear-btn-top;
         }
-
-        &-selected-item-wrapper {
-            padding: $gvnt-power-select-infinity-trigger-selected-item-wrapper-padding;
-        }
     }
+    // &-dropdown {
+    //     border: none !important;
+    // }
 }

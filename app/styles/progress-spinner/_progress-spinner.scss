@@ -1,14 +1,13 @@
-@import "./animations";
-@import "./variables";
+@import './animations';
+@import './variables';
 
-.progress-spinner {
+.ember-power-select-infinity-trigger-progress-spinner {
     display: inline-block;
     height: 0;
     opacity: 0;
     position: relative;
     transition: opacity 0.25s, width 0.25s;
-    border-color: $gvnt-btn-spinner-loading-color2
-        $gvnt-btn-spinner-loading-color1 $gvnt-btn-spinner-loading-color1;
+    border-color: $gvnt-btn-spinner-loading-color2 $gvnt-btn-spinner-loading-color1 $gvnt-btn-spinner-loading-color1;
     border-radius: 100%;
     border-style: solid;
     border-width: $gvnt-btn-spinner-loading-border-width;
