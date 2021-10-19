@@ -95,16 +95,24 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
      */
     @action
     async loadMore(keyword: string): Promise<any[]> {
-        const options = this.options.concat([]);
+        const options = this.data.concat([]);
         const offset = options.length;
         const nextPage = await taskFor(this.loadOptions).perform(keyword, offset);
         options.push(...nextPage);
-        this.options = options;
+        this.data = options;
         return options;
     }
 
     @action
     onChange(item: any) {
         this.selected = item;
+    }
+
+    @action
+    createOption(text: string) {
+        const newOption = generateOptions(1);
+        newOption[0].name = text;
+        this.data = [...this.data, ...newOption];
+        this.selected = newOption[0];
     }
 }

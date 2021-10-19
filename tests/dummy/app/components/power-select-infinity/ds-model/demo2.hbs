@@ -1,4 +1,4 @@
-<PowerSelectInfinity::ForModel
+<PowerSelectInfinity::DsModel
     @modelName="person"
     @selected={{@selected}}
     @onChange={{@onChange}}
@@ -10,7 +10,9 @@
     @loadOptionsOnRender={{false}}
     as |option|
 >
-    <div class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}">
+    <div
+        class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}"
+    >
         {{#if option.heading}}
             <div class="ember-power-select-option-section-heading font-weight-bold">
                 {{option.heading}}
@@ -20,4 +22,4 @@
             {{option.name}}
         </div>
     </div>
-</PowerSelectInfinity::ForModel>
+</PowerSelectInfinity::DsModel>

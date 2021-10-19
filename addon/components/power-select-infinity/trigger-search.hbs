@@ -1,5 +1,6 @@
 <div class="position-relative">
     {{! template-lint-disable no-positive-tabindex }}
+    {{! template-lint-disable no-down-event-binding }}
     <input
         value={{this.text}}
         placeholder={{@placeholder}}
@@ -16,7 +17,7 @@
         {{on "focus" @onFocus}}
         {{on "blur" (fn this.onBlur @select)}}
         {{on "input" @onInput}}
-        {{on "keyup" this.handleKeydown}}
+        {{on "keydown" this.handleKeydown}}
         {{did-update this.onSelectUpdate @select}}
     />
 

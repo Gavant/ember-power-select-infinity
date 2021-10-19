@@ -4,6 +4,7 @@ import { PowerSelectBeforeOptionsArgs } from 'ember-power-select/components/powe
 
 import { PowerSelectInfinityExtra } from '@gavant/ember-power-select-infinity/components/power-select-infinity';
 
-interface PowerSelectInfinityCreateMessageArgs<T> extends PowerSelectBeforeOptionsArgs<T, PowerSelectInfinityExtra> {}
+type PowerSelectInfinityCreateMessageArgs<T> = PowerSelectBeforeOptionsArgs<T, PowerSelectInfinityExtra>;
 
+// eslint-disable-next-line ember/no-empty-glimmer-component-classes
 export default class PowerSelectInfinityCreateMessage<T> extends Component<PowerSelectInfinityCreateMessageArgs<T>> {}

@@ -1,0 +1,23 @@
+<PowerSelectInfinity
+    @selected={{@selected}}
+    @onChange={{@onChange}}
+    @options={{this.options}}
+    @canLoadMore={{this.canLoadMore}}
+    @loadMore={{this.loadMore}}
+    @search={{this.search}}
+    @allowClear={{@allowClear}}
+    @placeholder={{@placeholder}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @loadingMessage={{@loadingMessage}}
+    @estimateHeight={{@estimateHeight}}
+    @renderInPlace={{@renderInPlace}}
+    @searchField={{@searchField}}
+    @triggerClass={{@triggerClass}}
+    @triggerIsSearch={{@triggerIsSearch}}
+    @clearOptions={{this.clearOptions}}
+    ...attributes
+    as |option select|
+>
+
+    {{yield option select to="default"}}
+</PowerSelectInfinity>

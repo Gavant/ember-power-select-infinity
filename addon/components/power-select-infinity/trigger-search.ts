@@ -74,6 +74,7 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
      */
 
     @action
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     handleKeydown(e: KeyboardEvent) {
         // up or down arrow and if not open, no-op and prevent parent handlers from being notified
@@ -103,7 +104,9 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
         }
 
         if (e.keyCode === KEYCODE_ENTER && this.args.extra?.showCreateMessage && this.args.extra.createOption) {
-            this.args.extra.createOption(this.args.select.searchText);
+            const select = this.args.select;
+            this.args.extra.createOption(select.searchText);
+            scheduleOnce('afterRender', null, select.actions.close);
         }
 
         // optional, passed from power-select
