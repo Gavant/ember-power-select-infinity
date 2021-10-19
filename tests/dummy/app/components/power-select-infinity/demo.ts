@@ -27,7 +27,7 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
     @tracked selected = null;
     @tracked canLoadMore: boolean = true;
     @tracked pageSize: number = 20;
-    @tracked data = [];
+    @tracked data: any[] = [];
     @tracked options: any[] = [];
 
     constructor(owner: unknown, args: BasicPowerSelectArgs) {
@@ -44,12 +44,12 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
      * This is where you would query the server for more options.
      *
      * @param {BasicPowerSelect} this
-     * @param {(string | null)} term
+     * @param {(string | null)} _term
      * @param {number} [offset]
      * @returns {Promise<any[]>}
      */
     @restartableTask
-    *loadOptions(this: BasicPowerSelect, term: string, offset: number = 0) {
+    *loadOptions(this: BasicPowerSelect, _term: string, offset: number = 0) {
         try {
             yield new Promise((r) => setTimeout(r, 500));
             const newRows: any[] = [];
