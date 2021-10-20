@@ -1,3 +1,4 @@
+/* eslint-disable node/no-missing-require */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable node/no-unsupported-features, no-console */
 'use strict';
