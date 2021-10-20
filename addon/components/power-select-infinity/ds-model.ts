@@ -85,7 +85,7 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
         return (
             this.args.processQueryParams ??
             function (this: PowerSelectInfinityModel<T>, term, offset) {
-                return removeEmptyQueryParams({
+                return this.removeEmptyQueryParams({
                     filter: {
                         ...this.args.filters,
                         [this.searchParamKey]: this.useSearchParamFilter ? term : null

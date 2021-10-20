@@ -33,17 +33,8 @@ The query params can be manipulated using `processQueryParams` and `filters` arg
 Check out the console to see what's happening!
 
 <div class="col-5 px-0 mt-3">
-{{power-select-infinity/ds-model/demo2
-                onChange=this.selectPerson2
-                selected=this.selectedPerson2
-                processQueryParams=this.processQueryParams
-                filters=(hash
-                    personName=this.selectedPerson.name
-                )
-            }}
+
 </div>
 {{/demo.example}}
-{{demo.snippet name="basic-power-select-for-model-demo2.hbs" label="Component"}}
-{{demo.snippet name="process-query-params.ts" label="Method"}}
-{{demo.snippet name="person.ts" label="Model"}}
+
 {{/docs-demo}}
