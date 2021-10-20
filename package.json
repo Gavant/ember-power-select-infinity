@@ -121,6 +121,9 @@
         "typescript": "^4.2.4",
         "webpack": "^5.58.2"
     },
+    "resolutions": {
+        "socket.io": "4.2.0"
+    },
     "engines": {
         "node": "12.* || 14.* || >= 16"
     },
