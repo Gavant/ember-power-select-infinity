@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-env node */
 'use strict';
 
@@ -6,9 +7,9 @@ const fs = require('fs');
 
 module.exports = {
     normalizeEntityName() {
-    // this prevents an error when the entityName is
-    // not specified (since that doesn't actually matter
-    // to us
+        // this prevents an error when the entityName is
+        // not specified (since that doesn't actually matter
+        // to us
     },
 
     afterInstall() {

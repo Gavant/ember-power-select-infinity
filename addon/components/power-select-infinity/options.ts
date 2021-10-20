@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore it does too exist
 import { setComponentTemplate } from '@ember/component';
 
