@@ -1,20 +1,11 @@
-# Power Select Infinity For Model
+# Power Select Infinity DS Model
 
-A power-select-infinity used to retrieve model data.
+A power-select-infinity used to retrieve ember-model data.
 
 {{#docs-demo as |demo|}}
 {{#demo.example name="power-select-infinity-ds-model.hbs"}}
 Open devTools and look at the API calls in the console!
 
- <div class="mt-3">
-<h3 class="mb-3">
-<u>Selected</u>
-</h3>
-<ul>
-<li>Name: {{this.selectedItem.name}}</li>
-<li>DOB: {{this.selectedItem.dob}}</li>
-</ul>
-</div>
 <div class="col-5 px-0">
 {{power-select-infinity/ds-model/demo
                 onChange=this.selectPerson

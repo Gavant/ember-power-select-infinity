@@ -128,6 +128,13 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
         }
     }
 
+    /**
+     * Remove empty query params for api call
+     *
+     * @param {QueryParamsObj} queryParams
+     * @return {*}  {QueryParamsObj}
+     * @memberof PowerSelectInfinityModel
+     */
     removeEmptyQueryParams(queryParams: QueryParamsObj): QueryParamsObj {
         for (const i in queryParams) {
             if (isEmpty(queryParams[i])) {
@@ -177,6 +184,19 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
             this.options = results.value;
         }
         return results;
+    }
+
+    /**
+     * Action called from power select infinity. This must return an array of search values
+     *
+     * @param {string} keyword
+     * @return {*}  {Promise<T[]>}
+     * @memberof PowerSelectInfinityModel
+     */
+    @action
+    async onSearch(keyword: string): Promise<T[]> {
+        const result = await this.search(keyword);
+        return result.isOk() ? result.value : [];
     }
 
     /**

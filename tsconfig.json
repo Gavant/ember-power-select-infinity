@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "es2020",
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -40,9 +40,7 @@
       "@gavant/ember-power-select-infinity/test-support/*": [
         "addon-test-support/*"
       ],
-      "*": [
-        "types/*"
-      ]
+      "*": ["types/*"]
     }
   },
   "include": [

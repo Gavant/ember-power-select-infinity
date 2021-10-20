@@ -20,6 +20,9 @@ module.exports = function (environment) {
         APP: {
             // Here you can pass flags/options to your application instance
             // when it is created
+        },
+        'ember-cli-mirage': {
+            enabled: true
         }
     };
 
@@ -29,17 +32,11 @@ module.exports = function (environment) {
         // ENV.APP.LOG_TRANSITIONS = true;
         // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
         // ENV.APP.LOG_VIEW_LOOKUPS = true;
-        ENV['ember-cli-mirage'] = {
-            enabled: true
-        };
     }
 
     if (environment === 'test') {
         // Testem prefers this...
         ENV.locationType = 'none';
-        ENV['ember-cli-mirage'] = {
-            enabled: true
-        };
 
         // keep test console output quieter
         ENV.APP.LOG_ACTIVE_GENERATION = false;
@@ -54,6 +51,9 @@ module.exports = function (environment) {
         ENV.rootURL = 'ADDON_DOCS_ROOT_URL';
         ENV.locationType = 'hash';
         ENV.rootURL = '/ember-power-select-infinity/';
+        ENV['ember-cli-mirage'] = {
+            enabled: false
+        };
         // here you can enable a production-specific feature
     }
 

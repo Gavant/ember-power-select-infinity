@@ -1,15 +1,13 @@
-{{!-- BEGIN-SNIPPET basic-power-select-for-model-demo.hbs --}}
-<PowerSelectInfinity::ForModel
+{{! BEGIN-SNIPPET basic-power-select-for-model-demo.hbs }}
+<PowerSelectInfinity::DsModel
     @modelName="person"
     @placeholder="Select a person"
     @searchPlaceholder="Search for people..."
     @triggerClass="form-control"
     as |option|
 >
-    <div class="ember-power-select-option-section">
-        <div>
-            {{option.name}}
-        </div>
+    <div class="text-truncate">
+        {{option.name}}
     </div>
-</PowerSelectInfinity::ForModel>
-{{!-- END-SNIPPET --}}
+</PowerSelectInfinity::DsModel>
+{{! END-SNIPPET }}

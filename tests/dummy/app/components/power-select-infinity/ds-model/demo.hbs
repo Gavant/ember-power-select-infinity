@@ -7,16 +7,7 @@
     @triggerClass="form-control"
     as |option|
 >
-    <div
-        class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}"
-    >
-        {{#if option.heading}}
-            <div class="ember-power-select-option-section-heading font-weight-bold">
-                {{option.heading}}
-            </div>
-        {{/if}}
-        <div class="text-truncate">
-            {{option.name}}
-        </div>
+    <div class="text-truncate">
+        {{option.name}}
     </div>
 </PowerSelectInfinity::DsModel>
