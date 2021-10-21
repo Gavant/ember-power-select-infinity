@@ -1,0 +1,37 @@
+{{! BEGIN-SNIPPET basic-power-select-demo.hbs }}
+
+<PowerSelectInfinity
+    @selected={{this.selected}}
+    @onChange={{this.onChange}}
+    @options={{this.options}}
+    @canLoadMore={{true}}
+    @loadMore={{this.loadMore}}
+    @search={{this.search}}
+    @allowClear={{true}}
+    @placeholder={{"Search"}}
+    @canCreate={{true}}
+    @labelPath="name"
+    @searchPlaceholder={{@searchPlaceholder}}
+    @loadingMessage={{"loading"}}
+    @searchField={{@searchField}}
+    @triggerClass={{@triggerClass}}
+    @clearOptions={{this.clearOptions}}
+    @createOption={{this.createOption}}
+    as |option|
+>
+    <div
+        class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}"
+    >
+        {{#if option.heading}}
+            <div class="ember-power-select-option-section-heading font-weight-bold">
+                {{option.heading}}
+            </div>
+        {{/if}}
+        <div class="text-truncate">
+
+            {{option.name}}
+        </div>
+    </div>
+</PowerSelectInfinity>
+
+{{! END-SNIPPET }}

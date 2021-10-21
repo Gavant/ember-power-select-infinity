@@ -1,0 +1,71 @@
+<PowerSelect
+    @afterOptionsComponent={{@afterOptionsComponent}}
+    @allowClear={{this.allowClear}}
+    @ariaDescribedBy={{@ariaDescribedBy}}
+    @ariaLabel={{@ariaLabel}}
+    @ariaLabelledBy={{@ariaLabelledBy}}
+    @beforeOptionsComponent={{this.beforeOptionsComponent}}
+    @buildSelection={{@buildSelection}}
+    @calculatePosition={{@calculatePosition}}
+    @closeOnSelect={{@closeOnSelect}}
+    @defaultHighlighted={{@defaultHighlighted}}
+    @destination={{@destination}}
+    @disabled={{@disabled}}
+    @dropdownClass={{this.dropdownClass}}
+    @eventType={{@eventType}}
+    @extra={{assign
+        (hash
+            bufferSize=this.bufferSize
+            estimateHeight=this.estimateHeight
+            staticHeight=this.staticHeight
+            isSearching=(or this.isLoadingMore this.task.isRunning)
+            onLastReached=this.onLastReached
+            noMatchesMessage=this.noMatchesMessage
+            searchText=this.searchText
+            clearSearch=this.clearSearch
+            showCreateMessage=this.showCreateMessage
+            createOption=this.createOption
+            clearSearchOnBlur=this.clearSearchOnBlur
+            loadingComponent=this.loadingComponent
+        )
+        @extra
+    }}
+    @groupComponent={{@groupComponent}}
+    @highlightOnHover={{@highlightOnHover}}
+    @horizontalPosition={{@horizontalPosition}}
+    @initiallyOpened={{@initiallyOpened}}
+    @loadingMessage={{@loadingMessage}}
+    @matcher={{@matcher}}
+    @matchTriggerWidth={{this.matchTriggerWidth}}
+    @noMatchesMessage={{this.noMatchesMessage}}
+    @onBlur={{@onBlur}}
+    @onChange={{@onChange}}
+    @onClose={{@onClose}}
+    @onFocus={{@onFocus}}
+    @onInput={{this.onSearchInput}}
+    @onKeydown={{@onKeydown}}
+    @onOpen={{@onOpen}}
+    @options={{@options}}
+    @optionsComponent={{this.optionsComponent}}
+    @placeholder={{@placeholder}}
+    @preventScroll={{@preventScroll}}
+    @registerAPI={{this.registerAPI}}
+    @renderInPlace={{@renderInPlace}}
+    @scrollTo={{@scrollTo}}
+    @search={{this.onSearch}}
+    @searchEnabled={{this.searchEnabled}}
+    @searchField={{this.searchField}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @selected={{@selected}}
+    @selectedItemComponent={{@selectedItemComponent}}
+    @tabindex={{this.tabindex}}
+    @triggerClass={{this.triggerClass}}
+    @triggerComponent={{this.triggerComponent}}
+    @triggerId={{@triggerId}}
+    @triggerRole={{@triggerRole}}
+    @verticalPosition={{@verticalPosition}}
+    ...attributes
+    as |option select|
+>
+    {{yield option select}}
+</PowerSelect>

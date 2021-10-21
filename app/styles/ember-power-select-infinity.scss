@@ -1,48 +1,32 @@
 @import 'ember-power-select-infinity/variables';
-
-@keyframes sk-bounce {
-  0%, 100% {
-    transform: scale(0.0);
-  } 50% {
-    transform: scale(1.0);
-  }
-}
+@import './progress-spinner/progress-spinner';
 
 .ember-power-select-infinity {
-    &-clear-btn {
-        right: 25px;
-        top: 4px;
-        position: absolute;
-    }
     &-trigger {
-        padding: 0;
-        border: none;
-    }
-    &-loading-indicator {
-        right: 25px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: $power-select-infinity-loading-width;
-        height: $power-select-infinity-loading-height;
-        position: absolute;
-        background-color: $power-select-infinity-loading-background-color;
-        .double-bounce1, .double-bounce2 {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-          background-color: $power-select-infinity-loading-color;
-          opacity: 0.6;
-          position: absolute;
-          top: 0;
-          left: 0;
-
-          -webkit-animation: sk-bounce 2s infinite ease-in-out;
-          animation: sk-bounce 2s infinite ease-in-out;
+        &.ember-power-select-trigger.ember-basic-dropdown-trigger,
+        &.ember-basic-dropdown-trigger--left.ember-power-select-trigger.ember-basic-dropdown-trigger,
+        &.ember-basic-dropdown-trigger--down.ember-power-select-trigger.ember-basic-dropdown-trigger {
+            border: none;
+            outline: none;
+            padding: 0;
+            height: auto;
+            line-height: 1.5;
+            min-height: 34px;
+            border-radius: 4px;
         }
 
-        .double-bounce2 {
-          -webkit-animation-delay: -1.0s;
-          animation-delay: -1.0s;
+        &-progress-spinner {
+            position: absolute;
+            right: $gvnt-power-select-infinity-trigger-spinner-right;
+            top: $gvnt-power-select-infinity-trigger-spinner-top;
+        }
+        &-clear-btn {
+            position: absolute;
+            right: $gvnt-power-select-infinity-trigger-clear-btn-right;
+            top: $gvnt-power-select-infinity-trigger-clear-btn-top;
         }
     }
+    // &-dropdown {
+    //     border: none !important;
+    // }
 }

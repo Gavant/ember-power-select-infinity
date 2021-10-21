@@ -1,0 +1,11 @@
+<DocsHero
+    @heading='Power Select Infinity'
+/>
+<div class ="index-demo">
+    <DocsDemo as |demo|>
+        <p class="demo-text">A <b>power select</b> with infinite pagination.</p>
+        <demo.example @name="my-demo.hbs">
+            <PowerSelectInfinity::Demo @onChange={{this.selectItem}} @selected={{this.selectedItem}} />
+        </demo.example>
+    </DocsDemo>
+</div>

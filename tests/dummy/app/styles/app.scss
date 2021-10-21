@@ -1,8 +1,267 @@
-@import "ember-power-select";
-@import "ember-power-select-infinity";
+@import 'ember-power-select';
+@import 'ember-power-select-infinity';
 
-.loading-square {
-    position: absolute;
-    right: 0;
-    top: 5px;
+body.ember-application {
+    background-color: #fff;
+}
+
+:root {
+    --brand-primary: #285a92;
+}
+
+section.item-section {
+    h2,
+    h3 {
+        font-size: 1.1rem;
+    }
+}
+
+.index-demo {
+    max-width: 37rem;
+    min-width: 37rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+
+    .demo-text {
+        margin: 1rem 1rem;
+    }
+}
+
+.docs {
+    &-bg-brand {
+        .docs-max-w-sm {
+            max-width: none;
+        }
+    }
+}
+
+.ember-basic-dropdown {
+    width: 100%;
+}
+.ember-basic-dropdown-trigger,
+.ember-basic-dropdown-trigger.ember-basic-dropdown-trigger--below.ember-power-select-trigger {
+    border: #e2e5ec solid 1px;
+    outline: none;
+    padding: 0.5rem 1rem;
+    height: auto;
+    line-height: 1.5;
+    min-height: 34px;
+    border-radius: 4px;
+    &:focus,
+    &.ember-power-select-trigger--active {
+        border: --brand-primary solid 1px;
+    }
+
+    &.ember-power-select-trigger[aria-disabled='true'] {
+        background-color: #f7f8fa;
+    }
+
+    .ember-power-select-selected-item {
+        margin-left: 0;
+        color: #212529;
+        font-weight: 400;
+    }
+
+    .ember-power-select-placeholder {
+        margin-left: 0;
+        color: #48465b;
+        opacity: 0.6;
+    }
+
+    .power-select-search-input {
+        width: 100%;
+        height: 100%;
+        padding: 0.5rem 1rem;
+    }
+
+    .ember-power-select-clear-btn {
+        top: 6px;
+    }
+
+    span.ember-power-select-placeholder {
+        font-weight: 400;
+    }
+
+    &.dropdown-trigger-formless {
+        padding: 0;
+        border: none;
+        min-height: 0;
+        .ember-power-select-selected-item {
+            color: grey;
+        }
+        &:hover,
+        &:active,
+        &:focus {
+            cursor: pointer;
+            border: none;
+            .ember-power-select-selected-item,
+            .ember-power-select-status-icon {
+                color: --brand-primary;
+            }
+            .ember-power-select-status-icon {
+                border-color: --brand-primary transparent transparent transparent;
+            }
+        }
+        .ember-power-select-status-icon {
+            display: flex;
+            position: relative;
+            margin-left: 10px;
+        }
+    }
+}
+
+.ember-basic-dropdown-content,
+.ember-power-select-dropdown.ember-basic-dropdown-content--in-place,
+.ember-power-select-dropdown.ember-basic-dropdown-content--below {
+    border: #e2e5ec solid 1px;
+    border-bottom: #e2e5ec solid 1px;
+    border-radius: 5px;
+    margin-top: 0.2rem;
+
+    &.header-dropdown {
+        top: 5rem !important;
+    }
+
+    &:first-child {
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    &:last-child {
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    a.dropdown-link {
+        padding: 0.75rem 1.75rem;
+        color: var(--brand-primary);
+
+        &.active {
+            background-color: --brand-primary;
+            color: #fff;
+        }
+
+        &:hover {
+            background-color: grey;
+            color: black;
+            &.active {
+                background-color: --brand-primary;
+                color: #fff;
+            }
+        }
+    }
+
+    button.dropdown-item {
+        padding: 0.75rem 1.75rem;
+        color: grey;
+
+        &:active,
+        &:focus {
+            background-color: --brand-primary;
+            color: #fff;
+        }
+
+        &:hover {
+            background-color: grey;
+            color: black;
+        }
+    }
+
+    .ember-power-select-options {
+        border: none;
+    }
+
+    .ember-power-select-search {
+        input {
+            border-color: --brand-primary-light;
+            outline: none;
+            border-radius: 3px;
+        }
+    }
+
+    &.power-select-patient {
+        &-content {
+            width: 350px;
+            margin-top: 0;
+
+            .open-patient-icon {
+                color: #74788d;
+                &:hover {
+                    color: --brand-primary-light;
+                }
+            }
+            .power-select-patient-options {
+                max-height: 20rem;
+
+                .ember-power-select-option--loading-message {
+                    padding: 0.5rem;
+                    padding-left: 1rem;
+                }
+            }
+        }
+    }
+}
+
+.dropdown {
+    &-sub-label-xs {
+        font-size: 9px;
+    }
+}
+
+// TODO: Remove when gavant-ember-bootstrap-dropdown is fixed
+@keyframes bsDropdownZoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+// TODO: Remove when gavant-ember-bootstrap-dropdown is fixed
+$bs-dropdown-animation-duration: 0.25s;
+$bs-dropdown-transition-in-animation: bsDropdownZoomIn;
+$bs-dropdown-transition-out-animation: bsDropdownZoomOut;
+$bs-dropdown-item-disabled-opacity: 0.5;
+
+// TODO: Remove when gavant-ember-bootstrap-dropdown is fixed
+.dropdown-menu {
+    display: block;
+    left: auto;
+    right: auto;
+    padding: 0.5rem 0;
+
+    &:focus {
+        outline: none;
+    }
+
+    &.dropdown {
+        &-patient-service {
+            transform: translate3d(-85px, 20px, 0px) !important;
+            &-actions {
+                transform: translate3d(-140px, 20px, 0px) !important;
+            }
+        }
+    }
+}
+
+.dropdown-item {
+    &.disabled,
+    &:disabled {
+        opacity: $bs-dropdown-item-disabled-opacity;
+        cursor: not-allowed;
+    }
+}
+
+button.dropdown-item {
+    cursor: pointer;
+}
+
+.prevent-overflow-hidden {
+    .ember-basic-dropdown-content {
+        position: fixed;
+        width: 7.3rem;
+    }
 }
