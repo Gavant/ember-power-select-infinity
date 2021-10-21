@@ -5,6 +5,16 @@ const getChannelURL = require('ember-source-channel-url');
 
 module.exports = async function () {
     return {
+        /*
+      If set to true, the `versionCompatibility` key under `ember-addon` in `package.json` will be used to
+      automatically generate scenarios that will deep merge with any in this configuration file.
+    */
+        useVersionCompatibility: true,
+        /*
+      If set to true, all npm scenarios will use `yarn` for install with the `--no-lockfile` option. At cleanup, your
+      dependencies will be restored to their prior state.
+    */
+        useYarn: true,
         scenarios: [
             {
                 name: 'ember-lts-3.20',
@@ -32,6 +42,7 @@ module.exports = async function () {
             },
             {
                 name: 'ember-beta',
+                allowedToFail: true,
                 npm: {
                     devDependencies: {
                         'ember-source': await getChannelURL('beta')
@@ -40,6 +51,7 @@ module.exports = async function () {
             },
             {
                 name: 'ember-canary',
+                allowedToFail: true,
                 npm: {
                     devDependencies: {
                         'ember-source': await getChannelURL('canary')
