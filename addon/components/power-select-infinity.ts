@@ -97,6 +97,22 @@ export interface PowerSelectInfinityArgs<T> extends PowerSelectArgs<T, PowerSele
     createOption?: (text: string) => void;
 
     /**
+     * Function given to control when we should show the create message
+     *
+     * @param {this} component
+     * @memberof PowerSelectInfinityArgs
+     */
+    showCreateMessage?: (component: PowerSelectInfinity<T>) => void;
+
+    /**
+     * The message displayed to the user telling them they can create the option
+     *
+     * @type {string}
+     * @memberof PowerSelectInfinityArgs
+     */
+    createMessage?: string;
+
+    /**
      * Used by ember-vertical-collection for occlusion rendering.
      *
      * @type {number}
@@ -220,11 +236,19 @@ export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinit
     @tracked select: Select | null = null;
 
     get showCreateMessage() {
-        const searchText = this.select?.searchText;
-        const numOptions = guard(this.args.options, 'content')
-            ? this.args.options.content.length
-            : this.args.options.length;
-        return this.args.canCreate && numOptions === 0 && searchText !== '' && !this.task.isRunning;
+        if (this.args.showCreateMessage) {
+            return this.args.showCreateMessage(this);
+        } else {
+            const searchText = this.select?.searchText;
+            const numOptions = guard(this.args.options, 'content')
+                ? this.args.options.content.length
+                : this.args.options.length;
+            return this.args.canCreate && numOptions === 0 && searchText !== '' && !this.task.isRunning;
+        }
+    }
+
+    get createMessage() {
+        return this.args.createMessage ?? `Press enter to create the group "${this.select?.searchText}"`;
     }
 
     get triggerComponent() {
@@ -232,7 +256,7 @@ export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinit
     }
 
     get triggerClass() {
-        return 'ember-power-select-infinity-trigger';
+        return this.args.triggerClass ?? 'ember-power-select-infinity-trigger';
     }
 
     get beforeOptionsComponent() {
