@@ -269,7 +269,9 @@ export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinit
     }
 
     get dropdownClass() {
-        return `${this.args.dropdownClass ?? ''} ember-power-select-infinity-dropdown`;
+        return `${this.args.dropdownClass ?? ''} ember-power-select-infinity-dropdown ${
+            this.task.isRunning ? 'options-loading' : ''
+        }`;
     }
 
     get clearSearchOnBlur() {

@@ -26,7 +26,7 @@
             top: $gvnt-power-select-infinity-trigger-clear-btn-top;
         }
     }
-    // &-dropdown {
-    //     border: none !important;
-    // }
+    &-dropdown.options-loading {
+        border: none !important;
+    }
 }
