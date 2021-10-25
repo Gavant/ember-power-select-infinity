@@ -35,6 +35,7 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
 
         this.data = generateOptions(1000);
         this.options = this.data;
+        // this.selected = this.options[0];
         // if (!Ember.testing) {
         //     scheduleOnce('afterRender', this, 'loadInitialPage');
         // }

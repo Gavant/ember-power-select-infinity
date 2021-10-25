@@ -21,7 +21,7 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
     PowerSelectTriggerArgs<T, PowerSelectInfinityExtra>
 > {
     oldSelect: Select | null = null;
-    @tracked text = '';
+    @tracked text = this.getSelectedAsText();
 
     get canClear() {
         return this.text && !this.args.select.disabled;
