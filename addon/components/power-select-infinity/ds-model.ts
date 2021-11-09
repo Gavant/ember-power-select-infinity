@@ -63,6 +63,7 @@ export interface PowerSelectInfinityModelArgs<T> extends PowerSelectInfinityArgs
      */
     loadOptionsOnRender?: boolean;
     include?: string[];
+    sort?: string[];
 }
 
 export interface QueryParamsObj {
@@ -94,7 +95,8 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
                         limit: this.pageSize,
                         offset: offset || 0
                     },
-                    include: this.args.include ?? undefined
+                    include: this.args.include ?? undefined,
+                    sort: this.args.sort?.join(',') ?? undefined
                 });
             }
         );
