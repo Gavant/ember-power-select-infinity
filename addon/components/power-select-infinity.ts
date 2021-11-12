@@ -19,6 +19,7 @@ export type PowerSelectInfinityExtra = Pick<
     | 'staticHeight'
     | 'loadingComponent'
     | 'createOption'
+    | 'allowClear'
 > & {
     /**
      *  Whether or not the user should be given the option to create if no options found

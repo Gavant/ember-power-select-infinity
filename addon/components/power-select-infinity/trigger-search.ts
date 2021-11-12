@@ -24,7 +24,7 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
     @tracked text = this.getSelectedAsText();
 
     get canClear() {
-        return this.text && !this.args.select.disabled;
+        return this.text && this.args.extra?.allowClear && !this.args.select.disabled;
     }
 
     /**
