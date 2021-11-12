@@ -27,13 +27,6 @@
 
     {{#if this.canClear}}
         {{! template-lint-disable no-bare-strings }}
-        <a
-            href="#clear"
-            class="ember-power-select-infinity-trigger-clear-btn"
-            {{on "mouseup" (fn this.clear @select)}}
-            {{on "touchstart" (fn this.clear @select)}}
-        >
-            &times;
-        </a>
+        <span class="ember-power-select-infinity-trigger-clear-btn" role="button" {{on "mousedown" (fn this.clear @select)}} {{on "touchstart" (fn this.clear @select)}}>&times;</span>
     {{/if}}
 </div>
