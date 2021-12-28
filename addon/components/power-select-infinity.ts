@@ -20,6 +20,8 @@ export type PowerSelectInfinityExtra = Pick<
     | 'loadingComponent'
     | 'createOption'
     | 'allowClear'
+    | 'renderAll'
+    | 'triggerClass'
 > & {
     /**
      *  Whether or not the user should be given the option to create if no options found
