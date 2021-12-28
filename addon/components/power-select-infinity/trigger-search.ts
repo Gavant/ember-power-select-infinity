@@ -8,14 +8,16 @@ import { PowerSelectTriggerArgs } from 'ember-power-select/components/power-sele
 
 import { PowerSelectInfinityExtra } from '@gavant/ember-power-select-infinity/components/power-select-infinity';
 
-const KEYCODE_BACKSPACE = 8;
-const KEYCODE_UP_ARROW = 38;
-const KEYCODE_DOWN_ARROW = 40;
-const KEYCODE_0 = 48;
-const KEYCODE_Z = 90;
-const KEYCODE_SPACE = 32;
-const KEYCODE_ENTER = 13;
-const KEYCODE_ESCAPE = 27;
+const KEY_BACKSPACE = 'Backspace';
+const KEY_UP_ARROW = 'ArrowUp';
+const KEY_DOWN_ARROW = 'ArrowDown';
+const KEY_0 = '0';
+const KEY_9 = '9';
+const KEY_A = 'A';
+const KEY_Z = 'Z';
+const KEY_SPACE = ' ';
+const KEY_ENTER = 'Enter';
+const KEY_ESCAPE = 'Escape';
 
 export default class PowerSelectInfinityTriggerSearch<T> extends Component<
     PowerSelectTriggerArgs<T, PowerSelectInfinityExtra>
@@ -78,22 +80,28 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
     //@ts-ignore
     handleKeydown(e: KeyboardEvent) {
         // up or down arrow and if not open, no-op and prevent parent handlers from being notified
-        if ([KEYCODE_UP_ARROW, KEYCODE_DOWN_ARROW].indexOf(e.keyCode) > -1 && !this.args.select.isOpen) {
+        if ([KEY_UP_ARROW, KEY_DOWN_ARROW].indexOf(e.key) > -1 && !this.args.select.isOpen) {
             e.stopPropagation();
             return;
         }
-        const isLetter = (e.keyCode >= KEYCODE_0 && e.keyCode <= KEYCODE_Z) || e.keyCode === KEYCODE_SPACE; // Keys 0-9, a-z or SPACE
+        const isLetter =
+            (e.key.length === 1 && ((e.key >= KEY_0 && e.key <= KEY_9) || (e.key >= KEY_A && e.key <= KEY_Z))) ||
+            e.key === KEY_SPACE; // Keys 0-9, a-z or SPACE
         // if isLetter, escape or enter, prevent parent handlers from being notified
-        if (isLetter || [KEYCODE_ENTER, KEYCODE_ESCAPE].indexOf(e.keyCode) > -1) {
+        if (isLetter || [KEY_ENTER, KEY_ESCAPE].indexOf(e.key) > -1) {
             const select = this.args.select;
             // open if loading msg configured
             if (!select.isOpen && this.args.loadingMessage) {
                 scheduleOnce('afterRender', null, select.actions.open);
             }
             e.stopPropagation();
+            // Prevent Enter from submitting forms
+            if (e.key === KEY_ENTER) {
+                e.preventDefault();
+            }
         }
 
-        if (e.keyCode === KEYCODE_BACKSPACE && this.args.select.selected) {
+        if (e.key === KEY_BACKSPACE && this.args.select.selected) {
             const select = this.args.select;
             e.stopPropagation();
             if (select.selected) {
@@ -103,7 +111,7 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
             scheduleOnce('afterRender', null, select.actions.open);
         }
 
-        if (e.keyCode === KEYCODE_ENTER && this.args.extra?.showCreateMessage && this.args.extra.createOption) {
+        if (e.key === KEY_ENTER && this.args.extra?.showCreateMessage && this.args.extra.createOption) {
             const select = this.args.select;
             this.args.extra.createOption(select.searchText);
             scheduleOnce('afterRender', null, select.actions.close);

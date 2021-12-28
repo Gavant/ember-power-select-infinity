@@ -217,7 +217,7 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
             }
             return results;
         } catch (errors) {
-            return errors;
+            return err(errors);
         }
     }
 

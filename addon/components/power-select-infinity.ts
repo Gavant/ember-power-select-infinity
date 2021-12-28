@@ -172,6 +172,14 @@ export interface PowerSelectInfinityArgs<T> extends PowerSelectArgs<T, PowerSele
      * @memberof PowerSelectInfinityArgs
      */
     staticHeight?: boolean;
+
+    /**
+     * Used by ember-vertical-collection to determine if all
+     * elements should be rendered or not.
+     *
+     * @type {boolean}
+     */
+    renderAll?: boolean;
 }
 
 export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinityArgs<T>> {
