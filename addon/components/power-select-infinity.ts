@@ -20,6 +20,8 @@ export type PowerSelectInfinityExtra = Pick<
     | 'loadingComponent'
     | 'createOption'
     | 'allowClear'
+    | 'renderAll'
+    | 'triggerClass'
 > & {
     /**
      *  Whether or not the user should be given the option to create if no options found
@@ -172,6 +174,14 @@ export interface PowerSelectInfinityArgs<T> extends PowerSelectArgs<T, PowerSele
      * @memberof PowerSelectInfinityArgs
      */
     staticHeight?: boolean;
+
+    /**
+     * Used by ember-vertical-collection to determine if all
+     * elements should be rendered or not.
+     *
+     * @type {boolean}
+     */
+    renderAll?: boolean;
 }
 
 export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinityArgs<T>> {

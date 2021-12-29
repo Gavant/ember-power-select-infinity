@@ -1,9 +1,11 @@
 <ul
     role="listbox"
     class="ember-power-select-options-list"
-    aria-controls="ember-power-select-options-{{@select.uniqueId}}"
+    {{!-- The keyboard navigation is currently broken in Ember-PowerSelect v4. The selector for navigation uses -trigger- for the aria-control instead of options. This should be changed back to -options- when v5 is used and stable. --}}
+    aria-controls="ember-power-select-trigger-{{@select.uniqueId}}"
     ...attributes
     {{did-insert this.addHandlers}}
+    {{will-destroy this.removeHandlers}}
 >
     <VerticalCollection
         @items={{@select.options}}
@@ -11,6 +13,7 @@
         @staticHeight={{@extra.staticHeight}}
         @bufferSize={{@extra.bufferSize}}
         @lastReached={{@extra.onLastReached}}
+        @renderAll={{this.renderAll}}
         @containerSelector=".ember-power-select-options"
         as |opt index|
     >

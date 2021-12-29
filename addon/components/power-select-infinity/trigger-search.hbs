@@ -5,7 +5,7 @@
         value={{this.text}}
         placeholder={{@placeholder}}
         maxlength="256"
-        class="ember-power-select-trigger-input power-select-search-input position-relative text-md form-control"
+        class="ember-power-select-trigger-input power-select-search-input position-relative text-md form-control {{@extra.triggerClass}}"
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
@@ -13,7 +13,7 @@
         id="ember-power-select-infinity-trigger-{{@select.uniqueId}}"
         aria-controls={{@listboxId}}
         disabled={{@select.disabled}}
-        tabindex={{-1}}
+        tabindex={{0}}
         {{on "focus" @onFocus}}
         {{on "blur" (fn this.onBlur @select)}}
         {{on "input" @onInput}}

@@ -17,5 +17,9 @@ export default class PowerSelectInfinityOptions<T, E extends PowerSelectInfinity
     get estimateHeight() {
         return this.args.extra.estimateHeight ?? 30;
     }
+
+    get renderAll() {
+        return this.args.extra.renderAll ?? true;
+    }
 }
 // setComponentTemplate(Template, PowerSelectInfinityOptions);
