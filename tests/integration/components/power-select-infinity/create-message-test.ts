@@ -11,6 +11,6 @@ module('Integration | Component | power-select-infinity/create-message', functio
     test('it renders', async function (assert) {
         await render(hbs`{{power-select-infinity/create-message}}`);
 
-        assert.equal(this.element.textContent?.trim(), '');
+        assert.strictEqual(this.element.textContent?.trim(), '');
     });
 });

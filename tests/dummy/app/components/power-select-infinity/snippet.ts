@@ -1,23 +1,24 @@
-// @ts-nocheck
-interface Model {}
+import { action } from '@ember/object';
+import { scheduleOnce } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 // BEGIN-SNIPPET basic-power-select-snippet.ts
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency-decorators';
-import { scheduleOnce } from '@ember/runloop';
-import { didCancel } from 'ember-concurrency';
-import { taskFor } from 'ember-concurrency-ts';
+
+import Model from '@ember-data/model';
+import Store from '@ember-data/store';
 import Ember from 'ember';
+import { didCancel } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { taskFor } from 'ember-concurrency-ts';
 
-interface BasicPowerSelectArgs {}
-
-export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
-    @tracked canLoadMore: boolean = true;
-    @tracked pageSize: number = 20;
+export default class BasicPowerSelect extends Component<Record<string, unknown>> {
+    @service declare store: Store;
+    @tracked canLoadMore = true;
+    @tracked pageSize = 20;
     @tracked options: Model[] = [];
 
-    constructor(owner: unknown, args: BasicPowerSelectArgs) {
+    constructor(owner: unknown, args: Record<string, unknown>) {
         super(owner, args);
         if (!Ember.testing) {
             scheduleOnce('afterRender', this, 'loadInitialPage');
@@ -33,7 +34,7 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
      * @returns {Promise<Model[]>}
      */
     @restartableTask
-    *loadOptions(this: BasicPowerSelect, term: string, offset: number = 0) {
+    *loadOptions(this: BasicPowerSelect, term: string, offset = 0) {
         try {
             const params = {
                 filter: {
@@ -44,6 +45,8 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
                     offset: offset || 0
                 }
             };
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             const result = yield this.store.query('model-name', params);
             const models = result.toArray();
             this.canLoadMore = models.length >= this.pageSize;

@@ -289,5 +289,6 @@ export class JSONAPISerializer extends EmberObject {
     typeKeyForModel(model: ModelInstance): string;
 
     serialize(object: ModelInstance, request: Request): any;
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     normalize(json: any): any;
 }

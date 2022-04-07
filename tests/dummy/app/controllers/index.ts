@@ -6,7 +6,7 @@ export default class IndexController extends Controller {
     @tracked selectedItem: any | null = null;
 
     @action
-    selectItem(newItem: any | null) {
+    selectItem(newItem: any | null): void {
         this.selectedItem = newItem ?? null;
     }
 }

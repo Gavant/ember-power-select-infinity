@@ -15,7 +15,15 @@ module.exports = {
         browser: true
     },
 
-    rules: {},
+    rules: {
+        'ember/no-jquery': 'error',
+        '@typescript-eslint/no-inferrable-types': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-empty-interface': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off'
+    },
     overrides: [
         // node files
         {

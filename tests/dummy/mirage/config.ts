@@ -8,6 +8,7 @@ interface Request {
     [x: string]: any;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function (this: any) {
     this.get('/people', (schema: Schema, request: Request) => {
         const keyword = request.queryParams['filter[keyword]'];

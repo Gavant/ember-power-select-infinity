@@ -1,8 +1,7 @@
-import { render } from '@ember/test-helpers';
+import { render, TestContext } from '@ember/test-helpers';
 
 import { Select } from 'ember-power-select/addon/components/power-select';
 import { setupRenderingTest } from 'ember-qunit';
-import { TestContext } from 'ember-test-helpers';
 
 import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
@@ -49,6 +48,6 @@ module('Integration | Component | power-select-infinity/trigger-search', functio
             hbs`<PowerSelectInfinity::TriggerSearch @onFocus={{this.onFocus}} @onInput={{this.onInput}} @select={{this.select}} />`
         );
 
-        assert.equal(this.element.textContent?.trim(), '');
+        assert.strictEqual(this.element?.textContent?.trim(), '');
     });
 });

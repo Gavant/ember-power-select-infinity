@@ -1,8 +1,7 @@
-import { click, render, triggerKeyEvent } from '@ember/test-helpers';
+import { click, render, TestContext, triggerKeyEvent } from '@ember/test-helpers';
 import fillIn from '@ember/test-helpers/dom/fill-in';
 
 import { setupRenderingTest } from 'ember-qunit';
-import { TestContext } from 'ember-test-helpers';
 
 import 'qunit-dom';
 
@@ -114,7 +113,7 @@ module('Integration | Component | power-select-infinity', function (hooks) {
             this.selected = option;
         };
 
-        this.search = (_text: string) => {
+        this.search = () => {
             this.set('options', []);
             return [];
         };
@@ -159,7 +158,7 @@ module('Integration | Component | power-select-infinity', function (hooks) {
 
         await triggerKeyEvent('.ember-power-select-trigger-input', 'keydown', 'Enter');
 
-        assert.equal(this.selected?.name, 'Cool test');
+        assert.strictEqual(this.selected?.name, 'Cool test');
     });
 
     test('Loading more options works', async function (this: PowerSelectInfinityContext, assert) {
@@ -200,7 +199,7 @@ module('Integration | Component | power-select-infinity', function (hooks) {
         </PowerSelectInfinity>
     `);
         await click('.ember-power-select-trigger-input');
-        assert.equal(this.options.length, 20);
+        assert.strictEqual(this.options.length, 20);
         // TODO fix this
         // await settled();
         // await scrollTo('.ember-basic-dropdown-content ul', 0, 1000);

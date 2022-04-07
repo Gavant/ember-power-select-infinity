@@ -1,7 +1,6 @@
-import { render } from '@ember/test-helpers';
+import { render, TestContext } from '@ember/test-helpers';
 
 import { setupRenderingTest } from 'ember-qunit';
-import { TestContext } from 'ember-test-helpers';
 
 import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';
@@ -37,6 +36,6 @@ module('Integration | Component | power-select-infinity/options', function (hook
         </div>
     `);
 
-        assert.equal(this.element.textContent?.trim(), '');
+        assert.strictEqual(this.element.textContent?.trim(), '');
     });
 });
