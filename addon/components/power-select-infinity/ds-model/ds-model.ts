@@ -182,7 +182,7 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
     @action
     async loadInitialPage(): Promise<Result<T[], Error>> {
         const results = (await this.search('')) ?? [];
-        if (results.isOk()) {
+        if (results.isOk) {
             this.options = results.value;
         }
         return results;
@@ -198,7 +198,7 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
     @action
     async onSearch(keyword: string): Promise<T[]> {
         const result = await this.search(keyword);
-        return result.isOk() ? result.value : [];
+        return result.isOk ? result.value : [];
     }
 
     /**
@@ -212,7 +212,7 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
     async search(keyword: string): Promise<Result<T[], Error>> {
         try {
             const results = (await taskFor(this.loadOptions).perform(keyword)) ?? [];
-            if (results.isOk()) {
+            if (results.isOk) {
                 this.options = results.value;
             }
             return results;
@@ -233,7 +233,7 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
         const options = this.options.concat([]);
         const offset = options.length;
         const nextPage = await taskFor(this.loadOptions).perform(keyword, offset);
-        if (nextPage.isOk()) {
+        if (nextPage.isOk) {
             options.push(...nextPage.value);
             this.options = options;
         }
