@@ -40,7 +40,7 @@
         "@ember/test-helpers": "^2.6.0",
         "@embroider/test-setup": "^1.2.0",
         "@gavant/glint-template-types": "^0.0.20",
-        "@glimmer/component": "^1.0.4",
+        "@glimmer/component": "^1.1.1",
         "@glint/core": "^0.6.1",
         "@glint/environment-ember-loose": "^0.6.1",
         "@types/ember-data": "^4.0.0",
@@ -82,11 +82,10 @@
         "broccoli-asset-rev": "^3.0.0",
         "ember-auto-import": "^2.4.0",
         "ember-cli": "~4.2.0",
-        "ember-cli-addon-docs": "^4.0.3",
         "ember-cli-dependency-checker": "^3.2.0",
         "ember-cli-github-pages": "^0.2.2",
         "ember-cli-inject-live-reload": "^2.1.0",
-        "ember-cli-mirage": "^2.2.0",
+        "ember-cli-mirage": "^2.4.0",
         "ember-cli-sri": "^2.1.1",
         "ember-cli-terser": "^4.0.2",
         "ember-cli-typescript-blueprints": "^3.0.0",
@@ -121,7 +120,7 @@
         "webpack": "^5.69.1"
     },
     "resolutions": {
-        "socket.io": "4.2.0"
+        "@embroider/macros": "1.5.0"
     },
     "engines": {
         "node": "12.* || 14.* || >= 16"

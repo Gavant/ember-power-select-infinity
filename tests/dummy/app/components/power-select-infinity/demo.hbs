@@ -1,5 +1,3 @@
-{{! BEGIN-SNIPPET basic-power-select-demo.hbs }}
-
 <PowerSelectInfinity
     @selected={{this.selected}}
     @onChange={{this.onChange}}
@@ -20,7 +18,7 @@
     as |option|
 >
     <div
-        class="ember-power-select-option-section {{if option.heading "ember-power-select-option-section-has-heading"}}"
+        class="ember-power-select-option-section {{if option.heading 'ember-power-select-option-section-has-heading'}}"
     >
         {{#if option.heading}}
             <div class="ember-power-select-option-section-heading font-weight-bold">
@@ -33,5 +31,3 @@
         </div>
     </div>
 </PowerSelectInfinity>
-
-{{! END-SNIPPET }}

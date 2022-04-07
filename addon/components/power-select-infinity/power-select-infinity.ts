@@ -271,12 +271,10 @@ export default class PowerSelectInfinity<T> extends Component<PowerSelectInfinit
     }
 
     get beforeOptionsComponent() {
-        if (this.args.beforeOptionsComponent) {
-            return this.args.beforeOptionsComponent;
-        } else if (this.showCreateMessage) {
+        if (this.showCreateMessage) {
             return 'power-select-infinity/create-message';
         }
-        return '';
+        return null;
     }
 
     get dropdownClass() {

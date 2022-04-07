@@ -1,6 +1,6 @@
 import PowerSelectOptions from 'ember-power-select/components/power-select/options';
 
-import { PowerSelectInfinityExtra } from '@gavant/ember-power-select-infinity/components/power-select-infinity';
+import { PowerSelectInfinityExtra } from '@gavant/ember-power-select-infinity/components/power-select-infinity/power-select-infinity';
 
 export default class PowerSelectInfinityOptions<T, E extends PowerSelectInfinityExtra> extends PowerSelectOptions<
     T,

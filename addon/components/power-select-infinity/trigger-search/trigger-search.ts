@@ -6,7 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import { Select } from 'ember-power-select/addon/components/power-select';
 import { PowerSelectTriggerArgs } from 'ember-power-select/components/power-select/trigger';
 
-import { PowerSelectInfinityExtra } from '@gavant/ember-power-select-infinity/components/power-select-infinity';
+import { PowerSelectInfinityExtra } from '@gavant/ember-power-select-infinity/components/power-select-infinity/power-select-infinity';
 
 const KEY_BACKSPACE = 'Backspace';
 const KEY_UP_ARROW = 'ArrowUp';
@@ -57,7 +57,7 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
 
         if (newSelect.lastSearchedText !== oldSelect?.lastSearchedText) {
             if (newSelect.lastSearchedText === '') {
-                scheduleOnce('afterRender', null, newSelect.actions.close, null, true);
+                scheduleOnce('afterRender', null, newSelect.actions.close, undefined, true);
             } else {
                 scheduleOnce('afterRender', null, newSelect.actions.open);
             }
@@ -76,8 +76,6 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
      */
 
     @action
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //@ts-ignore
     handleKeydown(e: KeyboardEvent) {
         // up or down arrow and if not open, no-op and prevent parent handlers from being notified
         if ([KEY_UP_ARROW, KEY_DOWN_ARROW].indexOf(e.key) > -1 && !this.args.select.isOpen) {

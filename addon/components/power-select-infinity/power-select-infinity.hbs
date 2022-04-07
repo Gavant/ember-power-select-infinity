@@ -1,0 +1,92 @@
+<PowerSelect
+    @animationEnabled={{@animationEnabled}}
+    @triggerRole={{@triggerRole}}
+    @ariaDescribedBy={{@ariaDescribedBy}}
+    @ariaInvalid={{@ariaInvalid}}
+    @ariaLabel={{@ariaLabel}}
+    @ariaLabelledBy={{@ariaLabelledBy}}
+    @afterOptionsComponent={{ensure-safe-component @afterOptionsComponent}}
+    @allowClear={{this.allowClear}}
+    @beforeOptionsComponent={{if
+        @beforeOptionsComponent
+        (ensure-safe-component @beforeOptionsComponent)
+        this.beforeOptionsComponent
+    }}
+    @buildSelection={{or @buildSelection this.defaultBuildSelection}}
+    @calculatePosition={{@calculatePosition}}
+    @closeOnSelect={{@closeOnSelect}}
+    @defaultHighlighted={{@defaultHighlighted}}
+    @destination={{@destination}}
+    @disabled={{@disabled}}
+    @dropdownClass={{this.dropdownClass}}
+    @groupComponent={{ensure-safe-component @groupComponent}}
+    @horizontalPosition={{@horizontalPosition}}
+    @initiallyOpened={{@initiallyOpened}}
+    @loadingMessage={{@loadingMessage}}
+    @matcher={{@matcher}}
+    @matchTriggerWidth={{this.matchTriggerWidth}}
+    @noMatchesMessage={{this.noMatchesMessage}}
+    @noMatchesMessageComponent={{ensure-safe-component @noMatchesMessageComponent}}
+    @onBlur={{@onBlur}}
+    @onChange={{@onChange}}
+    @onClose={{@onClose}}
+    @onFocus={{this.handleFocus}}
+    @onInput={{this.onSearchInput}}
+    @onKeydown={{this.handleKeydown}}
+    @onOpen={{this.handleOpen}}
+    @options={{@options}}
+    @optionsComponent={{if @optionsComponent (ensure-safe-component @optionsComponent) "power-select-infinity/options"}}
+    @placeholder={{@placeholder}}
+    @placeholderComponent={{ensure-safe-component @placeholderComponent}}
+    @preventScroll={{@preventScroll}}
+    @registerAPI={{this.registerAPI}}
+    @renderInPlace={{@renderInPlace}}
+    @required={{@required}}
+    @scrollTo={{@scrollTo}}
+    @search={{this.onSearch}}
+    @searchEnabled={{this.searchEnabled}}
+    @searchField={{this.searchField}}
+    @searchMessage={{@searchMessage}}
+    @searchPlaceholder={{@searchPlaceholder}}
+    @selected={{@selected}}
+    @selectedItemComponent={{ensure-safe-component @selectedItemComponent}}
+    @eventType={{@eventType}}
+    @title={{@title}}
+    @triggerClass={{this.triggerClass}}
+    @triggerComponent={{if
+        @triggerComponent
+        (component (ensure-safe-component @triggerComponent) tabindex=this.tabindex)
+        (component "power-select-infinity/trigger-search" tabindex=this.tabindex)
+    }}
+    @triggerId={{@triggerId}}
+    @verticalPosition={{@verticalPosition}}
+    @tabindex={{this.computedTabIndex}}
+    @ebdTriggerComponent={{ensure-safe-component @ebdTriggerComponent}}
+    @ebdContentComponent={{ensure-safe-component @ebdContentComponent}}
+    @extra={{assign
+        (hash
+            bufferSize=this.bufferSize
+            estimateHeight=this.estimateHeight
+            staticHeight=this.staticHeight
+            isSearching=(or this.isLoadingMore this.task.isRunning)
+            onLastReached=this.onLastReached
+            noMatchesMessage=this.noMatchesMessage
+            searchText=this.searchText
+            clearSearch=this.clearSearch
+            showCreateMessage=this.showCreateMessage
+            createOption=this.createOption
+            clearSearchOnBlur=this.clearSearchOnBlur
+            loadingComponent=this.loadingComponent
+            createMessage=this.createMessage
+            labelPath=@labelPath
+            allowClear=this.allowClear
+            triggerClass=this.triggerClass
+            renderAll=@renderAll
+        )
+        @extra
+    }}
+    ...attributes
+    as |option select|
+>
+    {{yield option select}}
+</PowerSelect>

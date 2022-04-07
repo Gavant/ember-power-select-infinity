@@ -31,7 +31,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
     constructor(owner: unknown, args: Record<string, unknown>) {
         super(owner, args);
 
-        this.data = generateOptions(1000);
+        this.data = generateOptions(100);
         this.options = this.data;
         // this.selected = this.options[0];
         // if (!Ember.testing) {

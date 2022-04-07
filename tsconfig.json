@@ -12,13 +12,13 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
     "noEmitOnError": true,
     "noEmit": true,
     "inlineSourceMap": true,
     "inlineSources": true,
     "baseUrl": ".",
     "module": "es6",
+    "noImplicitReturns": false,
     "experimentalDecorators": true,
     "paths": {
       "dummy/tests/*": [

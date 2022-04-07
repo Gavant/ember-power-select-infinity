@@ -9,7 +9,7 @@ import { didCancel, TaskGenerator } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { taskFor } from 'ember-concurrency-ts';
 
-import { PowerSelectInfinityArgs } from '@gavant/ember-power-select-infinity/components/power-select-infinity';
+import { PowerSelectInfinityArgs } from '@gavant/ember-power-select-infinity/components/power-select-infinity/power-select-infinity';
 
 import Result, { err, ok } from 'true-myth/result';
 
@@ -115,7 +115,7 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
     }
 
     get store() {
-        return getOwner(this).lookup('service:store');
+        return (getOwner(this) as any).lookup('service:store');
     }
 
     /**
@@ -126,7 +126,7 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
     constructor(owner: unknown, args: PowerSelectInfinityModelArgs<T>) {
         super(owner, args);
         if (this.loadOptionsOnRender) {
-            scheduleOnce('afterRender', this, 'loadInitialPage');
+            scheduleOnce('afterRender', this, this.loadInitialPage);
         }
     }
 
