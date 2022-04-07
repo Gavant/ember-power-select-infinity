@@ -5,7 +5,7 @@ module.exports = function (environment) {
         modulePrefix: 'dummy',
         environment,
         rootURL: '/',
-        locationType: 'auto',
+        locationType: 'history',
         EmberENV: {
             FEATURES: {
                 // Here you can enable experimental features on an ember canary build
@@ -20,9 +20,6 @@ module.exports = function (environment) {
         APP: {
             // Here you can pass flags/options to your application instance
             // when it is created
-        },
-        'ember-cli-mirage': {
-            enabled: true
         }
     };
 
@@ -47,13 +44,6 @@ module.exports = function (environment) {
     }
 
     if (environment === 'production') {
-        // Allow ember-cli-addon-docs to update the rootURL in compiled assets
-        ENV.rootURL = 'ADDON_DOCS_ROOT_URL';
-        ENV.locationType = 'hash';
-        ENV.rootURL = '/ember-power-select-infinity/';
-        ENV['ember-cli-mirage'] = {
-            enabled: false
-        };
         // here you can enable a production-specific feature
     }
 
