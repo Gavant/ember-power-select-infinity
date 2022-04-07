@@ -1,4 +1,4 @@
-import { click, render, TestContext } from '@ember/test-helpers';
+import { click, render, TestContext, waitFor } from '@ember/test-helpers';
 
 import { Server } from 'ember-cli-mirage/index';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -19,11 +19,12 @@ module('Integration | Component | power-select-infinity/ds-model', function (hoo
     setupMirage(hooks);
 
     test('Selecting an option works', async function (this: Context, assert) {
-        this.server.createList('person', 50);
+        await this.server.createList('person', 50);
 
         this.onChange = (selected: Person) => {
             this.selected = selected;
         };
+
         await render(hbs`
         <PowerSelectInfinity::DsModel
             @modelName="person"
@@ -41,8 +42,8 @@ module('Integration | Component | power-select-infinity/ds-model', function (hoo
     `);
 
         await click('.ember-power-select-trigger-input');
-
-        await click('.ember-basic-dropdown-content li');
+        await waitFor('.ember-power-select-options-list');
+        await click('.ember-power-select-options-list li');
 
         assert.strictEqual(this.selected?.name, 'person 0');
     });
