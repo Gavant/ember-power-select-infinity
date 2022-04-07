@@ -135,6 +135,6 @@
     },
     "homepage": "https://Gavant.github.io/ember-power-select-infinity",
     "volta": {
-        "node": "12.22.0"
+        "node": "14.19.1"
     }
 }
