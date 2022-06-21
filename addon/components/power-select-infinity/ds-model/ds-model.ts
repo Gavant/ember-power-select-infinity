@@ -11,8 +11,6 @@ import { taskFor } from 'ember-concurrency-ts';
 
 import { PowerSelectInfinityArgs } from '@gavant/ember-power-select-infinity/components/power-select-infinity/power-select-infinity';
 
-import Result, { err, ok } from 'true-myth/result';
-
 export interface PowerSelectInfinityModelArgs<T> extends PowerSelectInfinityArgs<T> {
     /**
      * An object containing additional query filters.
@@ -156,19 +154,19 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
      * @method loadOptions
      */
     @restartableTask
-    *loadOptions(keyword?: string, offset = 0): TaskGenerator<Result<T[], Error>> {
+    *loadOptions(keyword?: string, offset = 0): TaskGenerator<T[] | Error> {
         try {
             const params = this.processQueryParams(keyword, offset);
 
             const result = yield this.store.query(this.args.modelName, params);
             const results = result.toArray();
             this.canLoadMore = results.length >= this.pageSize;
-            return ok(results);
+            return results;
         } catch (errors) {
             if (!didCancel(errors)) {
-                return err(errors);
+                return errors;
             } else {
-                return ok([]);
+                return [];
             }
         }
     }
@@ -180,11 +178,12 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
      * @method loadInitialPage
      */
     @action
-    async loadInitialPage(): Promise<Result<T[], Error>> {
+    async loadInitialPage(): Promise<T[] | Error> {
         const results = (await this.search('')) ?? [];
-        if (results.isOk) {
-            this.options = results.value;
+        if (!(results instanceof Error)) {
+            this.options = results;
         }
+
         return results;
     }
 
@@ -196,9 +195,9 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
      * @memberof PowerSelectInfinityModel
      */
     @action
-    async onSearch(keyword: string): Promise<T[]> {
+    async onSearch(keyword: string): Promise<T[] | Error> {
         const result = await this.search(keyword);
-        return result.isOk ? result.value : [];
+        return result;
     }
 
     /**
@@ -209,15 +208,15 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
      * @method search
      */
     @action
-    async search(keyword: string): Promise<Result<T[], Error>> {
+    async search(keyword: string): Promise<T[] | Error> {
         try {
             const results = (await taskFor(this.loadOptions).perform(keyword)) ?? [];
-            if (results.isOk) {
-                this.options = results.value;
+            if (!(results instanceof Error)) {
+                this.options = results;
             }
             return results;
         } catch (errors) {
-            return err(errors);
+            return errors;
         }
     }
 
@@ -233,8 +232,8 @@ export default class PowerSelectInfinityModel<T> extends Component<PowerSelectIn
         const options = this.options.concat([]);
         const offset = options.length;
         const nextPage = await taskFor(this.loadOptions).perform(keyword, offset);
-        if (nextPage.isOk) {
-            options.push(...nextPage.value);
+        if (!(nextPage instanceof Error)) {
+            options.push(...nextPage);
             this.options = options;
         }
         return options;
