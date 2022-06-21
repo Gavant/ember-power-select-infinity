@@ -1449,10 +1449,10 @@
   resolved "https://registry.yarnpkg.com/@handlebars/parser/-/parser-2.0.0.tgz#5e8b7298f31ff8f7b260e6b7363c7e9ceed7d9c5"
   integrity sha512-EP9uEDZv/L5Qh9IWuMUGJRfwhXJ4h1dqKTT4/3+tY0eu7sPis7xh23j61SYUnNF4vqCQvvUXpDo9Bh/+q1zASA==
 
-"@html-next/vertical-collection@3.0.0-1":
-  version "3.0.0-1"
-  resolved "https://registry.yarnpkg.com/@html-next/vertical-collection/-/vertical-collection-3.0.0-1.tgz#d9ea385b46e74eb8eb4f5cd173dcf63ce7a2ee6b"
-  integrity sha512-TpsTvrQV2vJdJknr7r11YTz3E4N2jdbYEBuk86Bg3GzzwcE2ws1U5h8KiGDBMQGvW/P8clRKz5SD+ZM42PRU9g==
+"@html-next/vertical-collection@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@html-next/vertical-collection/-/vertical-collection-3.0.0.tgz#ba16bd2df413e9c25d245ae37ddb1950a5ccdbca"
+  integrity sha512-kpLYZXr3tlYkrSiyhww+f1YkyLMEhCm9h55A+PWPzJXBTZkV12sC5mIbxVcWD7q5QNjy634m6MMvmxfFgDmGoQ==
   dependencies:
     babel6-plugin-strip-class-callcheck "^6.0.0"
     broccoli-funnel "^2.0.2"
@@ -5532,6 +5532,22 @@ ember-cli-typescript@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-5.0.0.tgz#52f53843082d0a0128f318809dadabf83a76bbff"
   integrity sha512-UDKZlG7bInRo7eDsF3jvPz1Dxh1YvRhMw9wyj5rj2K3brw0xEh1IMTqPgWRbPESqjcWuwa8s0FCNuYWDc4PTfg==
+  dependencies:
+    ansi-to-html "^0.6.15"
+    broccoli-stew "^3.0.0"
+    debug "^4.0.0"
+    execa "^4.0.0"
+    fs-extra "^9.0.1"
+    resolve "^1.5.0"
+    rsvp "^4.8.1"
+    semver "^7.3.2"
+    stagehand "^1.0.0"
+    walk-sync "^2.2.0"
+
+ember-cli-typescript@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-5.1.0.tgz#460eb848564e29d64f2b36b2a75bbe98172b72a4"
+  integrity sha512-wEZfJPkjqFEZAxOYkiXsDrJ1HY75e/6FoGhQFg8oNFJeGYpIS/3W0tgyl1aRkSEEN1NRlWocDubJ4aZikT+RTA==
   dependencies:
     ansi-to-html "^0.6.15"
     broccoli-stew "^3.0.0"
@@ -12154,10 +12170,10 @@ trim-right@^1.0.1:
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   integrity sha1-yy4SAwZ+DI3h9hQJS5/kVwTqYAM=
 
-"true-myth@^5.2.0":
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/true-myth/-/true-myth-5.2.0.tgz#f434d4ca314922568260d742f7bed613b5ae3652"
-  integrity sha512-M8P2uox5tdgwevD4uihkHEfLJkHhX16Nec25bS4YIr7n5MeJzv1X1GRfuCVL8akb/XkfyZtr9BHJTDvOtDhIJw==
+"true-myth@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/true-myth/-/true-myth-6.0.0.tgz#3ebaaf3a0a056fd4f3018e7d99370f8ef990d606"
+  integrity sha512-CGo9RsfNFHqG+jTxikeOMOQwbooAQpPkCg7Ds63Uxxm4KBch94YetvVC9Nv68AVwOqr7/aeOjOdgygWIHn0TAQ==
 
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
