@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+
 import Person from '../../../models/person';
 
 export default class PowerSelectInfinityForModelController extends Controller {
@@ -8,12 +9,12 @@ export default class PowerSelectInfinityForModelController extends Controller {
     @tracked selectedPerson2: Person | null = null;
 
     @action
-    selectPerson(newPerson: Person | null) {
+    selectPerson(newPerson: Person | null): void {
         this.selectedPerson = newPerson ?? null;
     }
 
     @action
-    selectPerson2(newPerson: Person | null) {
+    selectPerson2(newPerson: Person | null): void {
         this.selectedPerson = newPerson ?? null;
     }
 

@@ -1,21 +1,12 @@
-import AddonDocsRouter, { docsRoute } from 'ember-cli-addon-docs/router';
 import config from './config/environment';
+import EmberRouter from '@ember/routing/router';
 
-const Router = AddonDocsRouter.extend({
-    location: config.locationType,
-    rootURL: config.rootURL
-});
+export default class Router extends EmberRouter {
+    location = config.locationType;
+    rootURL = config.rootURL;
+}
 
 Router.map(function () {
-    docsRoute(this, function () {
-        this.route('usage', { path: '/' });
-        this.route('components', function () {
-            this.route('power-select-infinity');
-            this.route('power-select-infinity-ds-model');
-            this.route('power-select-infinity-trigger-search');
-        });
-    });
+    this.route('index', { path: '/' });
     this.route('not-found', { path: '/*path' });
 });
-
-export default Router;

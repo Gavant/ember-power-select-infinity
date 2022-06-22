@@ -12,17 +12,20 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noEmitOnError": false,
+    "noEmitOnError": true,
     "noEmit": true,
     "inlineSourceMap": true,
     "inlineSources": true,
     "baseUrl": ".",
     "module": "es6",
+    "noImplicitReturns": false,
     "experimentalDecorators": true,
     "paths": {
       "dummy/tests/*": [
         "tests/*"
+      ],
+      "dummy/mirage/*": [
+        "tests/dummy/mirage/*"
       ],
       "dummy/*": [
         "tests/dummy/app/*",
@@ -40,7 +43,9 @@
       "@gavant/ember-power-select-infinity/test-support/*": [
         "addon-test-support/*"
       ],
-      "*": ["types/*"]
+      "*": [
+        "types/*"
+      ]
     }
   },
   "include": [

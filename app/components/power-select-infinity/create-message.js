@@ -1,1 +1,1 @@
-export { default } from '@gavant/ember-power-select-infinity/components/power-select-infinity/create-message';
+export { default } from '@gavant/ember-power-select-infinity/components/power-select-infinity/create-message/create-message';

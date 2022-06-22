@@ -6,8 +6,6 @@ import { didCancel } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { taskFor } from 'ember-concurrency-ts';
 
-interface BasicPowerSelectArgs {}
-
 const generateOptions = (number: number) => {
     const newRows: any[] = [];
     for (let i = 0; i <= number - 1; i++) {
@@ -23,17 +21,17 @@ const generateOptions = (number: number) => {
     return newRows;
 };
 
-export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
+export default class BasicPowerSelect extends Component<Record<string, unknown>> {
     @tracked selected = null;
-    @tracked canLoadMore: boolean = true;
-    @tracked pageSize: number = 20;
+    @tracked canLoadMore = true;
+    @tracked pageSize = 20;
     @tracked data: any[] = [];
     @tracked options: any[] = [];
 
-    constructor(owner: unknown, args: BasicPowerSelectArgs) {
+    constructor(owner: unknown, args: Record<string, unknown>) {
         super(owner, args);
 
-        this.data = generateOptions(1000);
+        this.data = generateOptions(100);
         this.options = this.data;
         // this.selected = this.options[0];
         // if (!Ember.testing) {
@@ -50,7 +48,7 @@ export default class BasicPowerSelect extends Component<BasicPowerSelectArgs> {
      * @returns {Promise<any[]>}
      */
     @restartableTask
-    *loadOptions(this: BasicPowerSelect, _term: string, offset: number = 0) {
+    *loadOptions(this: BasicPowerSelect, _term: string, offset = 0) {
         try {
             yield new Promise((r) => setTimeout(r, 500));
             const newRows: any[] = [];

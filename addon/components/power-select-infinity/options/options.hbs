@@ -1,7 +1,7 @@
 <ul
     role="listbox"
     class="ember-power-select-options-list"
-    {{!-- The keyboard navigation is currently broken in Ember-PowerSelect v4. The selector for navigation uses -trigger- for the aria-control instead of options. This should be changed back to -options- when v5 is used and stable. --}}
+    {{! The keyboard navigation is currently broken in Ember-PowerSelect v4. The selector for navigation uses -trigger- for the aria-control instead of options. This should be changed back to -options- when v5 is used and stable. }}
     aria-controls="ember-power-select-trigger-{{@select.uniqueId}}"
     ...attributes
     {{did-insert this.addHandlers}}
@@ -17,10 +17,11 @@
         @containerSelector=".ember-power-select-options"
         as |opt index|
     >
+        {{! template-lint-disable require-context-role }}
         <li
-            class="ember-power-select-option {{if opt.borderBottom "border-bottom-brand"}}"
+            class="ember-power-select-option {{if opt.borderBottom 'border-bottom-brand'}}"
             aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
-            aria-disabled="{{if opt.disabled "true"}}"
+            aria-disabled="{{if opt.disabled 'true'}}"
             aria-current="{{eq opt @select.highlighted}}"
             data-option-index="{{@groupIndex}}{{index}}"
             role="option"

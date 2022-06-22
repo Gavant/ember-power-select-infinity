@@ -1,16 +1,15 @@
+import { action } from '@ember/object';
 // BEGIN-SNIPPET power-select-infinity-trigger-search.ts
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency-decorators';
+
 import { didCancel } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
 import { taskFor } from 'ember-concurrency-ts';
 
-interface PowerSelectInfinityTriggerLoadingArgs {}
-
-export default class PowerSelectInfinityTriggerLoading extends Component<PowerSelectInfinityTriggerLoadingArgs> {
-    @tracked canLoadMore: boolean = true;
-    @tracked pageSize: number = 20;
+export default class PowerSelectInfinityTriggerLoading extends Component<Record<string, unknown>> {
+    @tracked canLoadMore = true;
+    @tracked pageSize = 20;
     @tracked options: any[] = [];
 
     /**
@@ -22,7 +21,7 @@ export default class PowerSelectInfinityTriggerLoading extends Component<PowerSe
      * @returns {Promise<any[]>}
      */
     @restartableTask
-    *loadOptions(this: PowerSelectInfinityTriggerLoading, term: string, offset: number = 0) {
+    *loadOptions(this: PowerSelectInfinityTriggerLoading, term: string, offset = 0) {
         try {
             yield new Promise((r) => setTimeout(r, 500));
             const newRows: any[] = [];
