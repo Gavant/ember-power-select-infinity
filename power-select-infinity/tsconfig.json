@@ -1,0 +1,36 @@
+{
+    "compilerOptions": {
+         // So that the test app's type checking doesn't break when we change types
+        "composite": true,
+
+         // Path resolution
+        "baseUrl": "./src",
+        "moduleResolution": "node",
+
+        "target": "es2020",
+        "allowJs": false,
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noEmitOnError": false,
+        "noEmit": true,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "module": "es6",
+        "experimentalDecorators": true
+    },
+    "include": [
+        "src/**/*",
+        "types/**/*"
+    ],
+    "exclude": [
+        "dist/**/*"
+    ]
+}
