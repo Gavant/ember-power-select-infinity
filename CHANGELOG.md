@@ -1,3 +1,5 @@
+## v3.0.0 (2022-07-20)
+
 #### [v2.0.0](https://github.com/Gavant/ember-power-select-infinity/compare/v1.0.8...v2.0.0)
 
 -   Merge pull request #25 from Gavant/upgrade-to-4.0 [`336090d`](https://github.com/Gavant/ember-power-select-infinity/commit/336090dec912f03a0e4c5f7b1dcaac3a3145441c)
