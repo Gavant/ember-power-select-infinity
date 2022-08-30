@@ -1,4 +1,4 @@
-export const guard = <T extends Record<string, unknown>>(
+export const guard = <T extends object>(
     itemToCheck: any,
     propertyNames: Array<keyof T> | keyof T
 ): itemToCheck is T => {
