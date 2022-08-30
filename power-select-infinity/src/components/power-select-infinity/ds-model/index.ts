@@ -112,7 +112,7 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
         return this.store.modelFor(this.args.modelName);
     }
 
-    get store() {
+    get store(): any {
         return (getOwner(this) as any).lookup('service:store');
     }
 
