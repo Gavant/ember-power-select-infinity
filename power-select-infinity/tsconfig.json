@@ -32,5 +32,11 @@
     ],
     "exclude": [
         "dist/**/*"
-    ]
+    ],
+    "glint": {
+        "environment": "ember-loose",
+        "transform": {
+            "include": ["src/**", "types/**"]
+        }
+    }
 }
