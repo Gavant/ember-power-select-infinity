@@ -12957,7 +12957,7 @@ rollup-plugin-delete@^2.0.0:
   dependencies:
     del "^5.1.0"
 
-rollup-plugin-ts@^3.0.1:
+rollup-plugin-ts@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-ts/-/rollup-plugin-ts-3.0.2.tgz#ee1a3f9ffe202ceff0b4d2f725fa268fa0c921bf"
   integrity sha512-67qi2QTHewhLyKDG6fX3jpohWpmUPPIT/xJ7rsYK46X6MqmoWy64Ti0y8ygPfLv8mXDCdRZUofM3mTxDfCswRA==
@@ -13006,10 +13006,17 @@ rollup@^1.12.0:
     "@types/node" "*"
     acorn "^7.1.0"
 
-rollup@^2.50.0, rollup@^2.75.5:
+rollup@^2.50.0:
   version "2.77.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.77.0.tgz#749eaa5ac09b6baa52acc076bc46613eddfd53f4"
   integrity sha512-vL8xjY4yOQEw79DvyXLijhnhh+R/O9zpF/LEgkCebZFtb6ELeN9H3/2T0r8+mp+fFTBHZ5qGpOpW2ela2zRt3g==
+  optionalDependencies:
+    fsevents "~2.3.2"
+
+rollup@^2.78.1:
+  version "2.78.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.78.1.tgz#52fe3934d9c83cb4f7c4cb5fb75d88591be8648f"
+  integrity sha512-VeeCgtGi4P+o9hIg+xz4qQpRl6R401LWEXBmxYKOV4zlF82lyhgh2hTZnheFUbANE8l2A41F458iwj2vEYaXJg==
   optionalDependencies:
     fsevents "~2.3.2"
 
