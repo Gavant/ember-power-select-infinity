@@ -1,3 +1,5 @@
+## v3.0.1 (2022-08-30)
+
 ## v3.0.0 (2022-07-20)
 
 #### [v2.0.0](https://github.com/Gavant/ember-power-select-infinity/compare/v1.0.8...v2.0.0)
