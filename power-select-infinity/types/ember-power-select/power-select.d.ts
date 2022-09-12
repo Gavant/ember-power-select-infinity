@@ -1,3 +1,5 @@
+import Component from '@glimmer/component';
+
 import { Dropdown, DropdownActions } from 'ember-basic-dropdown/components/basic-dropdown';
 // import { PowerSelectArgs as PSArgs } from 'ember-power-select/addon/components/power-select';
 import { PowerSelectAPI } from 'ember-power-select/types/power-select-api';
@@ -132,4 +134,13 @@ interface PowerSelectArgs<T, E> extends modifiedPSArgs<T> {
     registerAPI?: (select: PowerSelectAPI<T>) => void;
 }
 
-declare module 'ember-power-select/components/power-select';
+interface PowerSelectSignature<T, E extends Record<string, unknown>> {
+    Element: HTMLDivElement;
+    Args: PowerSelectArgs<T, E>;
+    Blocks: {
+        default: [T, PowerSelectAPI<T>];
+    };
+}
+
+// eslint-disable-next-line ember/no-empty-glimmer-component-classes
+export declare class PowerSelect<T, E extends Record<string, unknown>> extends Component<PowerSelectSignature<T, E>> {}
