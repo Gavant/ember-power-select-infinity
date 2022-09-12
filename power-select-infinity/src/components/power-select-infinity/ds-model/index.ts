@@ -8,6 +8,7 @@ import { tracked } from '@glimmer/tracking';
 import { didCancel, TaskGenerator } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { taskFor } from 'ember-concurrency-ts';
+import { Select } from '../../../../types/ember-power-select/power-select';
 
 import { PowerSelectInfinityArgs } from '../';
 
@@ -68,7 +69,14 @@ export interface QueryParamsObj {
     [x: string]: any;
 }
 
-export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelectInfinityModelArgs<T, E>> {
+interface PowerSelectInfinityModelSignature<T, E> {
+    Args: PowerSelectInfinityModelArgs<T, E>;
+    Blocks: {
+        default: [T, Select];
+    };
+}
+
+export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelectInfinityModelSignature<T, E>> {
     @tracked canLoadMore = true;
     @tracked options: T[] = [];
 

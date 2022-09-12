@@ -195,7 +195,14 @@ export interface PowerSelectInfinityArgs<T, E> extends PowerSelectArgs<T, E> {
     dropdownClass: string;
 }
 
-export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfinityArgs<T, E>> {
+interface PowerSelectInfinitySignature<T, E> {
+    Args: PowerSelectInfinityArgs<T, E>;
+    Blocks: {
+        default: [T, Select];
+    };
+}
+
+export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfinitySignature<T, E>> {
     get allowClear() {
         return this.args.allowClear ?? true;
     }
