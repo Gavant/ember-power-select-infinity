@@ -5,12 +5,11 @@ import { isEmpty } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-import { didCancel, TaskGenerator } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
-import { taskFor } from 'ember-concurrency-ts';
-import { Select } from '../../../../types/ember-power-select/power-select';
+import { didCancel, task } from 'ember-concurrency';
 
-import { PowerSelectInfinityArgs } from '../';
+import type { PowerSelectInfinityArgs } from '../';
+
+import type { Select } from '../../../../types/ember-power-select/power-select';
 
 export interface PowerSelectInfinityModelArgs<T, E> extends PowerSelectInfinityArgs<T, E> {
     /**
@@ -161,12 +160,11 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
      * @return {Promise<DS.Model[]>}
      * @method loadOptions
      */
-    @restartableTask
-    *loadOptions(keyword?: string, offset = 0): TaskGenerator<T[] | Error> {
+    loadOptions = task(this, { restartable: true }, async (keyword?: string, offset = 0): Promise<T[] | Error> => {
         try {
             const params = this.processQueryParams(keyword, offset);
 
-            const result = yield this.store.query(this.args.modelName, params);
+            const result = await this.store.query(this.args.modelName, params);
             const results = result.toArray();
             this.canLoadMore = results.length >= this.pageSize;
             return results;
@@ -177,7 +175,7 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
                 return [];
             }
         }
-    }
+    });
 
     /**
      * Loads the initial page of options.
@@ -218,7 +216,7 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
     @action
     async search(keyword: string): Promise<T[] | Error> {
         try {
-            const results = (await taskFor(this.loadOptions).perform(keyword)) ?? [];
+            const results = (await this.loadOptions.perform(keyword)) ?? [];
             if (!(results instanceof Error)) {
                 this.options = results;
             }
@@ -239,7 +237,7 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
     async loadMore(keyword: string): Promise<any[]> {
         const options = this.options.concat([]);
         const offset = options.length;
-        const nextPage = await taskFor(this.loadOptions).perform(keyword, offset);
+        const nextPage = await this.loadOptions.perform(keyword, offset);
         if (!(nextPage instanceof Error)) {
             options.push(...nextPage);
             this.options = options;

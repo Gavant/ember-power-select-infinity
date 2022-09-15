@@ -80,9 +80,7 @@
         "ember-cli-terser": "^4.0.2",
         "ember-cli-typescript": "^5.1.0",
         "ember-cli-typescript-blueprints": "^3.0.0",
-        "ember-concurrency": "^2.2.1",
-        "ember-concurrency-decorators": "^2.0.0",
-        "ember-concurrency-ts": "^0.3.1",
+        "ember-concurrency": "^2.3.7",
         "ember-data": "~4.4.0",
         "ember-disable-prototype-extensions": "^1.1.3",
         "ember-export-application-global": "^2.0.1",
@@ -111,6 +109,9 @@
         "sass": "^1.53.0",
         "typescript": "^4.7.4",
         "webpack": "^5.73.0"
+    },
+    "resolutions": {
+        "ember-concurrency": "2.3.7"
     },
     "engines": {
         "node": "14.* || >= 16"

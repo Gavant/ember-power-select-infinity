@@ -3,9 +3,7 @@ import { isBlank } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-import { didCancel, restartableTask, TaskCancelation, timeout } from 'ember-concurrency';
-import { taskFor } from 'ember-concurrency-ts';
-import { PowerSelectArgs, Select } from '../../../types/ember-power-select/power-select';
+import { didCancel, task, TaskCancelation, timeout } from 'ember-concurrency';
 
 import { ensureSafeComponent } from '@embroider/util';
 
@@ -14,6 +12,8 @@ import PowerSelectInfinityCreateMessage from './create-message';
 import PowerSelectInfinityLoading from './loading';
 import PowerSelectInfinityOptions from './options';
 import PowerSelectInfinityTriggerSearch from './trigger-search';
+
+import type { PowerSelectArgs, Select } from '../../../types/ember-power-select/power-select';
 
 export type PowerSelectInfinityExtra = Pick<
     PowerSelectInfinityArgs<unknown, unknown>,
@@ -272,7 +272,7 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
             const numOptions = guard(this.args.options, 'content')
                 ? this.args.options.content.length
                 : this.args.options.length;
-            return this.args.canCreate && numOptions === 0 && searchText !== '' && !this.task.isRunning;
+            return this.args.canCreate && numOptions === 0 && searchText !== '' && !this.searchTask.isRunning;
         }
     }
 
@@ -297,22 +297,12 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
 
     get dropdownClass() {
         return `${this.args.dropdownClass ?? ''} ember-power-select-infinity-dropdown ${
-            this.task.isRunning ? 'options-loading' : ''
+            this.searchTask.isRunning ? 'options-loading' : ''
         }`;
     }
 
     get clearSearchOnBlur() {
         return this.args.clearSearchOnBlur ?? false;
-    }
-
-    /**
-     * This is required for glint to get the correct type.
-     * (breaks TS when referencing this.searchTask.isRunning directly, for example)
-     *
-     * @readonly
-     */
-    get task() {
-        return taskFor(this.searchTask);
     }
 
     /**
@@ -323,9 +313,8 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
      * @method searchTask
      * @private
      */
-    @restartableTask
-    private *searchTask(term: string, select: Select) {
-        yield timeout(this.searchDebounceDelay);
+    searchTask = task(this, { restartable: true }, async (term: string, select: Select) => {
+        await timeout(this.searchDebounceDelay);
         try {
             return this.args.search?.(term, select);
         } catch (errors) {
@@ -334,9 +323,9 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
             }
             return errors;
         }
-    }
+    });
 
-    /**
+    /**e
      * Keeps track of the currently entered search input.
      *
      * @param {string | null} term
@@ -364,7 +353,7 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
      */
     @action
     async onSearch(term: string, select: Select): Promise<any[]> {
-        return taskFor(this.searchTask).perform(term, select);
+        return this.searchTask.perform(term, select);
     }
 
     /**
