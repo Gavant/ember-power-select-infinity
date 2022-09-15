@@ -1,3 +1,5 @@
+/* eslint-disable ember/no-classic-classes */
+/* eslint-disable ember/use-ember-data-rfc-395-imports */
 import DS from 'ember-data';
 
 export default class Application extends DS.RESTSerializer.extend({}) {}
