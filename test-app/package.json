@@ -110,9 +110,6 @@
         "typescript": "^4.7.4",
         "webpack": "^5.73.0"
     },
-    "resolutions": {
-        "ember-concurrency": "2.3.7"
-    },
     "engines": {
         "node": "14.* || >= 16"
     },
