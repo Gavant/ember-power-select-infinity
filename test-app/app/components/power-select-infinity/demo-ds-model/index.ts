@@ -2,7 +2,7 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-import { didCancel, restartableTask, task } from 'ember-concurrency';
+import { didCancel, task } from 'ember-concurrency';
 
 const generateOptions = (number: number) => {
     const newRows: any[] = [];
@@ -44,8 +44,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
      * @param {number} [offset]
      * @returns {Promise<any[]>}
      */
-    @restartableTask
-    loadOptions = task(this, async (term: string, offset = 0) => {
+    loadOptions = task(this, { restartable: true }, async (_term: string, offset = 0) => {
         try {
             await new Promise((r) => setTimeout(r, 500));
             const newRows: any[] = [];

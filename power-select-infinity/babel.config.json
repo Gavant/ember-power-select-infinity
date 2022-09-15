@@ -6,7 +6,8 @@
           }],
       "@embroider/addon-dev/template-colocation-plugin",
       ["@babel/plugin-proposal-decorators", { "legacy": true }],
-      "@babel/plugin-proposal-class-properties"
+      "@babel/plugin-proposal-class-properties",
+      "ember-concurrency/lib/babel-plugin-transform-ember-concurrency-async-tasks"
     ],
     "presets": ["@babel/preset-typescript"]
   }
