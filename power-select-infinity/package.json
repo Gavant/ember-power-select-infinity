@@ -27,15 +27,13 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.0.0",
-    "@embroider/util": "^1.0.0"
+    "@embroider/util": "^1.0.0",
+    "ember-concurrency": "^2.3.0"
   },
   "peerDependencies": {
     "@html-next/vertical-collection": "3.0.0",
     "ember-power-select": "^5.0.4",
     "ember-basic-dropdown": "^6.0.1",
-    "ember-concurrency": "^2.2.1",
-    "ember-concurrency-decorators": "^2.0.0",
-    "ember-concurrency-ts": "^0.3.1",
     "ember-source": ">= 3.24.0"
   },
   "devDependencies": {
@@ -78,7 +76,6 @@
     "ember-power-select": "^5.0.4",
     "ember-basic-dropdown": "^6.0.1",
     "ember-template-lint": "^4.3.0",
-    "ember-concurrency-ts": "^0.3.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ember": "^10.5.9",

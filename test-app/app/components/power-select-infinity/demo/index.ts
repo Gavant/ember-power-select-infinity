@@ -2,9 +2,7 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-import { didCancel } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
-import { taskFor } from 'ember-concurrency-ts';
+import { didCancel, task } from 'ember-concurrency';
 
 const generateOptions = (number: number) => {
     const newRows: any[] = [];
@@ -47,10 +45,9 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
      * @param {number} [offset]
      * @returns {Promise<any[]>}
      */
-    @restartableTask
-    *loadOptions(this: BasicPowerSelect, _term: string, offset = 0) {
+    loadOptions = task(this, { restartable: true }, async (_term: string, offset = 0) => {
         try {
-            yield new Promise((r) => setTimeout(r, 500));
+            await new Promise((r) => setTimeout(r, 500));
             const newRows: any[] = [];
             for (let i = offset; i <= offset + 10; i++) {
                 newRows.push({
@@ -69,7 +66,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
             }
             return [];
         }
-    }
+    });
 
     /**
      * Searches for records matching the given keyword.
@@ -96,7 +93,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
     async loadMore(keyword: string): Promise<any[]> {
         const options = this.data.concat([]);
         const offset = options.length;
-        const nextPage = await taskFor(this.loadOptions).perform(keyword, offset);
+        const nextPage = await this.loadOptions.perform(keyword, offset);
         this.data = [...this.data, ...nextPage];
         options.push(...nextPage);
         this.options = options;
