@@ -15,7 +15,7 @@
         aria-controls={{@listboxId}}
         disabled={{@select.disabled}}
         tabindex={{0}}
-        {{on "focus" @onFocus}}
+        {{on "focus" (fn this.onFocus @select)}}
         {{on "blur" (fn this.onBlur @select)}}
         {{on "input" @onInput}}
         {{on "keydown" this.handleKeydown}}

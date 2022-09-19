@@ -7,3 +7,9 @@ export default class Person extends Model {
     @attr('date') dob!: Date;
 }
 // END-SNIPPET
+
+declare module 'ember-data/types/registries/model' {
+    export default interface ModelRegistry {
+        person: Person;
+    }
+}

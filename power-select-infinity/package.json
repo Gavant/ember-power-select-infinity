@@ -51,6 +51,7 @@
     "@glint/environment-ember-loose": "^0.9.2",
     "@html-next/vertical-collection": "3.0.0",
     "@rollup/plugin-babel": "^5.3.1",
+    "@types/ember-data": "4.4.2",
     "@types/ember-qunit": "^5.0.0",
     "@types/ember-resolver": "^5.0.11",
     "@types/ember__application": "^4.0.0",

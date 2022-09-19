@@ -128,6 +128,12 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
         }
     }
 
+    @action
+    onFocus(select: Select) {
+        scheduleOnce('afterRender', null, select.actions.search, '');
+        scheduleOnce('afterRender', null, select.actions.open);
+    }
+
     /**
      * obtains selected value based on complex object or primitive value from power-select publicAPI
      *

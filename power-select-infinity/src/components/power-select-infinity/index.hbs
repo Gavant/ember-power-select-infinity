@@ -1,12 +1,11 @@
 <PowerSelect
+    @afterOptionsComponent={{ensure-safe-component @afterOptionsComponent}}
+    @allowClear={{this.allowClear}}
     @animationEnabled={{@animationEnabled}}
-    @triggerRole={{@triggerRole}}
     @ariaDescribedBy={{@ariaDescribedBy}}
     @ariaInvalid={{@ariaInvalid}}
     @ariaLabel={{@ariaLabel}}
     @ariaLabelledBy={{@ariaLabelledBy}}
-    @afterOptionsComponent={{ensure-safe-component @afterOptionsComponent}}
-    @allowClear={{this.allowClear}}
     @beforeOptionsComponent={{if
         @beforeOptionsComponent
         (ensure-safe-component @beforeOptionsComponent)
@@ -30,7 +29,7 @@
     @onBlur={{@onBlur}}
     @onChange={{@onChange}}
     @onClose={{@onClose}}
-    @onFocus={{this.handleFocus}}
+    @onFocus={{@handleFocus}}
     @onInput={{this.onSearchInput}}
     @onKeydown={{this.handleKeydown}}
     @onOpen={{this.handleOpen}}
@@ -55,8 +54,9 @@
     @triggerClass={{this.triggerClass}}
     @triggerComponent={{component this.triggerComponent tabindex=this.tabindex}}
     @triggerId={{@triggerId}}
+    @triggerRole={{false}}
     @verticalPosition={{@verticalPosition}}
-    @tabindex={{this.computedTabIndex}}
+    @tabindex={{"-1"}}
     @ebdTriggerComponent={{ensure-safe-component @ebdTriggerComponent}}
     @ebdContentComponent={{ensure-safe-component @ebdContentComponent}}
     @extra={{assign

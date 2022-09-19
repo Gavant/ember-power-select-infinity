@@ -4,6 +4,15 @@ import { tracked } from '@glimmer/tracking';
 
 import { didCancel, task } from 'ember-concurrency';
 
+type Option = {
+    date: string;
+    name: string;
+    age: number;
+    tall: boolean;
+    short: boolean;
+    id: string;
+};
+
 const generateOptions = (number: number) => {
     const newRows: any[] = [];
     for (let i = 0; i <= number - 1; i++) {
@@ -20,11 +29,11 @@ const generateOptions = (number: number) => {
 };
 
 export default class BasicPowerSelect extends Component<Record<string, unknown>> {
-    @tracked selected = null;
+    @tracked selected: Option | null = null;
     @tracked canLoadMore = true;
     @tracked pageSize = 20;
-    @tracked data: any[] = [];
-    @tracked options: any[] = [];
+    @tracked data: Option[] = [];
+    @tracked options: Option[] = [];
 
     constructor(owner: unknown, args: Record<string, unknown>) {
         super(owner, args);
@@ -43,12 +52,12 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
      * @param {BasicPowerSelect} this
      * @param {(string | null)} _term
      * @param {number} [offset]
-     * @returns {Promise<any[]>}
+     * @returns {Promise<Option[]>}
      */
     loadOptions = task(this, { restartable: true }, async (_term: string, offset = 0) => {
         try {
             await new Promise((r) => setTimeout(r, 500));
-            const newRows: any[] = [];
+            const newRows: Option[] = [];
             for (let i = offset; i <= offset + 10; i++) {
                 newRows.push({
                     date: new Date().toISOString(),
@@ -75,7 +84,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
      * @returns {Promise<any[]>}
      */
     @action
-    async search(keyword: string): Promise<any[]> {
+    async search(keyword: string): Promise<Option[]> {
         const options = this.data.filter((option) => {
             return option.name.toLowerCase().includes(keyword);
         });
@@ -90,7 +99,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
      * @returns {Promise<any[]>}
      */
     @action
-    async loadMore(keyword: string): Promise<any[]> {
+    async loadMore(keyword: string): Promise<Option[]> {
         const options = this.data.concat([]);
         const offset = options.length;
         const nextPage = await this.loadOptions.perform(keyword, offset);
@@ -101,7 +110,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
     }
 
     @action
-    onChange(item: any) {
+    onChange(item: Option) {
         this.selected = item;
     }
 
