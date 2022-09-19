@@ -1,15 +1,26 @@
 {
     "compilerOptions": {
-         // So that the test app's type checking doesn't break when we change types
+          // So that the test app's type checking doesn't break when we change types
         "composite": true,
 
-         // Path resolution
+        // Path resolution
         "baseUrl": "./src",
         "moduleResolution": "node",
-
-        "target": "es2020",
+        // We only use tsc for type checking and declaration output
+        "emitDeclarationOnly": false,
+        "declarationDir": "./dist",
+        "declaration": true,
+        "declarationMap": true,
+        // Build settings
+        "noEmitOnError": false,
+        "module": "ESNext",
+        "target": "ESNext",
+        // Features
+        "experimentalDecorators": true,
         "allowJs": false,
         "allowSyntheticDefaultImports": true,
+        // Strictness / Correctness
+        "strict": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
         "alwaysStrict": true,
@@ -19,12 +30,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "noEmitOnError": false,
-        "noEmit": true,
-        "inlineSourceMap": true,
-        "inlineSources": true,
-        "module": "es6",
-        "experimentalDecorators": true
+
     },
     "include": [
         "src/**/*",

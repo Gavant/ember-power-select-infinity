@@ -11,7 +11,7 @@ import type { PowerSelectInfinityArgs } from '../';
 
 import type { Select } from '../../../../types/ember-power-select/power-select';
 
-export interface PowerSelectInfinityModelArgs<T, E> extends PowerSelectInfinityArgs<T, E> {
+export interface PowerSelectInfinityModelArgs<T, E> extends Omit<PowerSelectInfinityArgs<T, E>, 'options'> {
     /**
      * An object containing additional query filters.
      *
@@ -170,7 +170,7 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
             return results;
         } catch (errors) {
             if (!didCancel(errors)) {
-                return errors;
+                return errors as Error;
             } else {
                 return [];
             }
@@ -222,7 +222,7 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
             }
             return results;
         } catch (errors) {
-            return errors;
+            return errors as Error;
         }
     }
 

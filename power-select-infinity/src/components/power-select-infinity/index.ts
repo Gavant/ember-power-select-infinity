@@ -190,9 +190,9 @@ export interface PowerSelectInfinityArgs<T, E> extends PowerSelectArgs<T, E> {
 
     allowClear?: boolean;
 
-    triggerClass: string;
+    triggerClass?: string;
 
-    dropdownClass: string;
+    dropdownClass?: string;
 }
 
 interface PowerSelectInfinitySignature<T, E> {
@@ -321,7 +321,7 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
             if (didCancel(errors)) {
                 throw errors;
             }
-            return errors;
+            return errors as any;
         }
     });
 
@@ -346,7 +346,7 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
 
     /**
      * Invokes the search action after a debounced delay when the user types in the search box
-     * @param {(String | null)} term
+     * @param {(String)} term
      * @return {Promise<any[]>}
      * @method onSearch
      * @private

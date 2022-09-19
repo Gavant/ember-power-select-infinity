@@ -2,12 +2,7 @@
 // @ts-ignore: Ignore import
 import PowerSelectOptions from 'ember-power-select/components/power-select/options';
 
-import { PowerSelectInfinityExtra } from '../index';
-
-export default class PowerSelectInfinityOptions<T, E extends PowerSelectInfinityExtra> extends PowerSelectOptions<
-    T,
-    E
-> {
+export default class PowerSelectInfinityOptions extends PowerSelectOptions {
     get estimateHeight() {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore: Ignore import
