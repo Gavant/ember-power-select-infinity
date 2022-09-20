@@ -128,6 +128,12 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
         }
     }
 
+    /**
+     * Because we have removed the tabindex from the outer trigger container, we need to handle the focus and open the trigger ourselves
+     *
+     * @param {Select} select
+     * @memberof PowerSelectInfinityTriggerSearch
+     */
     @action
     onFocus(select: Select) {
         scheduleOnce('afterRender', null, select.actions.search, '');
