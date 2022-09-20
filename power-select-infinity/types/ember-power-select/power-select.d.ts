@@ -90,7 +90,7 @@ interface PowerSelectArgs<T, E> extends modifiedPSArgs<T> {
     ariaLabelledBy?: string;
     required?: boolean;
     options: T[] | PromiseProxy<T[]>;
-    selected: T | PromiseProxy<T>;
+    selected: T | PromiseProxy<T> | null;
     placeholder?: string;
     searchPlaceholder?: string;
     renderInPlace?: boolean;

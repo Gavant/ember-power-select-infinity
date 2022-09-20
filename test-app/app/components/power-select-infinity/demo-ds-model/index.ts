@@ -4,6 +4,8 @@ import { tracked } from '@glimmer/tracking';
 
 import { didCancel, task } from 'ember-concurrency';
 
+import Person from 'test-app/models/person';
+
 const generateOptions = (number: number) => {
     const newRows: any[] = [];
     for (let i = 0; i <= number - 1; i++) {
@@ -20,7 +22,7 @@ const generateOptions = (number: number) => {
 };
 
 export default class BasicPowerSelect extends Component<Record<string, unknown>> {
-    @tracked selected = null;
+    @tracked selected: Person | null = null;
     @tracked canLoadMore = true;
     @tracked pageSize = 20;
     @tracked data: any[] = [];
@@ -99,7 +101,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
     }
 
     @action
-    onChange(item: any) {
+    onChange(item: Person) {
         this.selected = item;
     }
 

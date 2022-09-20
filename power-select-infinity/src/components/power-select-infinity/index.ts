@@ -16,7 +16,7 @@ import PowerSelectInfinityTriggerSearch from './trigger-search';
 import type { PowerSelectArgs, Select } from '../../../types/ember-power-select/power-select';
 
 export type PowerSelectInfinityExtra = Pick<
-    PowerSelectInfinityArgs<unknown, unknown>,
+    PowerSelectInfinityArgs<Record<string, unknown>, unknown>,
     | 'bufferSize'
     | 'labelPath'
     | 'clearSearchOnBlur'
@@ -60,7 +60,7 @@ export type PowerSelectInfinityExtra = Pick<
     onLastReached?: () => void;
 };
 
-export interface PowerSelectInfinityArgs<T, E> extends PowerSelectArgs<T, E> {
+export interface PowerSelectInfinityArgs<T extends Record<string, unknown>, E> extends PowerSelectArgs<T, E> {
     /**
      * Used by ember-vertical-collection for occlusion rendering.
      *
@@ -134,7 +134,7 @@ export interface PowerSelectInfinityArgs<T, E> extends PowerSelectArgs<T, E> {
      * @type {string}
      * @memberof PowerSelectInfinityArgs
      */
-    labelPath?: string;
+    labelPath?: keyof T;
 
     /**
      * The loading component to display
@@ -195,14 +195,16 @@ export interface PowerSelectInfinityArgs<T, E> extends PowerSelectArgs<T, E> {
     dropdownClass?: string;
 }
 
-interface PowerSelectInfinitySignature<T, E> {
+interface PowerSelectInfinitySignature<T extends Record<string, unknown>, E> {
     Args: PowerSelectInfinityArgs<T, E>;
     Blocks: {
         default: [T, Select];
     };
 }
 
-export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfinitySignature<T, E>> {
+export default class PowerSelectInfinity<T extends Record<string, unknown>, E> extends Component<
+    PowerSelectInfinitySignature<T, E>
+> {
     get allowClear() {
         return this.args.allowClear ?? true;
     }

@@ -6,12 +6,15 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
 import { didCancel, task } from 'ember-concurrency';
+// eslint-disable-next-line ember/use-ember-data-rfc-395-imports
+import ModelRegistry from 'ember-data/types/registries/model';
 
 import type { PowerSelectInfinityArgs } from '../';
 
 import type { Select } from '../../../../types/ember-power-select/power-select';
 
-export interface PowerSelectInfinityModelArgs<T, E> extends Omit<PowerSelectInfinityArgs<T, E>, 'options'> {
+export interface PowerSelectInfinityModelArgs<K extends keyof ModelRegistry, T extends ModelRegistry[K], E>
+    extends Omit<PowerSelectInfinityArgs<T, E>, 'options'> {
     /**
      * An object containing additional query filters.
      *
@@ -25,7 +28,7 @@ export interface PowerSelectInfinityModelArgs<T, E> extends Omit<PowerSelectInfi
      * @type {string}
      * @argument modelName
      */
-    modelName: string;
+    modelName: K;
     /**
      * The limit used for queries
      *
@@ -68,14 +71,18 @@ export interface QueryParamsObj {
     [x: string]: any;
 }
 
-interface PowerSelectInfinityModelSignature<T, E> {
-    Args: PowerSelectInfinityModelArgs<T, E>;
+interface PowerSelectInfinityModelSignature<K extends keyof ModelRegistry, T extends ModelRegistry[K], E> {
+    Args: PowerSelectInfinityModelArgs<K, T, E>;
     Blocks: {
         default: [T, Select];
     };
 }
 
-export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelectInfinityModelSignature<T, E>> {
+export default class PowerSelectInfinityModel<
+    K extends keyof ModelRegistry,
+    T extends ModelRegistry[K],
+    E
+> extends Component<PowerSelectInfinityModelSignature<K, T, E>> {
     @tracked canLoadMore = true;
     @tracked options: T[] = [];
 
@@ -90,7 +97,7 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
     get processQueryParams() {
         return (
             this.args.processQueryParams ??
-            function (this: PowerSelectInfinityModel<T, E>, term, offset) {
+            function (this: PowerSelectInfinityModel<K, T, E>, term, offset) {
                 return this.removeEmptyQueryParams({
                     filter: {
                         ...this.args.filters,
@@ -128,7 +135,7 @@ export default class PowerSelectInfinityModel<T, E> extends Component<PowerSelec
      * @param {unknown} owner
      * @param {PowerSelectInfinityModelArgs<T>} args
      */
-    constructor(owner: unknown, args: PowerSelectInfinityModelArgs<T, E>) {
+    constructor(owner: unknown, args: PowerSelectInfinityModelArgs<K, T, E>) {
         super(owner, args);
         if (this.loadOptionsOnRender) {
             scheduleOnce('afterRender', this, this.loadInitialPage);
