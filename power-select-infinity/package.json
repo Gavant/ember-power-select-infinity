@@ -1,6 +1,6 @@
 {
   "name": "@gavant/ember-power-select-infinity",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Ember Power Select with Infinity Paging and Occlusion Rendering",
   "keywords": [
     "ember-addon"
