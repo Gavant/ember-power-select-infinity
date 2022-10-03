@@ -1,7 +1,6 @@
 import { action } from '@ember/object';
 import { next, scheduleOnce } from '@ember/runloop';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Ignore import
@@ -27,49 +26,13 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
     PowerSelectTriggerArgs<T, PowerSelectInfinityExtra>
 > {
     oldSelect: Select | null = null;
-    @tracked text = this.getSelectedAsText();
+
+    get text() {
+        return this.getSelectedAsText() ?? this.args.select.searchText;
+    }
 
     get canClear() {
         return this.text && this.args.extra?.allowClear && !this.args.select.disabled;
-    }
-
-    /**
-     * When any select attributes are updated, save the new one and compare against the old
-     *
-     * @return {*}
-     * @memberof PowerSelectInfinityTriggerSearch
-     */
-    @action
-    onSelectUpdate() {
-        const oldSelect = this.oldSelect;
-        const newSelect = this.args.select;
-        this.oldSelect = newSelect;
-        if (!oldSelect) {
-            return;
-        }
-
-        if (oldSelect?.isOpen && !newSelect.isOpen && newSelect.searchText) {
-            const input: HTMLInputElement | null = document.querySelector(
-                `#ember-power-select-infinity-input-${newSelect.uniqueId}`
-            );
-            const newText = this.getSelectedAsText();
-            if (input && input?.value !== newText) {
-                input.value = newText;
-            }
-            this.text = newText;
-        }
-
-        if (newSelect.lastSearchedText !== oldSelect?.lastSearchedText) {
-            if (newSelect.lastSearchedText === '') {
-                scheduleOnce('afterRender', null, newSelect.actions.close, undefined, true);
-            } else {
-                scheduleOnce('afterRender', null, newSelect.actions.open);
-            }
-        }
-
-        if (oldSelect?.selected !== newSelect.selected) {
-            this.text = this.getSelectedAsText();
-        }
     }
 
     /**
@@ -185,7 +148,6 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
         if (this.args.extra?.clearSearchOnBlur) {
             scheduleOnce('afterRender', null, select.actions.search, '');
             scheduleOnce('afterRender', null, select.actions.open);
-            this.text = '';
         }
         this.args.onBlur?.(select, event);
     }
