@@ -19,7 +19,6 @@
         {{on "blur" (fn this.onBlur @select)}}
         {{on "input" @onInput}}
         {{on "keydown" this.handleKeydown}}
-        {{did-update this.onSelectUpdate @select}}
     />
 
     {{#if @extra.isSearching}}
