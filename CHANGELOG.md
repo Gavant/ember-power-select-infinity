@@ -1,3 +1,12 @@
+
+## v3.1.0 (2022-10-04)
+
+#### :bug: Bug Fix
+* [#30](https://github.com/Gavant/ember-power-select-infinity/pull/30) Fixing bug ([@bakerac4](https://github.com/bakerac4))
+
+#### Committers: 1
+- Adam Baker ([@bakerac4](https://github.com/bakerac4))
+
 ## v3.0.4 (2022-09-20)
 
 ## v3.0.3 (2022-09-15)
