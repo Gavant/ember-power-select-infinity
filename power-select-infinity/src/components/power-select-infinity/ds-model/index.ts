@@ -76,6 +76,7 @@ interface PowerSelectInfinityModelSignature<K extends keyof ModelRegistry, T ext
     Blocks: {
         default: [T, Select];
     };
+    Element: HTMLElement;
 }
 
 export default class PowerSelectInfinityModel<

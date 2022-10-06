@@ -200,6 +200,7 @@ interface PowerSelectInfinitySignature<T extends Record<string, unknown>, E> {
     Blocks: {
         default: [T, Select];
     };
+    Element: HTMLElement;
 }
 
 export default class PowerSelectInfinity<T extends Record<string, unknown>, E> extends Component<
