@@ -14,7 +14,7 @@ import type { PowerSelectInfinityArgs } from '../';
 import type { Select } from '../../../../types/ember-power-select/power-select';
 
 export interface PowerSelectInfinityModelArgs<K extends keyof ModelRegistry, T extends ModelRegistry[K], E>
-    extends Omit<PowerSelectInfinityArgs<T, E>, 'options'> {
+    extends Omit<PowerSelectInfinityArgs<T, E>, 'options' | 'canLoadMore'> {
     /**
      * An object containing additional query filters.
      *
