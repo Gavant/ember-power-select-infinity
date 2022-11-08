@@ -108,7 +108,7 @@ export default class PowerSelectInfinityModel<
                         limit: this.pageSize,
                         offset: offset || 0
                     },
-                    include: this.args.include ?? undefined,
+                    include: this.args.include?.join(',') ?? undefined,
                     sort: this.args.sort?.join(',') ?? undefined
                 });
             }
