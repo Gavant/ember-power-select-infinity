@@ -9,22 +9,18 @@
     @placeholder={{"Search"}}
     @canCreate={{true}}
     @labelPath="name"
-    @searchPlaceholder={{@searchPlaceholder}}
+    @searchPlaceholder={{"Search"}}
     @loadingMessage={{"loading"}}
-    @clearOptions={{this.clearOptions}}
     @createOption={{this.createOption}}
     as |option|
 >
-    <div
-        class="ember-power-select-option-section {{if option.heading 'ember-power-select-option-section-has-heading'}}"
-    >
-        {{#if option.heading}}
+    <div class="ember-power-select-option-section {{if option.date 'ember-power-select-option-section-has-heading'}}">
+        {{#if option.date}}
             <div class="ember-power-select-option-section-heading font-weight-bold">
-                {{option.heading}}
+                {{option.date}}
             </div>
         {{/if}}
         <div class="text-truncate">
-
             {{option.name}}
         </div>
     </div>

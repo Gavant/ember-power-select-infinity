@@ -9,9 +9,9 @@ import { didCancel, task } from 'ember-concurrency';
 // eslint-disable-next-line ember/use-ember-data-rfc-395-imports
 import ModelRegistry from 'ember-data/types/registries/model';
 
-import type { PowerSelectInfinityArgs } from '../';
+import { Select } from '@gavant/glint-template-types/types/ember-power-select/components/power-select';
 
-import type { Select } from '../../../../types/ember-power-select/power-select';
+import type { PowerSelectInfinityArgs } from '../';
 
 export interface PowerSelectInfinityModelArgs<K extends keyof ModelRegistry, T extends ModelRegistry[K], E>
     extends Omit<PowerSelectInfinityArgs<T, E>, 'options' | 'canLoadMore'> {

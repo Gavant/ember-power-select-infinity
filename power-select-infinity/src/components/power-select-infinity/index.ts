@@ -5,6 +5,8 @@ import { tracked } from '@glimmer/tracking';
 
 import { didCancel, task, TaskCancelation, timeout } from 'ember-concurrency';
 
+import { PowerSelectArgs, Select } from '@gavant/glint-template-types/types/ember-power-select/components/power-select';
+
 import { ensureSafeComponent } from '@embroider/util';
 
 import { guard } from '../../utils/typescript';
@@ -12,8 +14,6 @@ import PowerSelectInfinityCreateMessage from './create-message';
 import PowerSelectInfinityLoading from './loading';
 import PowerSelectInfinityOptions from './options';
 import PowerSelectInfinityTriggerSearch from './trigger-search';
-
-import type { PowerSelectArgs, Select } from '../../../types/ember-power-select/power-select';
 
 export type PowerSelectInfinityExtra = Pick<
     PowerSelectInfinityArgs<Record<string, unknown>, unknown>,
@@ -60,7 +60,7 @@ export type PowerSelectInfinityExtra = Pick<
     onLastReached?: () => void;
 };
 
-export interface PowerSelectInfinityArgs<T extends Record<string, unknown>, E> extends PowerSelectArgs<T, E> {
+export interface PowerSelectInfinityArgs<T, E> extends PowerSelectArgs<T> {
     /**
      * Used by ember-vertical-collection for occlusion rendering.
      *
@@ -134,7 +134,7 @@ export interface PowerSelectInfinityArgs<T extends Record<string, unknown>, E> e
      * @type {string}
      * @memberof PowerSelectInfinityArgs
      */
-    labelPath?: keyof T;
+    labelPath?: T extends object ? keyof T : any;
 
     /**
      * The loading component to display
@@ -195,7 +195,7 @@ export interface PowerSelectInfinityArgs<T extends Record<string, unknown>, E> e
     dropdownClass?: string;
 }
 
-interface PowerSelectInfinitySignature<T extends Record<string, unknown>, E> {
+interface PowerSelectInfinitySignature<T, E> {
     Args: PowerSelectInfinityArgs<T, E>;
     Blocks: {
         default: [T, Select];
@@ -203,9 +203,7 @@ interface PowerSelectInfinitySignature<T extends Record<string, unknown>, E> {
     Element: HTMLElement;
 }
 
-export default class PowerSelectInfinity<T extends Record<string, unknown>, E> extends Component<
-    PowerSelectInfinitySignature<T, E>
-> {
+export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfinitySignature<T, E>> {
     get allowClear() {
         return this.args.allowClear ?? true;
     }

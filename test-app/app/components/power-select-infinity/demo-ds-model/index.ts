@@ -21,7 +21,7 @@ const generateOptions = (number: number) => {
     return newRows;
 };
 
-export default class BasicPowerSelect extends Component<Record<string, unknown>> {
+export default class PowerSelectInfinityDemoDSModel extends Component<Record<string, unknown>> {
     @tracked selected: Person | null = null;
     @tracked canLoadMore = true;
     @tracked pageSize = 20;
@@ -111,5 +111,11 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
         newOption[0].name = text;
         this.data = [...this.data, ...newOption];
         this.selected = newOption[0];
+    }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+    export default interface Registry {
+        'PowerSelectInfinity::DemoDsModel': typeof PowerSelectInfinityDemoDSModel;
     }
 }

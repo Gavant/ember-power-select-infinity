@@ -1,12 +1,9 @@
 import Component from '@glimmer/component';
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore: Ignore import
-import { PowerSelectBeforeOptionsArgs } from 'ember-power-select/components/power-select/before-options';
+import type { BeforeOptionsSignature } from '@gavant/glint-template-types/types/ember-power-select/components/power-select/before-options';
 
-import { PowerSelectInfinityExtra } from '../';
-
-type PowerSelectInfinityCreateMessageArgs<T> = PowerSelectBeforeOptionsArgs<T, PowerSelectInfinityExtra>;
+type Args<T> = BeforeOptionsSignature<T>['Args'];
+type PowerSelectInfinityCreateMessageArgs<T> = Args<T>;
 
 // eslint-disable-next-line ember/no-empty-glimmer-component-classes
 export default class PowerSelectInfinityCreateMessage<T> extends Component<PowerSelectInfinityCreateMessageArgs<T>> {}
