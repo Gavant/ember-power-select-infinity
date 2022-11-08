@@ -1,4 +1,13 @@
 
+
+## v3.1.3 (2022-11-08)
+
+#### :bug: Bug Fix
+* [#31](https://github.com/Gavant/ember-power-select-infinity/pull/31) Fixing types which removes build error in upstream app ([@bakerac4](https://github.com/bakerac4))
+
+#### Committers: 1
+- Adam Baker ([@bakerac4](https://github.com/bakerac4))
+
 ## v3.1.2 (2022-10-06)
 
 ## v3.1.1 (2022-10-06)
