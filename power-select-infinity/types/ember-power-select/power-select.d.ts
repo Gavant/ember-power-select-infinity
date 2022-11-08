@@ -2,8 +2,11 @@ import Component from '@glimmer/component';
 
 import { Modify } from '../../src/utils/typescript';
 
-import type { Dropdown, DropdownActions } from 'ember-basic-dropdown/components/basic-dropdown';
-// import { PowerSelectArgs as PSArgs } from 'ember-power-select/addon/components/power-select';
+import type {
+    Dropdown,
+    DropdownActions
+} from '@gavant/glint-template-types/types/ember-basic-dropdown/components/basic-dropdown';
+
 import type { PowerSelectAPI } from 'ember-power-select/types/power-select-api';
 
 export type MatcherFn = (option: any, text: string) => number;

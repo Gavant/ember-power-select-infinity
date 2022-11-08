@@ -28,7 +28,7 @@ const generateOptions = (number: number) => {
     return newRows;
 };
 
-export default class BasicPowerSelect extends Component<Record<string, unknown>> {
+export default class PowerSelectInfinityDemo extends Component<Record<string, unknown>> {
     @tracked selected: Option | null = null;
     @tracked canLoadMore = true;
     @tracked pageSize = 20;
@@ -84,7 +84,7 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
      * @returns {Promise<any[]>}
      */
     @action
-    async search(keyword: string): Promise<Option[]> {
+    search(keyword: string) {
         const options = this.data.filter((option) => {
             return option.name.toLowerCase().includes(keyword);
         });
@@ -121,5 +121,11 @@ export default class BasicPowerSelect extends Component<Record<string, unknown>>
         this.data = [...this.data, ...newOption];
         this.options = [...this.options, ...newOption];
         this.selected = newOption[0];
+    }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+    export default interface Registry {
+        'PowerSelectInfinity::Demo': typeof PowerSelectInfinityDemo;
     }
 }
