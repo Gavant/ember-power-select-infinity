@@ -48,7 +48,6 @@ module('Integration | Component | power-select-infinity/trigger-search', functio
         await render(
             hbs`<PowerSelectInfinity::TriggerSearch @onFocus={{this.onFocus}} @onInput={{this.onInput}} @select={{this.select}} />`
         );
-
-        assert.strictEqual(this.element?.textContent?.trim(), '');
+        assert.dom('.trigger-search-container').exists();
     });
 });
