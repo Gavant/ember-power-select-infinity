@@ -35,7 +35,6 @@ module('Integration | Component | power-select-infinity/options', function (hook
             </PowerSelectInfinity::Options>
         </div>
     `);
-
-        assert.strictEqual(this.element.textContent?.trim(), '');
+        assert.dom('.ember-power-select-options').exists();
     });
 });
