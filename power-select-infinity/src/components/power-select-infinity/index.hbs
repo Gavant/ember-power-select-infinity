@@ -81,6 +81,7 @@
         )
         @extra
     }}
+    class="{{if (or this.isLoadingMore this.searchTask.isRunning) 'power-select-infinity-is-loading'}}"
     ...attributes
     as |option select|
 >
