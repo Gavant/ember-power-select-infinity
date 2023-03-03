@@ -22,7 +22,7 @@
     />
 
     {{#if @extra.isSearching}}
-        <span class="ember-power-select-infinity-trigger-progress-spinner active"></span>
+        <@extra.loadingComponent />
     {{/if}}
 
     {{#if this.canClear}}

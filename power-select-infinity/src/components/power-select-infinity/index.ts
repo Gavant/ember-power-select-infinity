@@ -221,7 +221,9 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
     }
 
     get loadingComponent() {
-        return ensureSafeComponent(this.args.loadingComponent, this) ?? PowerSelectInfinityLoading;
+        return this.args.loadingComponent
+            ? ensureSafeComponent(this.args.loadingComponent, this)
+            : PowerSelectInfinityLoading;
     }
 
     get matchTriggerWidth() {
@@ -233,7 +235,9 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
     }
 
     get optionsComponent() {
-        return ensureSafeComponent(this.args.optionsComponent, this) ?? PowerSelectInfinityOptions;
+        return this.args.optionsComponent
+            ? ensureSafeComponent(this.args.optionsComponent, this)
+            : PowerSelectInfinityOptions;
     }
 
     get search() {
@@ -282,7 +286,9 @@ export default class PowerSelectInfinity<T, E> extends Component<PowerSelectInfi
     }
 
     get triggerComponent() {
-        return ensureSafeComponent(this.args.triggerComponent, this) ?? PowerSelectInfinityTriggerSearch;
+        return this.args.triggerComponent
+            ? ensureSafeComponent(this.args.triggerComponent, this)
+            : PowerSelectInfinityTriggerSearch;
     }
 
     get triggerClass() {
