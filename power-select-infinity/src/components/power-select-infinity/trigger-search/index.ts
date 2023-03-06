@@ -32,7 +32,7 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
     }
 
     get canClear() {
-        return this.text && this.args.extra?.allowClear && !this.args.select.disabled;
+        return this.text && this.args.extra?.allowClear && !this.args.select.disabled && this.args.select.selected;
     }
 
     /**
