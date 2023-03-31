@@ -1,8 +1,7 @@
 import { render, TestContext } from '@ember/test-helpers';
 
+import { Select } from 'ember-power-select/components/power-select';
 import { setupRenderingTest } from 'ember-qunit';
-
-import { Select } from '@gavant/glint-template-types/types/ember-power-select/components/power-select';
 
 import hbs from 'htmlbars-inline-precompile';
 import { module, test } from 'qunit';

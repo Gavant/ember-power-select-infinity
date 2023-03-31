@@ -4,8 +4,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
 import { didCancel, task, TaskCancelation, timeout } from 'ember-concurrency';
-
-import { PowerSelectArgs, Select } from '@gavant/glint-template-types/types/ember-power-select/components/power-select';
+import { PowerSelectArgs, Select } from 'ember-power-select/components/power-select';
 
 import { ensureSafeComponent } from '@embroider/util';
 

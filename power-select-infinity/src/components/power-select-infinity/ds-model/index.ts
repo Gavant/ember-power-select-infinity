@@ -8,8 +8,7 @@ import { tracked } from '@glimmer/tracking';
 import { didCancel, task } from 'ember-concurrency';
 // eslint-disable-next-line ember/use-ember-data-rfc-395-imports
 import ModelRegistry from 'ember-data/types/registries/model';
-
-import { Select } from '@gavant/glint-template-types/types/ember-power-select/components/power-select';
+import { Select } from 'ember-power-select/components/power-select';
 
 import type { PowerSelectInfinityArgs } from '../';
 
