@@ -41,9 +41,6 @@
         "dist/**/*"
     ],
     "glint": {
-        "environment": "ember-loose",
-        "transform": {
-            "include": []
-        }
+        "environment": "ember-loose"
     }
 }
