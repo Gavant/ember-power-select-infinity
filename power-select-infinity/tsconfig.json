@@ -34,7 +34,8 @@
     },
     "include": [
         "src/**/*",
-        "types/**/*"
+        "types/**/*",
+        "../node_modules/@gavant/glint-template-types/types/ember-power-select/**/*"
     ],
     "exclude": [
         "dist/**/*"

@@ -36,7 +36,8 @@
       "app/**/*",
       "tests/**/*",
       "types/**/*",
-      "mirage/**/*"
+      "mirage/**/*",
+      "../node_modules/@gavant/glint-template-types/types/ember-power-select/**/*"
    ],
    "glint": {
     "environment": "ember-loose",
