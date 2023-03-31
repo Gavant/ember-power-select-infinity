@@ -100,6 +100,8 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
     @action
     onFocus(select: Select) {
         scheduleOnce('afterRender', null, select.actions.search, '');
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         scheduleOnce('afterRender', null, select.actions.open);
     }
 
@@ -147,6 +149,8 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
     onBlur(select: Select, event: FocusEvent) {
         if (this.args.extra?.clearSearchOnBlur) {
             scheduleOnce('afterRender', null, select.actions.search, '');
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             scheduleOnce('afterRender', null, select.actions.open);
         }
         this.args.onBlur?.(select, event);
