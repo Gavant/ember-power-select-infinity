@@ -12,6 +12,7 @@ node_modules/
 .vscode
 .env*
 .pnp*
+.yarn*
 .sass-cache
 .eslintcache
 coverage/

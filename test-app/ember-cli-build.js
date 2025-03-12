@@ -9,7 +9,19 @@ module.exports = function (defaults) {
             watchDependencies: Object.keys(packageJson.dependencies)
         },
         sassOptions: {
-            includePaths: ['../node_modules/@gavant/ember-power-select-infinity/dist/styles']
+            includePaths: [
+                '../node_modules/@gavant/ember-power-select-infinity/dist/styles',
+                '../node_modules/ember-basic-dropdown',
+                '../node_modules/ember-power-select'
+            ]
+        },
+        babel: {
+            plugins: [
+                // ... any other plugins
+                require.resolve('ember-concurrency/async-arrow-task-transform')
+
+                // NOTE: put any code coverage plugins last, after the transform.
+            ]
         }
     });
 

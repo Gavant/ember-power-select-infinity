@@ -149,6 +149,7 @@ export default class PowerSelectInfinityTriggerSearch<T> extends Component<
             scheduleOnce('afterRender', null, select.actions.search, '');
             scheduleOnce('afterRender', null, select.actions.open);
         }
+        // @ts-ignore
         this.args.onBlur?.(select, event);
     }
 }

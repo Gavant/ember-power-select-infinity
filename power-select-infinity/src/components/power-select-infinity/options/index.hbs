@@ -20,7 +20,7 @@
         {{! template-lint-disable require-context-role }}
         <li
             class="ember-power-select-option {{if opt.borderBottom 'border-bottom-brand'}}"
-            aria-selected="{{ember-power-select-is-selected opt @select.selected}}"
+            aria-selected="{{ember-power-select-is-equal opt @select.selected}}"
             aria-disabled="{{if opt.disabled 'true'}}"
             aria-current="{{eq opt @select.highlighted}}"
             data-option-index="{{@groupIndex}}{{index}}"
